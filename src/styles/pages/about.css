@@ -1,0 +1,667 @@
+/* ================================
+   About Page Styles
+   ================================ */
+
+.about-page {
+  overflow-x: hidden;
+}
+
+/* ================================
+   1. Hero Banner
+   ================================ */
+.about-hero {
+  position: relative;
+  padding: clamp(4rem, 10vw, 7rem) 0 4rem;
+  background: 
+    radial-gradient(ellipse at 85% 15%, rgba(205, 164, 103, 0.22), transparent 55%),
+    radial-gradient(ellipse at 15% 85%, rgba(146, 62, 50, 0.18), transparent 55%),
+    linear-gradient(180deg, var(--color-parchment-light) 0%, var(--color-parchment) 100%);
+  border-bottom: 1px solid rgba(205, 164, 103, 0.35);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.about-hero.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-hero__container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.about-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: rgba(146, 62, 50, 0.08);
+  border: 1px solid rgba(146, 62, 50, 0.25);
+  border-radius: var(--radius-full);
+  color: var(--color-red);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+  letter-spacing: 0.03em;
+}
+
+.about-hero__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-hero);
+  color: var(--color-red-dark);
+  line-height: 1.4;
+  margin-bottom: var(--space-md);
+  text-shadow: 0 2px 4px rgba(110, 46, 37, 0.08);
+}
+
+.about-hero__subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-2xl);
+}
+
+.about-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.about-hero__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-gold-light);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-hero__mascot {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
+
+/* ================================
+   2. Dấu Việt là gì? (Intro)
+   ================================ */
+.about-intro {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.about-intro.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-intro__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.about-intro__lead {
+  font-size: var(--text-lg);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  margin-bottom: var(--space-md);
+}
+
+.about-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.about-pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid rgba(205, 164, 103, 0.25);
+  border-left: 3px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.about-pillar-item:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-md);
+  border-left-color: var(--color-red);
+}
+
+.about-pillar-item__icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(205, 164, 103, 0.15);
+  color: var(--color-red);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.about-pillar-item__title {
+  font-size: var(--text-base);
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.about-pillar-item__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+  line-height: 1.55;
+}
+
+/* Diorama Image Card */
+.about-diorama-card {
+  padding: var(--space-md);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.about-diorama-card__image-wrapper {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #E8D5BF;
+}
+
+.about-diorama-card__img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.about-diorama-card:hover .about-diorama-card__img {
+  transform: scale(1.03);
+}
+
+.about-diorama-card__overlay {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+}
+
+.about-diorama-card__tag {
+  background: rgba(56, 43, 37, 0.85);
+  color: var(--color-gold-light);
+  backdrop-filter: blur(4px);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(205, 164, 103, 0.4);
+}
+
+.about-diorama-card__caption {
+  padding: var(--space-md) var(--space-sm) 0;
+}
+
+.about-diorama-card__headline {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-red-dark);
+  margin-bottom: 0.25rem;
+}
+
+.about-diorama-card__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+/* ================================
+   3. Vì sao chúng tôi tạo ra Dấu Việt? (Problem)
+   ================================ */
+.about-problem {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.about-problem.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-story {
+  max-width: 900px;
+  margin: 0 auto var(--space-3xl);
+}
+
+.about-story__quote blockquote {
+  font-family: var(--font-accent);
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-style: italic;
+  color: var(--color-red-dark);
+  line-height: 1.5;
+  text-align: center;
+  padding: var(--space-xl) var(--space-2xl);
+  background: rgba(205, 164, 103, 0.12);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-gold-light);
+  position: relative;
+  margin-bottom: var(--space-2xl);
+}
+
+.about-story__quote blockquote::before,
+.about-story__quote blockquote::after {
+  content: '“';
+  font-size: 3rem;
+  color: var(--color-gold);
+  line-height: 0;
+  position: absolute;
+}
+
+.about-story__body p {
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--color-text-secondary);
+}
+
+/* Comparison */
+.about-comparison {
+  margin-top: var(--space-3xl);
+}
+
+.about-comparison__title {
+  text-align: center;
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-xl);
+  color: var(--color-text-primary);
+}
+
+.about-comparison__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+}
+
+.about-comparison__col {
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+  background: var(--color-parchment-light);
+  border: 1px solid rgba(205, 164, 103, 0.25);
+}
+
+.about-comparison__col--trad {
+  background: rgba(56, 43, 37, 0.03);
+  border: 1px dashed rgba(56, 43, 37, 0.2);
+}
+
+.about-comparison__col--dv {
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-gold);
+}
+
+.about-comparison__col-header {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid rgba(205, 164, 103, 0.3);
+}
+
+.about-comparison__col-header h4 {
+  font-size: var(--text-xl);
+  margin-top: var(--space-xs);
+}
+
+.about-comparison__badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.about-comparison__badge--trad {
+  background: rgba(56, 43, 37, 0.12);
+  color: var(--color-text-muted);
+}
+
+.about-comparison__badge--dv {
+  background: rgba(146, 62, 50, 0.12);
+  color: var(--color-red);
+}
+
+.about-comparison__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.about-comparison__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.about-comparison__mark {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-comparison__mark--trad {
+  background: rgba(110, 46, 37, 0.1);
+  color: var(--color-red-dark);
+}
+
+.about-comparison__mark--dv {
+  background: rgba(120, 172, 81, 0.2);
+  color: var(--color-green-dark);
+}
+
+/* ================================
+   4. Sứ mệnh giáo dục (Mission)
+   ================================ */
+.about-mission {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.about-mission.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-mission__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+
+.about-mission__card {
+  padding: var(--space-2xl) var(--space-xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--radius-2xl);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.about-mission__card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.about-mission__icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, var(--color-gold-light) 0%, rgba(205, 164, 103, 0.2) 100%);
+  border: 2px solid var(--color-gold);
+  color: var(--color-red-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+  box-shadow: 0 4px 12px rgba(205, 164, 103, 0.3);
+}
+
+.about-mission__card-title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-primary);
+}
+
+.about-mission__card-desc {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+}
+
+/* ================================
+   5. Tầm nhìn (Vision)
+   ================================ */
+.about-vision {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.about-vision.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-vision__content {
+  padding: var(--space-3xl);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
+}
+
+.about-vision__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-vision__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(205, 164, 103, 0.2);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.about-vision__headline {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: var(--color-red-dark);
+  line-height: 1.35;
+  margin-bottom: var(--space-md);
+}
+
+.about-vision__lead {
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2xl);
+}
+
+.about-vision__goals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.about-vision__goal-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: rgba(255, 249, 238, 0.8);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(205, 164, 103, 0.3);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.about-vision__check {
+  color: var(--color-green-dark);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ================================
+   6. CTA Section
+   ================================ */
+.about-cta-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  padding-bottom: var(--space-5xl);
+}
+
+.about-cta-section.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-cta {
+  background: 
+    radial-gradient(ellipse at bottom right, rgba(146, 62, 50, 0.15), transparent 60%),
+    radial-gradient(ellipse at top left, rgba(205, 164, 103, 0.2), transparent 60%),
+    linear-gradient(135deg, var(--color-surface) 0%, var(--color-parchment-light) 100%);
+  border-radius: var(--radius-2xl);
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-2xl);
+  text-align: center;
+  border: 2px solid var(--color-gold);
+  box-shadow: var(--shadow-xl);
+}
+
+.about-cta__content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-cta__badge {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background: rgba(146, 62, 50, 0.1);
+  color: var(--color-red);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-md);
+}
+
+.about-cta__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  color: var(--color-red-dark);
+  line-height: 1.4;
+  margin-bottom: var(--space-md);
+}
+
+.about-cta__desc {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-2xl);
+}
+
+.about-cta__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* ================================
+   Responsive Breakpoints
+   ================================ */
+
+@media (max-width: 1024px) {
+  .about-intro__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .about-mission__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-comparison__grid {
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .about-comparison__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-mission__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-vision__content {
+    padding: var(--space-xl);
+  }
+
+  .about-story__quote blockquote {
+    padding: var(--space-lg);
+  }
+
+  .about-cta {
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .about-cta__buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .about-cta__buttons .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero__tag {
+    font-size: var(--text-xs);
+    padding: 0.4rem 0.8rem;
+  }
+
+  .about-pillar-item {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .about-pillar-item__icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .about-vision__goal-item {
+    font-size: var(--text-sm);
+  }
+}

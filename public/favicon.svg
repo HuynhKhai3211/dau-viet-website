@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" fill="#923E32"/>
+  <circle cx="32" cy="32" r="22" fill="#F5EBDC" stroke="#CDA467" stroke-width="2"/>
+  <text x="32" y="40" text-anchor="middle" font-family="serif" font-size="22" font-weight="bold" fill="#923E32">DV</text>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#CDA467" stroke-width="1.5" stroke-dasharray="4 4"/>
+</svg>

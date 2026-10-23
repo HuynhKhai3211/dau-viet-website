@@ -1,0 +1,115 @@
+.tide-interaction {
+  --river-ink: #493d2e;
+  --river-red: #984d36;
+  --river-border: #cbb78d;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--river-ink);
+}
+.tide-battle-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+.tide-eyebrow { display: block; color: var(--river-red); letter-spacing: .2em; font-size: 10px; font-weight: 700; margin-bottom: 8px; }
+.tide-battle-heading h4 { font-family: var(--font-heading); font-size: clamp(20px, 2.2vw, 28px); color: #603b2b; margin: 0 0 8px; }
+.tide-battle-heading p { font-size: 13px; line-height: 1.8; max-width: 560px; margin: 0; color: #756550; }
+.tide-interaction__quick-toggles { display: flex; flex-shrink: 0; gap: 8px; }
+.tide-interaction__toggle-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 14px; border: 1px solid var(--river-border); border-radius: 7px; background: #f7f0df; color: #6d5640; font-size: 12px; font-weight: 600; white-space: nowrap; transition: background-color .2s, color .2s; }
+.tide-interaction__toggle-btn[aria-pressed="true"] { background: var(--river-red); border-color: var(--river-red); color: #fff6e4; }
+.tide-interaction__toggle-btn:hover { border-color: var(--river-red); }
+.tide-battle-scene { margin: 0; position: relative; border: 1px solid #a48c5f; border-radius: 11px; overflow: hidden; background: #244c50; box-shadow: 0 14px 30px #3f4b3826; }
+.tide-artwork-scroll { width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: #c9b88e #3f6967; }
+.tide-artwork-frame { line-height: 0; }
+.river-artwork { display: block; width: 100%; height: auto; aspect-ratio: 12 / 7; overflow: hidden; }
+.tide-scene-status { position: absolute; left: 22px; top: 22px; padding: 14px 18px; max-width: calc(100% - 100px); border: 1px solid #dfc99b88; border-radius: 6px; background: #343c32df; box-shadow: 0 4px 14px #233c311a; pointer-events: none; }
+.tide-scene-status > span { display: block; font-size: 10px; letter-spacing: .17em; color: #e5c98b; font-weight: 700; margin-bottom: 5px; }
+.tide-scene-status strong { display: flex; align-items: center; gap: 7px; color: #f6eed8; font-size: 12px; line-height: 1.65; font-weight: 500; }
+.tide-scene-status strong svg { flex-shrink: 0; }
+.tide-zoom { position: absolute; right: 18px; top: 18px; width: 36px; height: 36px; display: grid; place-items: center; background: #f7eedacb; color: #536453; border: 1px solid #f7eedaaa; border-radius: 7px; }
+.tide-zoom:hover { background: #fff5df; }
+.tide-scene-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; position: absolute; bottom: 20px; right: 20px; left: 20px; pointer-events: none; }
+.tide-scene-legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 10px; font-weight: 500; color: #f9f2dd; padding: 6px 10px; background: #355b51d9; border: 1px solid #d7caa37a; border-radius: 30px; }
+.tide-scene-legend span::before { content: ''; width: 5px; height: 5px; background: #d1d9ae; border-radius: 50%; }
+.tide-scene-legend span:last-child { background: #714b35d9; }
+.tide-scene-legend span:last-child::before { background: #e2ad7f; }
+.tide-story { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tide-story-card { display: flex; flex-direction: column; gap: 7px; text-align: left; padding: 16px; border: 1px solid #d9c7a4; background: #f8f2e5; border-radius: 7px; color: #6a4c37; transition: background-color .2s, border-color .2s; }
+.tide-story-card[aria-pressed="true"] { border-color: #a65b3f; background: #f0e0bd; box-shadow: inset 3px 0 #a65b3f; }
+.tide-story-card:hover { background: #f2e6cd; }
+.tide-story-card__number { color: #a35a40; font-size: 13px; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; }
+.tide-story-card__number > span { font-size: 9px; letter-spacing: .1em; }
+.tide-story-card > strong { font-size: 12px; font-weight: 700; line-height: 1.65; }
+.tide-story-card p { margin: 0; color: #7c6b52; font-size: 11px; line-height: 1.8; }
+.tide-control-panel { border: 1px solid var(--river-border); border-radius: 10px; background: linear-gradient(135deg, #faf4e8, #f6efdf); padding: 22px 24px 18px; }
+.tide-control-panel__heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.tide-control-panel__heading label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 16px; font-weight: 700; line-height: 1.65; }
+.tide-control-panel__heading label svg { color: #729994; flex-shrink: 0; }
+.tide-control-panel__heading output { padding: 5px 10px; background: #4b3d30; border-radius: 6px; color: #fff3d8; font-size: 14px; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.tide-control-panel__heading output span { font-size: 10px; margin-left: 2px; opacity: .8; }
+.tide-controls__slider { display: block; appearance: none; -webkit-appearance: none; width: 100%; height: 26px; margin: 0; border: 1px solid #bfa984; border-radius: 24px; background: linear-gradient(to right, #a25439 0%, #a25439 var(--tide-level), #789a95 var(--tide-level), #789a95 100%); cursor: ew-resize; }
+.tide-controls__slider::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 25px; height: 25px; background: #713f2b; border: 4px solid #fff4db; outline: 1px solid #81543a; border-radius: 50%; box-shadow: 0 2px 7px #342b2844; }
+.tide-controls__slider::-moz-range-thumb { width: 17px; height: 17px; background: #713f2b; border: 4px solid #fff4db; outline: 1px solid #81543a; border-radius: 50%; box-shadow: 0 2px 7px #342b2844; }
+.tide-control-limits { display: flex; justify-content: space-between; gap: 14px; font-size: 10px; font-weight: 600; margin-top: 10px; }
+.tide-control-limits span:first-child { color: #a25439; }
+.tide-control-limits span:last-child { color: #638681; text-align: right; }
+.tide-observation { padding: 13px 15px; margin: 17px 0 12px; border-left: 3px solid #a25439; background: #ece1c8; border-radius: 5px; font-size: 12px; color: #6d5941; line-height: 1.8; }
+.tide-observation strong { color: #8b4832; }
+.tide-art-note { font-size: 10px; color: #88765b; margin: 0; line-height: 1.8; }
+.river-scout-position, .river-enemy-position { transition: transform .55s cubic-bezier(.2,.65,.3,1); }
+.river-warship:not(.river-warship--trapped):not(.river-warship--grounding) { animation: riverBoatFloat 4.2s ease-in-out infinite; }
+.river-warship--grounding { animation: riverBoatGrounding .65s ease-out; }
+.river-warship__intact, .river-warship__wreck { transition: opacity .2s ease-out; }
+.river-warship__wreck { opacity: 0; }
+.river-warship__half { transform-origin: 0 0; transition: transform 1.15s cubic-bezier(.2,.65,.3,1); }
+.river-warship__half--front { transform: translate(12px, -20px); }
+.river-warship__half--back { transform: translate(-20px, -15px); }
+.river-warship--trapped .river-warship__intact { opacity: 0; }
+.river-warship--trapped .river-warship__wreck { opacity: 1; }
+.river-warship--trapped .river-warship__half--front { transform: translate(-24px, 16px) rotate(-13deg); }
+.river-warship--trapped .river-warship__half--back { transform: translate(24px, 12px) rotate(12deg); }
+.river-scout { animation: riverBoatFloat 3.5s ease-in-out infinite reverse; }
+.river-current { animation: riverCurrentDrift 9s ease-in-out infinite alternate; }
+.river-impact { animation: riverImpactReveal .55s ease-out both; }
+@keyframes riverBoatFloat { 0%, 100% { transform: translateY(0) rotate(-.5deg); } 50% { transform: translateY(3px) rotate(.5deg); } }
+@keyframes riverBoatGrounding { 0%, 100% { transform: translate(0, 0) rotate(0); } 20%, 60% { transform: translate(-3px, 2px) rotate(-1deg); } 40%, 80% { transform: translate(3px, -1px) rotate(1deg); } }
+@keyframes riverCurrentDrift { from { transform: translateX(-8px); opacity: .7; } to { transform: translateX(15px); opacity: 1; } }
+@keyframes riverImpactReveal { from { opacity: 0; } to { opacity: 1; } }
+
+/* Give the river illustration the whole panorama within the clue panel. */
+.clue-detail-panel--panoramic .clue-detail-panel__body { display: flex; flex-direction: column; gap: 24px; }
+.clue-detail-panel--panoramic .clue-interactive-zone { order: -1; width: 100%; background: #fdf8ee; padding: 26px; }
+.clue-detail-panel--panoramic .clue-text-box { width: 100%; margin: 0; }
+.clue-detail-panel--panoramic .clue-interactive-zone__header { display: none; }
+
+@media (max-width: 760px) {
+  .tide-battle-heading { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .tide-scene-status { left: 12px; top: 12px; padding: 10px 12px; }
+  .tide-scene-status > span { font-size: 8px; letter-spacing: .12em; }
+  .tide-scene-status strong { font-size: 10px; }
+  .tide-scene-legend { position: static; padding: 10px; background: #244c50; justify-content: center; }
+  .tide-zoom { right: 12px; top: 12px; width: 30px; height: 30px; }
+  .tide-story { gap: 7px; }
+  .tide-story-card { padding: 11px 9px; }
+  .tide-story-card > strong { font-size: 11px; }
+  .tide-story-card p { font-size: 10px; }
+  .tide-control-panel { padding: 16px; }
+  .tide-control-panel__heading label { font-size: 14px; }
+  .clue-detail-panel--panoramic .clue-interactive-zone { padding: 16px; }
+}
+@media (max-width: 480px) {
+  .tide-story { grid-template-columns: 1fr; }
+  .tide-story-card { display: grid; grid-template-columns: 33px 1fr; column-gap: 10px; padding: 12px; }
+  .tide-story-card__number { grid-row: span 2; }
+  .tide-story-card__number > span { display: none; }
+  .tide-story-card p { grid-column: 2; }
+  .tide-scene-status { padding: 6px 8px; max-width: calc(100% - 60px); left: 8px; top: 8px; }
+  .tide-scene-status > span { font-size: 7px; margin-bottom: 2px; }
+  .tide-scene-status strong { font-size: 9px; gap: 4px; }
+  .tide-scene-status strong svg { width: 12px; }
+  .tide-zoom { top: 8px; right: 8px; }
+  .tide-scene-legend span { font-size: 8px; }
+  .tide-control-panel__heading { gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .river-scout, .river-warship, .river-current, .river-impact { animation: none !important; }
+  .river-scout-position, .river-enemy-position { transition: none; }
+  .river-warship__intact, .river-warship__wreck, .river-warship__half { transition: none; }
+}

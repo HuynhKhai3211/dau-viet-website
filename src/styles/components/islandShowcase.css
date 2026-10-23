@@ -1,0 +1,421 @@
+/* =========================================================================
+   DẤU VIỆT — PERSONAL ISLAND SHOWCASE COMPONENT STYLES
+   Stylized 2.5D isometric historical aesthetic with warm parchment & antique gold
+   ========================================================================= */
+
+.island-showcase-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.island-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--space-2xl, 2.5rem);
+  align-items: center;
+}
+
+/* -------------------------------------------------------------------------
+   LEFT COLUMN: Dominant Island Visual Display
+   ------------------------------------------------------------------------- */
+.island-showcase__visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.island-showcase__card {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-2xl, 24px);
+  border: 2px solid var(--color-gold, #CDA467);
+  background: linear-gradient(150deg, #FFFFFF 0%, #FFF9EE 40%, #F5EBDC 100%);
+  padding: 1rem;
+  box-shadow: 0 12px 36px rgba(56, 43, 37, 0.12), 0 0 28px rgba(205, 164, 103, 0.2);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.island-showcase__card:hover {
+  border-color: var(--color-gold-light, #E0C08A);
+  box-shadow: 0 16px 44px rgba(56, 43, 37, 0.16), 0 0 36px rgba(67, 190, 215, 0.25);
+}
+
+/* Ambient water/lake glowing ripple under the island */
+.island-showcase__water-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 55%, rgba(67, 190, 215, 0.22) 0%, rgba(67, 190, 215, 0.08) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  animation: islandWaterPulse 7s ease-in-out infinite alternate;
+}
+
+@keyframes islandWaterPulse {
+  0% { transform: scale(0.96); opacity: 0.7; }
+  100% { transform: scale(1.04); opacity: 1; }
+}
+
+/* Image stage wrapper with fixed aspect-ratio to prevent layout shifts */
+.island-showcase__image-stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 2560 / 1707;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-xl, 18px);
+  background: radial-gradient(circle at 50% 60%, rgba(224, 242, 254, 0.6) 0%, rgba(245, 235, 220, 0.4) 100%);
+}
+
+.island-showcase__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.island-showcase__image.transitioning {
+  opacity: 0.15;
+  transform: scale(0.97);
+}
+
+.island-showcase__image.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.island-showcase__image-stage:hover .island-showcase__image.loaded {
+  transform: scale(1.025);
+}
+
+/* Overlay badges */
+.island-showcase__badge-top {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  background: rgba(56, 43, 37, 0.88);
+  color: var(--color-parchment, #F5EBDC);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid rgba(205, 164, 103, 0.55);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.island-showcase__badge-top svg {
+  color: var(--color-gold, #CDA467);
+}
+
+.island-showcase__badge-bottom {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  background: rgba(255, 249, 238, 0.95);
+  color: var(--color-red, #923E32);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid var(--color-gold-light, #E0C08A);
+  box-shadow: 0 4px 12px rgba(56, 43, 37, 0.12);
+  backdrop-filter: blur(6px);
+}
+
+.island-showcase__caption {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #6B5B52);
+  text-align: center;
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------
+   RIGHT COLUMN: Tabs, Information, and Progression
+   ------------------------------------------------------------------------- */
+.island-showcase__info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs Header */
+.island-showcase__tabs-header {
+  margin-bottom: 1.25rem;
+}
+
+.island-showcase__tabs-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #8C7B70);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+.island-showcase__tabs-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  background: rgba(205, 164, 103, 0.12);
+  padding: 0.4rem;
+  border-radius: var(--radius-xl, 18px);
+  border: 1px solid rgba(205, 164, 103, 0.3);
+}
+
+.island-showcase__tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.75rem 0.5rem;
+  min-height: 48px;
+  border-radius: var(--radius-lg, 12px);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-primary, #2D231E);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  font-family: inherit;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.island-showcase__tab-btn:hover {
+  background: rgba(255, 249, 238, 0.75);
+  border-color: var(--color-gold-light, #E0C08A);
+  transform: translateY(-1px);
+}
+
+.island-showcase__tab-btn--active {
+  background: linear-gradient(135deg, var(--color-red, #923E32) 0%, #742F26 100%);
+  color: #FFF9EE !important;
+  border-color: #5D231C;
+  box-shadow: 0 4px 12px rgba(146, 62, 50, 0.35);
+  transform: translateY(-1px);
+}
+
+.island-showcase__tab-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.island-showcase__tab-sub {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.island-showcase__tab-btn--active .island-showcase__tab-sub {
+  color: #F8D8B0;
+}
+
+/* Panel Body */
+.island-showcase__panel {
+  background: var(--color-parchment-light, #FFF9EE);
+  border: 1.5px solid rgba(205, 164, 103, 0.35);
+  border-radius: var(--radius-2xl, 24px);
+  padding: 1.75rem;
+  box-shadow: 0 8px 24px rgba(56, 43, 37, 0.06);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.island-showcase__panel-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.island-showcase__title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.island-showcase__title {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #2D231E);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.island-showcase__subtitle {
+  font-size: 0.85rem;
+  color: var(--color-red, #923E32);
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.island-showcase__requirement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  background: rgba(120, 172, 81, 0.15);
+  color: #386A20;
+  border: 1px solid rgba(120, 172, 81, 0.5);
+  max-width: 100%;
+}
+
+.island-showcase__description {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary, #6B5B52);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+/* Features List */
+.island-showcase__features-wrap {
+  margin-bottom: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(205, 164, 103, 0.4);
+}
+
+.island-showcase__features-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #2D231E);
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.island-showcase__features-title svg {
+  color: var(--color-gold, #CDA467);
+}
+
+.island-showcase__features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.island-showcase__feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #2D231E);
+  line-height: 1.45;
+}
+
+.island-showcase__feature-icon {
+  color: #386A20;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Callout Box */
+.island-showcase__tip-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  background: rgba(205, 164, 103, 0.15);
+  border-radius: var(--radius-lg, 12px);
+  border-left: 3px solid var(--color-gold, #CDA467);
+}
+
+.island-showcase__tip-icon {
+  color: var(--color-gold, #CDA467);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.island-showcase__tip-text {
+  font-size: 0.8rem;
+  color: var(--color-text-primary, #2D231E);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   ------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .island-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl, 2rem);
+  }
+
+  .island-showcase__card {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .island-showcase__card {
+    padding: 0.65rem;
+    border-radius: var(--radius-xl, 18px);
+  }
+
+  .island-showcase__tabs-group {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .island-showcase__tab-btn {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+  }
+
+  .island-showcase__panel {
+    padding: 1.25rem;
+    border-radius: var(--radius-xl, 18px);
+  }
+
+  .island-showcase__title {
+    font-size: 1.45rem;
+  }
+
+  .island-showcase__panel-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .island-showcase__water-glow {
+    animation: none;
+  }
+  .island-showcase__image {
+    transition: none;
+  }
+  .island-showcase__tab-btn {
+    transition: none;
+  }
+}
