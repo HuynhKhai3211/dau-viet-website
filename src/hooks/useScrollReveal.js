@@ -8,9 +8,9 @@ export function useScrollReveal(threshold = 0.15) {
     const el = ref.current;
     if (!el) return;
 
-    // Check reduced motion preference
+    // Mobile shows content immediately, including sections taller than the viewport.
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || window.matchMedia('(max-width: 768px)').matches) {
       setIsRevealed(true);
       return;
     }

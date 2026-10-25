@@ -71,7 +71,7 @@ export default function DemoPage() {
 
   // Scroll to top when stage changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(max-width: 768px)').matches ? 'instant' : 'smooth' });
   }, [currentStage, activeView]);
 
   // Handle discovering a new clue (+10 points per unique clue)

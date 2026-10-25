@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import '../../styles/components/header.css';
 import SoundToggle from '../common/SoundToggle';
@@ -7,6 +7,8 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const drawerRef = useRef(null);
+  const toggleRef = useRef(null);
 
   // Navigation link list
   const navLinks = [
@@ -33,24 +35,51 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock background scroll when drawer is open
+  // Restore the exact scroll position after closing the mobile drawer (also on iOS).
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (!isMobileMenuOpen) return;
+
+    const scrollY = window.scrollY;
+    const openedPath = window.location.pathname;
+    const body = document.body;
+    const previous = { position: body.style.position, top: body.style.top, width: body.style.width, overflow: body.style.overflow };
+    Object.assign(body.style, { position: 'fixed', top: `-${scrollY}px`, width: '100%', overflow: 'hidden' });
+    drawerRef.current?.querySelector('button')?.focus({ preventScroll: true });
 
     return () => {
-      document.body.style.overflow = '';
+      Object.assign(body.style, previous);
+      window.scrollTo({ top: window.location.pathname === openedPath ? scrollY : 0, behavior: 'instant' });
+      toggleRef.current?.focus({ preventScroll: true });
     };
   }, [isMobileMenuOpen]);
 
-  // Handle escape key to close drawer
+  // A hidden mobile drawer must never leave desktop scrolling locked after rotation.
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 901px)');
+    const closeOnDesktop = () => { if (desktop.matches) setIsMobileMenuOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
+
+  // Keep keyboard focus inside the open drawer.
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape' && isMobileMenuOpen) {
+      if (!isMobileMenuOpen) return;
+      if (event.key === 'Escape') {
         setIsMobileMenuOpen(false);
+      }
+      if (event.key === 'Tab') {
+        const controls = drawerRef.current?.querySelectorAll('a[href], button');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -101,6 +130,7 @@ export default function Header() {
 
         {/* Mobile Hamburger Toggle Button */}
         <button
+          ref={toggleRef}
           type="button"
           className={`header__hamburger ${isMobileMenuOpen ? 'header__hamburger--open' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -123,10 +153,12 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       <aside
+        ref={drawerRef}
         id="mobile-nav-drawer"
         className={`header__drawer ${isMobileMenuOpen ? 'header__drawer--open' : ''}`}
         aria-label="Menu điều hướng di động"
         aria-hidden={!isMobileMenuOpen}
+        inert={!isMobileMenuOpen}
       >
         <div className="header__drawer-header">
           <Link

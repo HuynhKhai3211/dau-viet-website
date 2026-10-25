@@ -1,0 +1,186 @@
+/* Mobile overrides live here so desktop styles keep their existing values. */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+    scroll-padding-top: calc(var(--header-height) + 16px);
+  }
+
+  .page-layout { min-height: 100svh; }
+  .container { min-width: 0; width: 100%; }
+  .btn { min-width: 0; min-height: 44px; max-width: 100%; white-space: normal; text-align: center; }
+  .btn svg { flex-shrink: 0; }
+  input, textarea, select, .contact-input, .contact-textarea { font-size: 16px; }
+
+  /* Avoid repainting large animated, masked layers during touch scrolling. */
+  .ambient-background { display: none; }
+  .hero-decorations, .hero-visual__glow { display: none; }
+  .float-animation, .float-animation--slow, .float-animation--fast,
+  .mascot-float, .water-animation, .island-showcase__water-glow,
+  .clue-marker__pulse {
+    animation: none;
+  }
+  .animated-mascot .animated-mascot__character {
+    animation: none;
+    will-change: auto;
+  }
+  .animated-mascot__sparkles { display: none; }
+  .hero-btn-secondary, .hero-visual__tag {
+    backdrop-filter: none;
+  }
+
+  /* Show sections immediately; long sections may never reach a 15% threshold. */
+  .reveal, .reveal-left, .reveal-right, .reveal-scale,
+  .hero-content, .hero-visual, .about-preview-grid,
+  .app-notify-box, .app-mascot-promo {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-section { min-height: auto; padding-block: 24px 40px; }
+  .hero-container { gap: 24px; }
+  .hero-visual { order: 1; margin: 0; }
+  .hero-mascot { align-self: center; margin: 20px 0 0; }
+  .hero-badge { letter-spacing: 0; text-align: left; }
+  .hero-badge__icon { flex-shrink: 0; }
+  .hero-actions { margin-bottom: 24px; }
+  .hero-stats { gap: 12px; justify-content: space-around; }
+  .hero-stat-label { font-size: 11px; letter-spacing: 0; }
+
+  /* Speech participates in layout instead of covering nearby controls or text. */
+  .animated-mascot:has(.animated-mascot__bubble) {
+    width: min(240px, 100%);
+    max-width: 100%;
+  }
+  .animated-mascot__bubble {
+    position: relative;
+    inset: auto;
+    transform: none;
+    animation: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 12px 42px 12px 12px;
+    margin-bottom: 18px;
+  }
+  .animated-mascot__bubble-close { top: 4px; right: 4px; width: 32px; height: 32px; }
+  .animated-mascot__bubble + .animated-mascot__btn { max-width: 120px; }
+
+  /* The journey navigation scrolls with the document, leaving room to read. */
+  .demo-experience-tabs { width: 100%; margin-block: 16px; }
+  .demo-experience-tabs button { flex: 1 1 130px; justify-content: center; min-height: 44px; padding: 10px; }
+  .demo-experience-tabs small { white-space: nowrap; }
+  .demo-navbar {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px 8px;
+    padding: 16px 12px;
+    margin-bottom: 24px;
+    backdrop-filter: none;
+    transition: none;
+  }
+  .demo-navbar__brand { min-width: 0; flex-wrap: wrap; gap: 6px; }
+  .demo-navbar__badge { font-size: 10px; padding: 6px 8px; letter-spacing: 0; }
+  .demo-navbar__title { display: none; }
+  .demo-navbar__score-widget { gap: 6px; }
+  .demo-score-chip { padding: 6px 8px; gap: 4px; }
+  .demo-score-chip__label { display: none; }
+  .demo-restart-icon-btn { width: 44px; height: 44px; flex-shrink: 0; }
+  .demo-stepper { grid-column: 1 / -1; min-width: 0; width: 100%; margin: 0; }
+  .demo-stepper__circle { width: 28px; height: 28px; }
+  .demo-stepper__line { margin-inline: 3px; }
+
+  .clue-exploration__topbar, .clue-exploration__bottom-action, .clue-map-panel, .clue-detail-panel,
+  .hypothesis-card, .verification-card { padding: 16px; min-width: 0; }
+  .clue-exploration__layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .clue-exploration__title-wrap { flex-wrap: wrap; gap: 12px; }
+  .clue-exploration__title-wrap > div:has(h2) { flex: 1 1 190px; min-width: 0; }
+  .clue-detail-panel__header { flex-wrap: wrap; gap: 12px; }
+  .clue-detail-panel__badge { white-space: normal; }
+  .clue-detail-panel__title-wrap, .clue-detail-panel__body,
+  .clue-interactive-zone, .clue-text-box { min-width: 0; }
+  .clue-interactive-zone, .clue-text-box { padding: 16px; }
+  .clue-tab { min-width: 0; min-height: 48px; }
+  .clue-marker__bubble { width: 44px; height: 44px; }
+  .strategy-stepper__tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strategy-tab { min-width: 0; min-height: 48px; }
+  .strategy-tab__name { white-space: normal; overflow-wrap: anywhere; line-height: 1.5; }
+  .strategy-content-card__controls { flex-wrap: wrap; }
+  .strategy-content-card__controls button { min-height: 44px; }
+  .terrain-zone-btn, .stake-schematic__part { min-height: 44px; }
+
+  .hypothesis-stage__header, .reconstruction-stage__header,
+  .verification-banner { flex-wrap: wrap; gap: 16px; }
+  .hypothesis-stage__title-group, .reconstruction-stage__title-group { flex-basis: 100%; min-width: 0; }
+  .hypothesis-stage__title-group > div, .reconstruction-stage__title-group > div { min-width: 0; }
+  .hypothesis-progress { flex: 1 1 140px; min-width: 0; text-align: left; }
+  .hypothesis-mascot-wrap, .verification-mascot-wrap { max-width: 100%; }
+  .hypothesis-stage__title, .reconstruction-stage__title, .verification-banner__title { font-size: 22px; }
+  .hypothesis-card__header { flex-wrap: wrap; gap: 8px; }
+  .verification-banner__text { flex: 1 1 160px; min-width: 0; }
+  .verification-card__related-clues, .verification-card__clue-chips { flex-wrap: wrap; }
+  .verification-card__explanation-box { padding: 12px; }
+  .verification-card__title-row { flex-wrap: wrap; gap: 8px; }
+  .reconstruction-stage__meta-pill { max-width: 100%; white-space: normal; flex-wrap: wrap; }
+  .reconstruction-item {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 12px;
+    padding: 16px 12px;
+  }
+  .reconstruction-item__icon-wrap { display: none; }
+  .reconstruction-item__pos { min-width: 0; }
+  .reconstruction-item__content { min-width: 0; }
+  .reconstruction-item__title-row { flex-wrap: wrap; gap: 6px; }
+  .reconstruction-item__title { font-size: 16px; overflow-wrap: anywhere; }
+  .reconstruction-notice { padding: 16px; gap: 10px; }
+
+  .tide-interaction__quick-toggles { flex-wrap: wrap; }
+  .tide-interaction__toggle-btn, .tide-zoom { min-width: 44px; min-height: 44px; }
+  .tide-controls__slider { min-height: 44px; touch-action: pan-y; }
+  .tide-control-panel__heading { flex-wrap: wrap; }
+  .tide-control-panel__heading label { flex: 1 1 150px; }
+  .tide-scene-status { max-width: calc(100% - 68px); }
+  .tide-artwork-scroll, .island-scene-scroll { overscroll-behavior-x: contain; }
+  .island-zoom-btn { min-height: 44px; }
+  .island-edit-bar .btn { min-height: 44px; }
+
+  .explore-timeline__demo-banner { flex-direction: column; align-items: stretch; gap: 12px; padding: 16px; }
+  .explore-timeline__demo-banner .btn { width: 100%; }
+  .app-notify-input { min-width: 0; width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .demo-experience-tabs { flex-direction: column; }
+  .demo-experience-tabs button { flex: auto; }
+  .hypothesis-stage__title-group, .reconstruction-stage__title-group { flex-direction: column; gap: 12px; }
+  .reconstruction-item { grid-template-columns: 36px minmax(0, 1fr); }
+  .reconstruction-item__pos { grid-column: 1; grid-row: 1; }
+  .reconstruction-item__content { grid-column: 1 / -1; grid-row: 2; }
+  .reconstruction-item__actions { grid-column: 2; grid-row: 1; flex-direction: row; justify-content: flex-end; }
+}
+
+/* Match the existing drawer breakpoint, including phones in landscape. */
+@media (max-width: 900px) {
+  .header--scrolled { background: var(--color-parchment-light); backdrop-filter: none; }
+  .header { transition: box-shadow 150ms ease; }
+  .header__container { gap: 12px; }
+  .header__hamburger { width: 44px; height: 44px; flex-shrink: 0; padding: 11px 10px; }
+  .sound-toggle { width: 44px; height: 44px; }
+  .header__backdrop { backdrop-filter: none; visibility: hidden; }
+  .header__backdrop--visible { visibility: visible; }
+  .header__drawer {
+    height: 100dvh;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    overscroll-behavior-y: contain;
+    visibility: hidden;
+    transition: transform 220ms ease, visibility 220ms;
+  }
+  .header__drawer--open { visibility: visible; }
+  .header__drawer-header { gap: 16px; flex-shrink: 0; margin-bottom: 16px; padding-bottom: 16px; }
+  .header__drawer-close { width: 44px; height: 44px; flex-shrink: 0; }
+  .header__drawer-link { min-height: 48px; }
+  .header__drawer-actions { flex-shrink: 0; margin-top: 20px; }
+}

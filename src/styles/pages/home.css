@@ -705,6 +705,12 @@
   .island-features-list { grid-template-columns: 1fr; }
 }
 
+/* Keep the introduction first on phones, including landscape orientation. */
+@media (max-width: 900px) {
+  .hero-content { order: 0; }
+  .hero-visual { order: 1; margin-bottom: 0; }
+}
+
 @media (max-width: 576px) {
   .hero-actions, .demo-cta-actions { flex-direction: column; width: 100%; }
   .hero-actions .btn, .demo-cta-actions .btn { width: 100%; }
@@ -743,11 +749,24 @@
    ------------------------------------------------------------------------- */
 .hero-mascot {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   align-self: flex-end;
   margin-top: 100px;
   margin-right: 16px;
   z-index: 10;
   pointer-events: auto;
+}
+
+.hero-mascot__greeting {
+  max-width: 230px;
+  margin: 12px 0 0;
+  color: var(--color-red-dark);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
 }
 
 /* -------------------------------------------------------------------------
