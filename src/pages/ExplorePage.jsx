@@ -2,16 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Compass,
-  MapPin,
   Clock,
-  Map,
-  BookOpen,
-  Search,
-  Brain,
-  CheckCircle,
-  Puzzle,
   Award,
-  Palmtree,
   Star,
   TrendingUp,
   Zap,
@@ -29,29 +21,15 @@ import {
 } from 'lucide-react';
 import SectionHeader from '../components/common/SectionHeader';
 import IslandShowcase from '../components/explore/IslandShowcase';
+import LearningJourney from '../components/explore/LearningJourney';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 import {
   historicalPeriods,
-  learningJourney,
   islandLevels,
 } from '../data/historicalPeriods';
 import { gamificationFeatures, energySystem } from '../data/gamification';
 import '../styles/pages/explore.css';
-
-// Icon mapping for learning journey steps
-const journeyIconMap = {
-  MapPin,
-  Clock,
-  Map,
-  BookOpen,
-  Search,
-  Brain,
-  CheckCircle,
-  Puzzle,
-  Award,
-  Palmtree,
-};
 
 // Icon mapping for gamification features
 const gamificationIconMap = {
@@ -72,18 +50,6 @@ export default function ExplorePage() {
   const [islandRef, islandRevealed] = useScrollReveal(0.12);
   const [gamifyRef, gamifyRevealed] = useScrollReveal(0.12);
   const [ctaRef, ctaRevealed] = useScrollReveal(0.15);
-
-  // Expanded learning flow steps (track set of step numbers or active step)
-  const [expandedSteps, setExpandedSteps] = useState({});
-  const [hoveredStep, setHoveredStep] = useState(null);
-  const [focusedStep, setFocusedStep] = useState(null);
-
-  const toggleStep = (stepNumber) => {
-    setExpandedSteps((prev) => ({
-      ...prev,
-      [stepNumber]: !prev[stepNumber],
-    }));
-  };
 
   // Selected period state (all open by default or toggleable)
   const [expandedPeriods, setExpandedPeriods] = useState({
@@ -144,7 +110,7 @@ export default function ExplorePage() {
         id="learning-flow"
         ref={flowRef}
         className={`section explore-flow ${flowRevealed ? 'revealed' : ''}`}
-        aria-labelledby="flow-heading"
+        aria-label="Quy trình học tập tương tác"
       >
         <div className="container">
           <SectionHeader
@@ -152,119 +118,7 @@ export default function ExplorePage() {
             subtitle="Hành trình 10 bước biến mỗi sự kiện lịch sử thành một cuộc điều tra hấp dẫn"
           />
 
-          <div className="explore-flow__grid">
-            {learningJourney.map((item) => {
-              const IconComponent = journeyIconMap[item.icon] || MapPin;
-              const isExpanded = hoveredStep === item.step || focusedStep === item.step || !!expandedSteps[item.step];
-
-              return (
-                <article
-                  key={item.step}
-                  onMouseEnter={() => setHoveredStep(item.step)}
-                  onMouseLeave={() => setHoveredStep(null)}
-                  onFocus={() => setFocusedStep(item.step)}
-                  onBlur={(event) => {
-                    if (!event.currentTarget.contains(event.relatedTarget)) {
-                      setFocusedStep(null);
-                    }
-                  }}
-                  className={`explore-step-card card card--historical ${
-                    isExpanded ? 'explore-step-card--expanded' : ''
-                  }`}
-                >
-                  <button
-                    type="button"
-                    className="explore-step-card__header"
-                    onClick={() => toggleStep(item.step)}
-                    aria-expanded={isExpanded}
-                  >
-                    <div className="explore-step-card__indicator">
-                      <span className="explore-step-card__number">
-                        {String(item.step).padStart(2, '0')}
-                      </span>
-                      <div className="explore-step-card__icon" aria-hidden="true">
-                        <IconComponent size={20} />
-                      </div>
-                    </div>
-                    <div className="explore-step-card__title-wrap">
-                      <h3 className="explore-step-card__title">{item.title}</h3>
-                      <p className="explore-step-card__summary">{item.description}</p>
-                    </div>
-                    <div className="explore-step-card__toggle" aria-hidden="true">
-                      {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                    </div>
-                  </button>
-
-                  {isExpanded && (
-                    <div className="explore-step-card__body">
-                      <div className="explore-step-card__detail">
-                        {item.step === 1 && (
-                          <p>
-                            Bắt đầu tại không gian hòn đảo bình yên của bạn. Đây là trung tâm chỉ huy,
-                            nơi hiển thị huy hiệu, tiến độ các triều đại và cổng dịch chuyển tới các màn chơi.
-                          </p>
-                        )}
-                        {item.step === 2 && (
-                          <p>
-                            Chọn niên đại muốn khám phá thông qua trục thời gian biểu diễn trực quan,
-                            từ thời các Vua Hùng đến những chiến thắng vang dội bảo vệ giang sơn.
-                          </p>
-                        )}
-                        {item.step === 3 && (
-                          <p>
-                            Mỗi thời kỳ sở hữu một bản đồ địa lý 2.5D riêng biệt, phản ánh địa hình,
-                            sông núi và các thành trì cổ kính thời bấy giờ.
-                          </p>
-                        )}
-                        {item.step === 4 && (
-                          <p>
-                            Chọn một sự kiện cụ thể (ví dụ: Trận thủy chiến Bạch Đằng 938) để bắt đầu
-                            tìm hiểu bối cảnh địa chính trị và mưu lược quân sự.
-                          </p>
-                        )}
-                        {item.step === 5 && (
-                          <p>
-                            Khám phá mô hình diorama, tương tác với các điểm nóng để tìm đủ 4 Dấu Vết:
-                            thủy triều, bãi cọc gỗ, chiến thuyền Nam Hán và kế nghi binh của Ngô Quyền.
-                          </p>
-                        )}
-                        {item.step === 6 && (
-                          <p>
-                            Kết nối các dữ kiện thu được, trả lời câu hỏi cốt lõi: Tại sao thời điểm
-                            và bãi cọc lại quyết định sự thành bại của toàn bộ chiến dịch?
-                          </p>
-                        )}
-                        {item.step === 7 && (
-                          <p>
-                            Đối chiếu suy luận với dữ liệu sử học chính thống. Nhận phản hồi tức thì
-                            để củng cố kiến thức hoặc điều chỉnh góc nhìn khách quan.
-                          </p>
-                        )}
-                        {item.step === 8 && (
-                          <p>
-                            Kéo thả các mảnh ghép thời gian để tái hiện chính xác trình tự diễn biến:
-                            dụ địch vào bãi cọc khi nước lớn, phản công khi thủy triều rút kiệt.
-                          </p>
-                        )}
-                        {item.step === 9 && (
-                          <p>
-                            Nhận điểm Dấu Việt, điểm kinh nghiệm XP, nâng cấp huân chương lịch sử
-                            và mở khóa các cổ vật độc bản tương ứng với thời kỳ.
-                          </p>
-                        )}
-                        {item.step === 10 && (
-                          <p>
-                            Trở về đảo riêng, sử dụng tài nguyên vừa tích lũy để trồng cây, dựng lầu son,
-                            đặt tượng kỷ niệm và mở rộng vùng đất tri thức của bản thân.
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-          </div>
+          <LearningJourney />
         </div>
       </section>
 

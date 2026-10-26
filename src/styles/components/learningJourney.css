@@ -1,0 +1,119 @@
+.learning-journey {
+  display: grid;
+  grid-template-columns: minmax(280px, .85fr) minmax(0, 1.35fr);
+  gap: 24px;
+  align-items: stretch;
+  isolation: isolate;
+}
+.learning-journey__navigation {
+  padding: 22px 18px 18px;
+  background: #fff9eef5;
+  border: 1px solid #dac19b;
+  border-radius: 20px;
+}
+.learning-journey__intro { padding: 0 10px 18px; }
+.learning-journey__eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--color-gold-dark); }
+.learning-journey__intro p { margin: 6px 0 0; font-size: 12px; line-height: 1.7; color: var(--color-text-muted); }
+.learning-journey__mobile-hint { display: none; }
+.learning-journey__steps { display: grid; gap: 5px; }
+.learning-journey__step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 54px;
+  padding: 9px 12px;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.learning-journey__step:hover { background: #f6ecd9; }
+.learning-journey__step[aria-selected="true"] { color: var(--color-red-dark); background: linear-gradient(110deg, #f2dfb8, #fbf0dc); border-color: #cba365; box-shadow: inset 3px 0 var(--color-red); }
+.learning-journey__number { width: 22px; flex-shrink: 0; color: var(--color-gold-dark); font-size: 13px; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; }
+.learning-journey__icon { display: grid; place-items: center; flex-shrink: 0; width: 33px; height: 33px; color: var(--color-red); background: #923e320a; border-radius: 50%; }
+.learning-journey__step[aria-selected="true"] .learning-journey__icon { background: var(--color-red); color: #fff6e7; }
+.learning-journey__step-title { flex: 1; font-size: 13px; font-weight: 600; line-height: 1.55; }
+.learning-journey__chevron { flex-shrink: 0; opacity: 0; }
+.learning-journey__step[aria-selected="true"] .learning-journey__chevron { opacity: 1; }
+.learning-journey__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 28px 30px 22px;
+  border: 1px solid #d7b582;
+  border-radius: 20px;
+  background: #fffaf1;
+  box-shadow: 0 12px 32px #6e492d0c;
+}
+.learning-journey__panel::before { content: ''; position: absolute; top: 0; left: 28px; right: 28px; height: 3px; background: linear-gradient(90deg, var(--color-red), var(--color-gold)); border-radius: 0 0 4px 4px; }
+.learning-journey__panel-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.learning-journey__counter { white-space: nowrap; font-size: 11px; color: var(--color-text-muted); font-variant-numeric: lining-nums tabular-nums; }
+.learning-journey__counter strong { font-size: 16px; color: var(--color-red); }
+.learning-journey__content { animation: journeyContentReveal .22s ease-out; }
+.learning-journey__copy { min-height: 167px; }
+.learning-journey__copy h3 { display: flex; align-items: center; gap: 12px; min-height: 45px; margin: 0 0 12px; color: var(--color-red-dark); font-family: var(--font-heading); font-size: clamp(21px, 2.2vw, 28px); line-height: 1.5; }
+.learning-journey__copy h3 > span { display: grid; place-items: center; flex-shrink: 0; width: 43px; height: 43px; border: 1px solid #dbc096; border-radius: 13px; background: #f7ebd7; color: var(--color-red); }
+.learning-journey__copy > p { margin: 0; color: var(--color-text-secondary); font-size: 14px; line-height: 1.85; }
+.learning-journey__illustration { position: relative; height: 218px; overflow: hidden; margin: 0; border: 1px solid #ddc59f; border-radius: 13px; background: #f5ead7; }
+.learning-journey__illustration img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.learning-journey__illustration figcaption { position: absolute; bottom: 0; left: 0; right: 0; padding: 23px 16px 12px; color: #fff8e9; font-size: 11px; line-height: 1.65; background: linear-gradient(transparent, #253c32e8); }
+.learning-journey__note { display: flex; align-items: center; gap: 10px; min-height: 61px; padding: 12px 14px; margin: 16px 0 20px; font-size: 12px; line-height: 1.7; color: #79592f; background: #f5ead4; border-radius: 10px; }
+.learning-journey__note svg { flex-shrink: 0; color: var(--color-gold-dark); }
+.learning-journey__footer { margin-top: auto; padding-top: 18px; border-top: 1px solid #ead9bf; }
+.learning-journey__controls { display: flex; gap: 12px; justify-content: space-between; }
+.learning-journey__controls button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 43px; padding: 10px 15px; border: 1px solid #d8bd95; border-radius: 9px; background: transparent; color: var(--color-red); font-size: 12px; font-weight: 600; transition: background-color .18s ease; }
+.learning-journey__controls .learning-journey__next { background: var(--color-red); border-color: var(--color-red); color: #fff8e9; }
+.learning-journey__controls button:hover:not(:disabled) { background: #f0dfbf; }
+.learning-journey__controls .learning-journey__next:hover:not(:disabled) { background: var(--color-red-dark); }
+.learning-journey__controls button:disabled { opacity: .4; cursor: default; }
+.learning-journey__demo { display: flex; align-items: center; justify-content: center; gap: 7px; width: fit-content; margin: 14px auto 0; color: var(--color-text-secondary); font-size: 11px; text-underline-offset: 4px; }
+.learning-journey__demo:hover { color: var(--color-red); text-decoration: underline; }
+.learning-journey :is(button, a, [role="tabpanel"]):focus-visible { outline: 3px solid var(--color-gold-dark); outline-offset: 3px; }
+@keyframes journeyContentReveal { from { opacity: .25; } to { opacity: 1; } }
+@media (max-width: 1000px) and (min-width: 761px) {
+  .learning-journey { gap: 16px; grid-template-columns: minmax(250px, .9fr) minmax(0, 1.1fr); }
+  .learning-journey__navigation { padding: 20px 10px 14px; }
+  .learning-journey__step { gap: 8px; padding-inline: 9px; }
+  .learning-journey__panel { padding-inline: 22px; }
+  .learning-journey__copy { min-height: 210px; }
+}
+@media (max-width: 760px) {
+  .learning-journey { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .learning-journey__navigation { padding: 20px 14px 14px; }
+  .learning-journey__desktop-hint { display: none; }
+  .learning-journey__mobile-hint { display: inline; }
+  .learning-journey__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+  .learning-journey__step { gap: 8px; padding: 9px 8px; min-height: 65px; }
+  .learning-journey__step-title { font-size: 12px; }
+  .learning-journey__number { width: 19px; font-size: 11px; }
+  .learning-journey__icon { width: 28px; height: 28px; }
+  .learning-journey__icon svg { width: 17px; }
+  .learning-journey__chevron { display: none; }
+  .learning-journey__panel { padding: 23px 20px 20px; }
+  .learning-journey__copy { min-height: 175px; }
+  .learning-journey__copy h3 { font-size: 23px; }
+}
+@media (max-width: 420px) {
+  .learning-journey__navigation { padding-inline: 8px; }
+  .learning-journey__intro { padding-inline: 8px; }
+  .learning-journey__step { gap: 6px; padding-inline: 6px; }
+  .learning-journey__icon { width: 25px; height: 25px; }
+  .learning-journey__panel { padding-inline: 16px; }
+  .learning-journey__copy { min-height: 214px; }
+  .learning-journey__copy h3 { min-height: 62px; font-size: 21px; gap: 10px; }
+  .learning-journey__copy h3 > span { width: 36px; height: 36px; }
+  .learning-journey__copy > p { font-size: 13px; }
+  .learning-journey__illustration { height: 190px; }
+  .learning-journey__note { min-height: 80px; }
+  .learning-journey__controls { gap: 8px; }
+  .learning-journey__controls button { font-size: 11px; padding-inline: 10px; }
+  .learning-journey__panel-top .learning-journey__eyebrow { font-size: 9px; letter-spacing: .07em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .learning-journey__content { animation: none; }
+  .learning-journey * { transition: none; }
+}
