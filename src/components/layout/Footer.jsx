@@ -45,7 +45,7 @@ export default function Footer() {
 
             <div className="footer__socials" aria-label="Mạng xã hội">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/dauviet05"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__social-link"
@@ -145,7 +145,7 @@ export default function Footer() {
                 </svg>
                 <div>
                   <strong>Địa điểm phát triển:</strong><br />
-                  <span>Trường Đại học FPT, Khu CNC Hòa Lạc, Hà Nội</span>
+                  <span>Trường Đại học FPT Cần Thơ, số 600, đường Nguyễn Văn Cừ nối dài, phường An Bình, thành phố Cần Thơ, Việt Nam, 900000.</span>
                 </div>
               </li>
               <li className="footer__contact-item">

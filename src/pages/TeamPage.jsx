@@ -94,7 +94,7 @@ export default function TeamPage() {
             <p className="team-intro__text">
               Dấu Việt được sinh ra từ niềm tin chung: Lịch sử Việt Nam xứng đáng
               được kể lại bằng ngôn ngữ của thời đại số. Chúng tôi là nhóm sinh viên
-              tại Đại học FPT, kết nối bởi tình yêu với di sản văn hóa cha ông và mong
+              tại Đại học FPT Cần Thơ, kết nối bởi tình yêu với di sản văn hóa cha ông và mong
               muốn đem đến trải nghiệm học tập truyền cảm hứng, vượt ra khỏi những trang
               sách giáo khoa đơn thuần.
             </p>

@@ -120,8 +120,8 @@ export default function ContactPage() {
   const socialLinks = [
     {
       name: 'Facebook',
-      url: 'https://facebook.com',
-      handle: 'facebook.com/dauviet.history',
+      url: 'https://www.facebook.com/dauviet05',
+      handle: 'facebook.com/dauviet05',
       icon: (
         <svg viewBox="0 0 24 24" className="contact-social-svg" fill="currentColor">
           <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.19 22 12z" />
@@ -218,7 +218,7 @@ export default function ContactPage() {
                 <div>
                   <h2 className="contact-card__title">Địa điểm làm việc</h2>
                   <p className="contact-card__text">
-                    Trường Đại học FPT Hà Nội, Khu Công nghệ cao Hòa Lạc, Km29 Đại lộ Thăng Long, Hà Nội.
+                    Trường Đại học FPT Cần Thơ, số 600, đường Nguyễn Văn Cừ nối dài, phường An Bình, thành phố Cần Thơ, Việt Nam, 900000.
                   </p>
                   <div className="contact-card__meta">
                     <Clock size={15} aria-hidden="true" />
@@ -268,10 +268,10 @@ export default function ContactPage() {
                   </div>
                   <div className="contact-map-pin">
                     <MapPin size={28} className="contact-map-pin-icon" />
-                    <span className="contact-map-label">Đại học FPT Hòa Lạc</span>
+                    <span className="contact-map-label">Đại học FPT Cần Thơ</span>
                   </div>
                   <div className="contact-map-coords">
-                    21°00'46.3"N 105°31'40.9"E
+                    An Bình · Cần Thơ · 900000
                   </div>
                 </div>
                 <p className="contact-map-caption">
