@@ -37,19 +37,19 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(110deg, transparent 28%, #fff8e538 47%, #fff9e84d 50%, #fff8e51f 55%, transparent 72%);
-  transform: translateX(-110%);
+  background: linear-gradient(110deg, transparent 25%, #9c70230a 36%, #fff3c933 43%, #fffbed99 50%, #fff3c94d 55%, #f3d99014 63%, transparent 75%);
+  transform: translate3d(-115%, 0, 0);
   opacity: 0;
-  animation: heritage-surface-sheen 26s ease-in-out infinite;
+  animation: heritage-surface-sheen 20s ease-in-out -1s infinite;
 }
 
-.footer .heritage-surface__shine::before { animation-delay: -11s; animation-duration: 32s; }
+.footer .heritage-surface__shine::before { animation-delay: -5s; animation-duration: 24s; }
 .header__drawer:not(.header__drawer--open) .heritage-surface__shine::before { animation-play-state: paused; }
 
 @keyframes heritage-surface-sheen {
-  0%, 12% { transform: translateX(-110%); opacity: 0; }
-  22%, 42% { opacity: .65; }
-  54%, 100% { transform: translateX(110%); opacity: 0; }
+  0% { transform: translate3d(-115%, 0, 0); opacity: 0; }
+  8%, 42% { opacity: .55; }
+  58%, 100% { transform: translate3d(115%, 0, 0); opacity: 0; }
 }
 
 /* The existing background control also governs the gold surface highlight. */

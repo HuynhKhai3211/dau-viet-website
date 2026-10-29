@@ -40,18 +40,6 @@
 .header__nav-link--active { background: #fff2d44d; border-color: #ba944649; }
 .header__nav-link--active::after { content: ''; position: absolute; bottom: 5px; left: 25%; right: 25%; height: 1px; background: #a07937; }
 .header__actions { flex-shrink: 0; }
-.header__ornament {
-  position: absolute;
-  bottom: -9px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding-inline: 12px;
-  color: #b48d49;
-  background: #ead09b;
-  font-size: 16px;
-  line-height: 15px;
-  pointer-events: none;
-}
 .sound-toggle {
   display: inline-flex;
   align-items: center;
@@ -142,7 +130,6 @@
   .header__logo { gap: 9px; }
   .header__logo .brand-lockup__seal { width: 46px; height: 46px; }
   .header__logo .brand-lockup__name { font-size: 22px; gap: 5px; }
-  .header__ornament { bottom: -7px; font-size: 13px; line-height: 12px; }
 }
 @media (max-width: 360px) {
   .header__container { padding-inline: 12px; gap: 8px; }

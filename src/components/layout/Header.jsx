@@ -109,7 +109,6 @@ export default function Header() {
           <span className="header__hamburger-bar" /><span className="header__hamburger-bar" /><span className="header__hamburger-bar" />
         </button>
       </div>
-      <span className="header__ornament" aria-hidden="true">◇</span>
       <div className={`header__backdrop ${isMobileMenuOpen ? 'header__backdrop--visible' : ''}`}
         onClick={() => setIsMobileMenuOpen(false)} aria-hidden="true" />
       <aside ref={drawerRef} id="mobile-nav-drawer"
