@@ -1,7 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import '../../styles/components/header.css';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowUpRight, Compass, X } from 'lucide-react';
+import BrandLockup from '../common/BrandLockup';
 import SoundToggle from '../common/SoundToggle';
+import '../../styles/components/header.css';
+
+const navLinks = [
+  { label: 'Giới thiệu', path: '/about' },
+  { label: 'Cách hoạt động', path: '/explore#learning-flow' },
+  { label: '4 thời kỳ', path: '/explore#historical-timeline' },
+  { label: 'Khám phá', path: '/explore' },
+  { label: 'Đảo di sản', path: '/explore#personal-island' },
+  { label: 'Tính năng', path: '/#tinh-nang' },
+  { label: 'FAQ', path: '/#faq', faq: true },
+];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,79 +22,58 @@ export default function Header() {
   const drawerRef = useRef(null);
   const toggleRef = useRef(null);
 
-  // Navigation link list
-  const navLinks = [
-    { label: 'Trang chủ', path: '/' },
-    { label: 'Giới thiệu', path: '/about' },
-    { label: 'Khám phá', path: '/explore' },
-    { label: 'Trải nghiệm', path: '/demo' },
-    { label: 'Đội ngũ', path: '/team' },
-    { label: 'Liên hệ', path: '/contact' },
-  ];
+  const isActive = ({ path }) => {
+    const [pathname, hash = ''] = path.split('#');
+    return location.pathname === pathname && location.hash.slice(1) === hash;
+  };
 
-  // Close mobile drawer when route changes
+  useEffect(() => { setIsMobileMenuOpen(false); }, [location.key]);
+
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  // Track window scroll for elevation styling
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 15);
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Restore the exact scroll position after closing the mobile drawer (also on iOS).
   useEffect(() => {
     if (!isMobileMenuOpen) return;
-
     const scrollY = window.scrollY;
-    const openedPath = window.location.pathname;
+    const openedAddress = window.location.pathname + window.location.hash;
     const body = document.body;
     const previous = { position: body.style.position, top: body.style.top, width: body.style.width, overflow: body.style.overflow };
     Object.assign(body.style, { position: 'fixed', top: `-${scrollY}px`, width: '100%', overflow: 'hidden' });
     drawerRef.current?.querySelector('button')?.focus({ preventScroll: true });
-
     return () => {
       Object.assign(body.style, previous);
-      window.scrollTo({ top: window.location.pathname === openedPath ? scrollY : 0, behavior: 'instant' });
+      const address = window.location.pathname + window.location.hash;
+      window.scrollTo({ top: address === openedAddress ? scrollY : 0, behavior: 'instant' });
       toggleRef.current?.focus({ preventScroll: true });
     };
   }, [isMobileMenuOpen]);
 
-  // A hidden mobile drawer must never leave desktop scrolling locked after rotation.
   useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 901px)');
+    const desktop = window.matchMedia('(min-width: 1201px)');
     const closeOnDesktop = () => { if (desktop.matches) setIsMobileMenuOpen(false); };
     desktop.addEventListener('change', closeOnDesktop);
     return () => desktop.removeEventListener('change', closeOnDesktop);
   }, []);
 
-  // Keep keyboard focus inside the open drawer.
   useEffect(() => {
+    if (!isMobileMenuOpen) return;
     const handleKeyDown = (event) => {
-      if (!isMobileMenuOpen) return;
-      if (event.key === 'Escape') {
-        setIsMobileMenuOpen(false);
-      }
+      if (event.key === 'Escape') setIsMobileMenuOpen(false);
       if (event.key === 'Tab') {
         const controls = drawerRef.current?.querySelectorAll('a[href], button');
         if (!controls?.length) return;
-        const first = controls[0];
-        const last = controls[controls.length - 1];
+        const first = controls[0], last = controls[controls.length - 1];
         if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
+          event.preventDefault(); last.focus();
         } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
+          event.preventDefault(); first.focus();
         }
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isMobileMenuOpen]);
@@ -90,129 +81,66 @@ export default function Header() {
   return (
     <header className={`header heritage-surface ${isScrolled ? 'header--scrolled' : ''}`}>
       <span className="heritage-surface__shine" aria-hidden="true" />
+      <div className="header__motto">
+        <span>GÌN GIỮ CỘI NGUỒN</span><span className="header__motto-dot" aria-hidden="true">◆</span><span>ĐÁNH THỨC DI SẢN</span>
+      </div>
       <div className="header__container">
-        {/* Official Dấu Việt Logo */}
-        <Link to="/" className="header__logo" aria-label="Dấu Việt - Trang chủ">
-          <div className="header__logo-img-wrap">
-            <img
-              src="/images/branding/logo-dau-viet.jpg"
-              alt="Logo Dấu Việt"
-              className="header__logo-img"
-            />
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
+        <BrandLockup className="header__logo" />
         <nav className="header__nav" aria-label="Điều hướng chính">
           <ul className="header__nav-list">
-            {navLinks.map((link) => (
-              <li key={link.path} className="header__nav-item">
-                <NavLink
-                  to={link.path}
-                  end={link.path === '/'}
-                  className={({ isActive }) =>
-                    `header__nav-link ${isActive ? 'header__nav-link--active' : ''}`
-                  }
-                >
+            {navLinks.map(link => (
+              <li key={link.path}>
+                <Link to={link.path}
+                  className={`header__nav-link ${isActive(link) ? 'header__nav-link--active' : ''} ${link.faq ? 'header__nav-link--faq' : ''}`}
+                  aria-current={isActive(link) ? 'location' : undefined}>
                   {link.label}
-                </NavLink>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
-
-        {/* CTA Action Button */}
         <SoundToggle />
         <div className="header__actions">
-          <Link to="/demo" className="btn btn--primary header__cta">
-            Trải nghiệm ngay
+          <Link to="/demo" className="heritage-ticket header__cta">
+            <Compass size={18} aria-hidden="true" /><span>Nhận vé trải nghiệm</span><ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
-
-        {/* Mobile Hamburger Toggle Button */}
-        <button
-          ref={toggleRef}
-          type="button"
+        <button ref={toggleRef} type="button"
           className={`header__hamburger ${isMobileMenuOpen ? 'header__hamburger--open' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? 'Đóng menu' : 'Mở menu điều hướng'}
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="mobile-nav-drawer"
-        >
-          <span className="header__hamburger-bar" />
-          <span className="header__hamburger-bar" />
-          <span className="header__hamburger-bar" />
+          aria-expanded={isMobileMenuOpen} aria-controls="mobile-nav-drawer">
+          <span className="header__hamburger-bar" /><span className="header__hamburger-bar" /><span className="header__hamburger-bar" />
         </button>
       </div>
-
-      {/* Mobile Backdrop Overlay */}
-      <div
-        className={`header__backdrop ${isMobileMenuOpen ? 'header__backdrop--visible' : ''}`}
-        onClick={() => setIsMobileMenuOpen(false)}
-        aria-hidden="true"
-      />
-
-      {/* Mobile Drawer */}
-      <aside
-        ref={drawerRef}
-        id="mobile-nav-drawer"
+      <span className="header__ornament" aria-hidden="true">◇</span>
+      <div className={`header__backdrop ${isMobileMenuOpen ? 'header__backdrop--visible' : ''}`}
+        onClick={() => setIsMobileMenuOpen(false)} aria-hidden="true" />
+      <aside ref={drawerRef} id="mobile-nav-drawer"
         className={`header__drawer heritage-surface ${isMobileMenuOpen ? 'header__drawer--open' : ''}`}
-        aria-label="Menu điều hướng di động"
-        aria-hidden={!isMobileMenuOpen}
-        inert={!isMobileMenuOpen}
-      >
+        role={isMobileMenuOpen ? 'dialog' : undefined}
+        aria-modal={isMobileMenuOpen ? true : undefined}
+        aria-label="Menu điều hướng di động" aria-hidden={!isMobileMenuOpen} inert={!isMobileMenuOpen}>
         <span className="heritage-surface__shine" aria-hidden="true" />
         <div className="header__drawer-header">
-          <Link
-            to="/"
-            className="header__logo"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Dấu Việt - Trang chủ"
-          >
-            <div className="header__logo-img-wrap">
-              <img
-                src="/images/branding/logo-dau-viet.jpg"
-                alt="Logo Dấu Việt"
-                className="header__logo-img"
-              />
-            </div>
-          </Link>
-          <button
-            type="button"
-            className="header__drawer-close"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Đóng menu"
-          >
-            ✕
-          </button>
+          <BrandLockup onClick={() => setIsMobileMenuOpen(false)} />
+          <button type="button" className="header__drawer-close" onClick={() => setIsMobileMenuOpen(false)} aria-label="Đóng menu"><X size={20} /></button>
         </div>
-
         <ul className="header__drawer-nav">
-          {navLinks.map((link) => (
+          {navLinks.map(link => (
             <li key={link.path}>
-              <NavLink
-                to={link.path}
-                end={link.path === '/'}
-                className={({ isActive }) =>
-                  `header__drawer-link ${isActive ? 'header__drawer-link--active' : ''}`
-                }
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span>{link.label}</span>
-                <span aria-hidden="true">›</span>
-              </NavLink>
+              <Link to={link.path} className={`header__drawer-link ${isActive(link) ? 'header__drawer-link--active' : ''}`}
+                aria-current={isActive(link) ? 'location' : undefined} onClick={() => setIsMobileMenuOpen(false)}>
+                <span>{link.label}</span><ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
             </li>
           ))}
         </ul>
-
         <div className="header__drawer-actions">
-          <Link
-            to="/demo"
-            className="btn btn--primary header__drawer-cta"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Trải nghiệm ngay
+          <Link to="/demo" className="heritage-ticket header__drawer-cta" onClick={() => setIsMobileMenuOpen(false)}>
+            <Compass size={18} aria-hidden="true" /><span>Nhận vé trải nghiệm</span><ArrowUpRight size={16} aria-hidden="true" />
           </Link>
+          <Link to="/contact" className="header__drawer-contact" onClick={() => setIsMobileMenuOpen(false)}>Liên hệ với Dấu Việt <ArrowUpRight size={15} aria-hidden="true" /></Link>
         </div>
       </aside>
     </header>

@@ -160,25 +160,3 @@
   .reconstruction-item__content { grid-column: 1 / -1; grid-row: 2; }
   .reconstruction-item__actions { grid-column: 2; grid-row: 1; flex-direction: row; justify-content: flex-end; }
 }
-
-/* Match the existing drawer breakpoint, including phones in landscape. */
-@media (max-width: 900px) {
-  .header { transition: box-shadow 150ms ease; }
-  .header__container { gap: 12px; }
-  .header__hamburger { width: 44px; height: 44px; flex-shrink: 0; padding: 11px 10px; }
-  .sound-toggle { width: 44px; height: 44px; }
-  .header__backdrop { backdrop-filter: none; visibility: hidden; }
-  .header__backdrop--visible { visibility: visible; }
-  .header__drawer {
-    height: 100dvh;
-    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
-    overscroll-behavior-y: contain;
-    visibility: hidden;
-    transition: transform 220ms ease, visibility 220ms;
-  }
-  .header__drawer--open { visibility: visible; }
-  .header__drawer-header { gap: 16px; flex-shrink: 0; margin-bottom: 16px; padding-bottom: 16px; }
-  .header__drawer-close { width: 44px; height: 44px; flex-shrink: 0; }
-  .header__drawer-link { min-height: 48px; }
-  .header__drawer-actions { flex-shrink: 0; margin-top: 20px; }
-}

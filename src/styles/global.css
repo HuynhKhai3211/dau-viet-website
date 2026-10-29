@@ -3,6 +3,7 @@
    ================================ */
 @import './fonts.css';
 @import './components/heritageSurface.css';
+@import './components/brandLockup.css';
 
 *, *::before, *::after {
   margin: 0;
@@ -12,6 +13,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 16px);
   -webkit-text-size-adjust: 100%;
   font-synthesis: none;
 }
@@ -91,6 +93,7 @@ input, textarea, select {
 }
 
 button:focus-visible,
+summary:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,

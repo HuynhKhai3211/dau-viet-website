@@ -154,11 +154,11 @@ try {
   await tap('.header__drawer-close');
   assert.ok(Math.abs(await evaluate('scrollY') - previousScroll) < 2, 'Closing menu preserves scroll');
   await tap('.header__hamburger');
-  await tap('.header__drawer-link[href="/contact"]');
+  await tap('.header__drawer-contact[href="/contact"]');
   await waitFor('location.pathname === "/contact" && document.body.style.position !== "fixed"');
   assert.equal(await evaluate('scrollY'), 0, 'Menu navigation starts at top');
   await tap('.header__hamburger');
-  await viewport(1024);
+  await viewport(1280);
   await waitFor('document.body.style.position !== "fixed"');
   assert.equal(await evaluate('document.querySelector(".header__hamburger").getAttribute("aria-expanded")'), 'false');
 

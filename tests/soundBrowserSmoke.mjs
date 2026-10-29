@@ -89,8 +89,9 @@ try {
   await trustedClick('.sound-toggle');
   assert.equal(await evaluate('document.querySelector(".sound-toggle").getAttribute("aria-pressed")'), 'false');
   assert.equal(await voiceCount(), 0, 'Muting does not play a sound');
+  await evaluate('window.__soundReloadPending = true');
   await send('Page.reload');
-  await waitFor('!!document.querySelector(".sound-toggle")');
+  await waitFor('!window.__soundReloadPending && !!document.querySelector(".sound-toggle")');
   assert.equal(await evaluate('document.querySelector(".sound-toggle").getAttribute("aria-pressed")'), 'false', 'Mute preference survives reload');
   await trustedClick('.sound-toggle');
   await waitFor('window.__audioAudit.voices.length === 2');
@@ -103,7 +104,7 @@ try {
   assert.equal(await voiceCount(), beforeReward + 5, 'Reward has five softly voiced notes');
   assert.ok(await evaluate('window.__audioAudit.stops > 0'), 'Mute stops scheduled notes immediately');
   const mutedCount = await voiceCount();
-  await trustedClick('.header__nav a[href="/demo"]');
+  await trustedClick('.header__cta[href="/demo"]');
   assert.equal(await voiceCount(), mutedCount, 'Navigation remains silent when muted');
   await trustedClick('.sound-toggle');
   await trustedClick('.demo-intro button.btn--primary');

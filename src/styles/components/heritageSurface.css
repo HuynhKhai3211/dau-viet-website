@@ -17,7 +17,8 @@
   background-color: #dcb978;
   background-image:
     radial-gradient(ellipse at 50% 0%, #fff8e64d, transparent 65%),
-    repeating-linear-gradient(125deg, #fff5d914 0 1px, #76502005 1px 2px, transparent 2px 7px),
+    repeating-linear-gradient(128deg, #fff5d92e 0 1px, transparent 1px 43px),
+    repeating-linear-gradient(52deg, #fff5d914 0 1px, transparent 1px 86px),
     linear-gradient(115deg, #dcb978 0%, #f8e3b8 48%, #dcb978 100%);
 }
 
