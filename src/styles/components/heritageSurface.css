@@ -1,0 +1,69 @@
+/* Shared gold finish for navigation and footer, including the mobile drawer. */
+.heritage-surface {
+  --color-parchment: #f8e3b8;
+  --color-parchment-light: #fff0d0;
+  --color-parchment-dark: #dcb978;
+  --color-text-primary: #48321f;
+  --color-text-secondary: #5e452e;
+  --color-text-muted: #6a5036;
+  --color-red: #684525;
+  --color-red-dark: #48321f;
+  --color-red-light: #795632;
+  --color-gold: #98703b;
+  --color-gold-light: #dcb978;
+  --color-gold-dark: #795632;
+  isolation: isolate;
+  color: var(--color-text-primary);
+  background-color: #dcb978;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, #fff8e64d, transparent 65%),
+    repeating-linear-gradient(125deg, #fff5d914 0 1px, #76502005 1px 2px, transparent 2px 7px),
+    linear-gradient(115deg, #dcb978 0%, #f8e3b8 48%, #dcb978 100%);
+}
+
+/* Only the highlight clips its contents; fixed navigation stays unrestricted. */
+.heritage-surface__shine {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.heritage-surface__shine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 28%, #fff8e538 47%, #fff9e84d 50%, #fff8e51f 55%, transparent 72%);
+  transform: translateX(-110%);
+  opacity: 0;
+  animation: heritage-surface-sheen 26s ease-in-out infinite;
+}
+
+.footer .heritage-surface__shine::before { animation-delay: -11s; animation-duration: 32s; }
+.header__drawer:not(.header__drawer--open) .heritage-surface__shine::before { animation-play-state: paused; }
+
+@keyframes heritage-surface-sheen {
+  0%, 12% { transform: translateX(-110%); opacity: 0; }
+  22%, 42% { opacity: .65; }
+  54%, 100% { transform: translateX(110%); opacity: 0; }
+}
+
+/* The existing background control also governs the gold surface highlight. */
+.page-layout:has(.ambient-background[hidden]) .heritage-surface__shine::before {
+  animation: none;
+  opacity: 0;
+}
+
+.page-layout:has(.ambient-background--paused) .heritage-surface__shine::before {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heritage-surface__shine { display: none; }
+  .heritage-surface__shine::before { animation: none; }
+}
+
+@media print { .heritage-surface__shine { display: none; } }

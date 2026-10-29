@@ -163,7 +163,6 @@
 
 /* Match the existing drawer breakpoint, including phones in landscape. */
 @media (max-width: 900px) {
-  .header--scrolled { background: var(--color-parchment-light); backdrop-filter: none; }
   .header { transition: box-shadow 150ms ease; }
   .header__container { gap: 12px; }
   .header__hamburger { width: 44px; height: 44px; flex-shrink: 0; padding: 11px 10px; }

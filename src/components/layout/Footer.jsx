@@ -22,7 +22,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="footer">
+    <footer className="footer heritage-surface">
+      <span className="heritage-surface__shine" aria-hidden="true" />
       <div className="footer__container">
         <div className="footer__grid">
           {/* Column 1: Brand & Description & Socials */}

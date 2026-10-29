@@ -2,6 +2,7 @@
    Global Styles
    ================================ */
 @import './fonts.css';
+@import './components/heritageSurface.css';
 
 *, *::before, *::after {
   margin: 0;

@@ -88,7 +88,8 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+    <header className={`header heritage-surface ${isScrolled ? 'header--scrolled' : ''}`}>
+      <span className="heritage-surface__shine" aria-hidden="true" />
       <div className="header__container">
         {/* Official Dấu Việt Logo */}
         <Link to="/" className="header__logo" aria-label="Dấu Việt - Trang chủ">
@@ -155,11 +156,12 @@ export default function Header() {
       <aside
         ref={drawerRef}
         id="mobile-nav-drawer"
-        className={`header__drawer ${isMobileMenuOpen ? 'header__drawer--open' : ''}`}
+        className={`header__drawer heritage-surface ${isMobileMenuOpen ? 'header__drawer--open' : ''}`}
         aria-label="Menu điều hướng di động"
         aria-hidden={!isMobileMenuOpen}
         inert={!isMobileMenuOpen}
       >
+        <span className="heritage-surface__shine" aria-hidden="true" />
         <div className="header__drawer-header">
           <Link
             to="/"

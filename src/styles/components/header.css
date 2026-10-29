@@ -8,16 +8,14 @@
   left: 0;
   right: 0;
   height: var(--header-height, 72px);
-  background-color: var(--color-parchment-light, #FFF9EE);
-  border-bottom: 1px solid rgba(205, 164, 103, 0.35);
+  border-bottom: 1px solid #98703b66;
+  box-shadow: inset 0 -1px 0 #fff3d54d;
   z-index: var(--z-header, 100);
-  transition: all var(--transition-base, 250ms ease);
+  transition: box-shadow var(--transition-base, 250ms ease);
 }
 
 .header--scrolled {
-  box-shadow: 0 4px 20px rgba(56, 43, 37, 0.08), 0 1px 3px rgba(205, 164, 103, 0.2);
-  background-color: rgba(255, 249, 238, 0.96);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px #51351f1a, inset 0 -1px 0 #fff3d54d;
 }
 
 .header__container {
@@ -64,6 +62,7 @@
   object-fit: contain;
   display: block;
   border-radius: 4px;
+  mix-blend-mode: multiply;
 }
 
 .header__logo:hover .header__logo-img {
@@ -155,6 +154,21 @@
   border-radius: var(--radius-full, 9999px);
 }
 
+.header .header__cta,
+.header .header__drawer-cta {
+  border: 1px solid #98703b99;
+  background: linear-gradient(135deg, #fff0d0, #e5c48b);
+  color: var(--color-text-primary);
+  box-shadow: 0 3px 10px #6845251f, inset 0 1px 0 #fff8e6;
+}
+
+.header .header__cta:hover,
+.header .header__drawer-cta:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-gold-dark);
+  box-shadow: 0 5px 16px #6845252e, inset 0 1px 0 #fff8e6;
+}
+
 /* ================================
    Hamburger Toggle Button
    ================================ */
@@ -227,7 +241,6 @@
   right: 0;
   bottom: 0;
   width: min(320px, 85vw);
-  background-color: var(--color-parchment-light, #FFF9EE);
   box-shadow: -4px 0 24px rgba(56, 43, 37, 0.25);
   border-left: 1px solid var(--color-gold-light, #E0C08A);
   z-index: calc(var(--z-header, 100) + 20);
@@ -304,7 +317,7 @@
 }
 
 .header__drawer-link--active {
-  background-color: rgba(146, 62, 50, 0.08);
+  background-color: #68452512;
   color: var(--color-red, #923E32);
   font-weight: 700;
   border-left-color: var(--color-red, #923E32);
