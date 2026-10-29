@@ -8,24 +8,10 @@
   transition: box-shadow 200ms ease;
 }
 .header--scrolled { box-shadow: 0 5px 22px #51351f24, inset 0 -2px 0 #fff3d566; }
-.header__motto {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  height: 28px;
-  border-bottom: 1px solid #b48a3b1a;
-  color: #604831;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .14em;
-}
-.header__motto::before, .header__motto::after { content: ''; width: 70px; height: 1px; background: #ad843a40; }
-.header__motto-dot { color: #ad843a; font-size: 5px; }
 .header__container {
   width: 100%;
   max-width: 1700px;
-  height: calc(100% - 28px);
+  height: 100%;
   margin-inline: auto;
   padding-inline: 32px;
   display: flex;
@@ -53,7 +39,6 @@
 .header__nav-link:hover { color: #48321f; background-color: #fff5dc38; }
 .header__nav-link--active { background: #fff2d44d; border-color: #ba944649; }
 .header__nav-link--active::after { content: ''; position: absolute; bottom: 5px; left: 25%; right: 25%; height: 1px; background: #a07937; }
-.header__nav-link--faq { background: #fff1d34d; border-color: #eddbac80; box-shadow: 0 3px 6px #8d663a0d, inset 0 1px 0 #fff7e140; }
 .header__actions { flex-shrink: 0; }
 .header__ornament {
   position: absolute;
@@ -125,7 +110,6 @@
 .header__drawer .brand-lockup { gap: 9px; }
 .header__drawer .brand-lockup__seal { width: 47px; height: 47px; }
 .header__drawer .brand-lockup__name { font-size: 21px; gap: 5px; }
-.header__drawer .brand-lockup__tagline { font-size: 8px; letter-spacing: .14em; }
 .header__drawer-close { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border: 1px solid #a8814159; border-radius: 8px; color: #48321f; }
 .header__drawer-close:hover { background: #fff4dc80; }
 .header__drawer-nav { display: flex; flex-direction: column; gap: 4px; }
@@ -133,14 +117,12 @@
 .header__drawer-link:hover, .header__drawer-link--active { background: #fff1d359; color: #48321f; box-shadow: inset 3px 0 0 #986b34; }
 .header__drawer-actions { padding-top: 24px; margin-top: 24px; border-top: 1px solid #aa85433d; }
 .header__drawer-cta { width: 100%; padding-inline: 14px; font-size: 14px; }
-.header__drawer-contact { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 44px; margin-top: 16px; color: #5e452e; font-size: 13px; }
 
 @media (min-width: 1201px) and (max-width: 1500px) {
   .header__container { gap: 12px; padding-inline: 24px; }
   .header__logo { gap: 10px; }
   .header__logo .brand-lockup__seal { width: 54px; height: 54px; }
   .header__logo .brand-lockup__name { font-size: 25px; gap: 7px; }
-  .header__logo .brand-lockup__tagline { font-size: 9px; }
   .header__nav-list { gap: 0; }
   .header__nav-link { font-size: 12.5px; padding-inline: 7px; }
   .header__cta { min-height: 54px; padding: 14px 18px; gap: 9px; font-size: 13px; }
@@ -149,28 +131,23 @@
 @media (max-width: 1200px) {
   .header__nav, .header__actions { display: none; }
   .header__container { padding-inline: 24px; gap: 14px; }
-  .header__motto { height: 26px; }
-  .header__container { height: calc(100% - 26px); }
+  .header__container { height: 100%; }
   .header__hamburger { display: flex; }
   .sound-toggle { margin-left: auto; width: 44px; height: 44px; }
   .header__logo .brand-lockup__seal { width: 54px; height: 54px; }
   .header__logo .brand-lockup__name { font-size: 25px; }
 }
 @media (max-width: 600px) {
-  .header__container { padding-inline: 16px; gap: 10px; height: calc(100% - 22px); }
-  .header__motto { height: 22px; gap: 10px; font-size: 7px; letter-spacing: .1em; }
-  .header__motto::before, .header__motto::after { display: none; }
+  .header__container { padding-inline: 16px; gap: 10px; height: 100%; }
   .header__logo { gap: 9px; }
   .header__logo .brand-lockup__seal { width: 46px; height: 46px; }
   .header__logo .brand-lockup__name { font-size: 22px; gap: 5px; }
-  .header__logo .brand-lockup__tagline { font-size: 8px; letter-spacing: .13em; }
   .header__ornament { bottom: -7px; font-size: 13px; line-height: 12px; }
 }
 @media (max-width: 360px) {
   .header__container { padding-inline: 12px; gap: 8px; }
   .header__logo .brand-lockup__seal { width: 40px; height: 40px; }
   .header__logo .brand-lockup__name { font-size: 20px; }
-  .header__logo .brand-lockup__tagline { font-size: 7px; }
   .header__hamburger, .sound-toggle { width: 40px; height: 44px; }
   .header__drawer { padding: 16px 12px; }
 }

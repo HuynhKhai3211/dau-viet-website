@@ -8,7 +8,6 @@ export default function BrandLockup({ className = '', onClick }) {
       </span>
       <span className="brand-lockup__copy">
         <span className="brand-lockup__name">DẤU VIỆT <span aria-hidden="true">◆</span></span>
-        <span className="brand-lockup__tagline">CHẠM VÀO QUÁ KHỨ</span>
       </span>
     </Link>
   );

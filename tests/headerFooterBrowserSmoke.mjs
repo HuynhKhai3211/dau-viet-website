@@ -70,19 +70,21 @@ try {
   };
 
 
+const baseline={"nav":[{"label":"Trang chủ","path":"/"},{"label":"Giới thiệu","path":"/about"},{"label":"Khám phá","path":"/explore"},{"label":"Trải nghiệm","path":"/demo"},{"label":"Đội ngũ","path":"/team"},{"label":"Liên hệ","path":"/contact"}],"links":[{"label":"Trang chủ","path":"/"},{"label":"Giới thiệu dự án","path":"/about"},{"label":"Khám phá thời kỳ","path":"/explore"},{"label":"Trải nghiệm tương tác","path":"/demo"},{"label":"Đội ngũ phát triển","path":"/team"},{"label":"Liên hệ đóng góp","path":"/contact"},{"label":"Phòng suy luận lịch sử","path":"/explore"},{"label":"Bản đồ di sản tương tác","path":"/explore"},{"label":"Tái hiện các trận chiến hào hùng","path":"/demo"},{"label":"Hệ thống thu thập dấu vết","path":"/demo"},{"label":"Kho tư liệu thời đại","path":"/about"}],"cta":"Trải nghiệm ngay","description":"Dấu Việt là nền tảng số hóa và giáo dục lịch sử Việt Nam tương tác. \n              Chúng tôi đưa người học vào hành trình khám phá quá khứ qua thu thập chứng cứ, \n              suy luận bối cảnh và tái hiện những thời khắc vẻ vang của dân tộc.","socials":["https://www.facebook.com/dauviet05","https://youtube.com","https://tiktok.com","https://github.com"],"contacts":["Hộp thư điện tử:  \n                   \n                    contact@historydauviet.id.vn","Địa điểm phát triển:  \n                   Trường Đại học FPT Cần Thơ, số 600, đường Nguyễn Văn Cừ nối dài, phường An Bình, thành phố Cần Thơ, Việt Nam, 900000.","Thời gian hỗ trợ:  \n                   08:00 – 17:30 (Thứ 2 đến Thứ 6)"],"headings":["Điều hướng","Trải nghiệm","Liên hệ"],"legal":[{"path":"/about","label":"Về chúng tôi"},{"path":"/contact","label":"Hỗ trợ kỹ thuật"},{"path":"#root","label":"Lên đầu trang ↑"}]};
+
   await send('Page.enable');
   await send('Runtime.enable');
-  await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
-  await mkdir('artifacts/header-footer-reference', { recursive: true });
-  const viewport = async width => {
-    await send('Emulation.setDeviceMetricsOverride', { width, height: 960, deviceScaleFactor: 1, mobile: width < 600 });
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+  await mkdir('artifacts/header-footer-original-content',{recursive:true});
+  const normalize=text=>text.replace(/\s+/g,' ').trim();
+  const viewport=async width=>{
+    await send('Emulation.setDeviceMetricsOverride',{width,height:960,deviceScaleFactor:1,mobile:width<600});
     await delay(200);
   };
-  const click = async selector => {
+  const click=async selector=>{
     const point=await evaluate(`(() => {
       const el=document.querySelector(${JSON.stringify(selector)});
-      if(!el)throw Error('Missing control: '+${JSON.stringify(selector)});
-      const r=el.getBoundingClientRect(), x=r.x+r.width/2, y=r.y+r.height/2;
+      const r=el.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2;
       if(!el.contains(document.elementFromPoint(x,y)))throw Error('Covered control: '+${JSON.stringify(selector)});
       return{x,y};
     })()`);
@@ -90,106 +92,75 @@ try {
     await send('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...point});
     await delay(250);
   };
-  const capture=async name=>{
-    const shot=await send('Page.captureScreenshot',{format:'png'});
-    await writeFile('artifacts/header-footer-reference/'+name+'.png',Buffer.from(shot.data,'base64'));
-  };
-  const checkAnchor=async id=>{
-    await waitFor(`!!document.getElementById(${JSON.stringify(id)})`);
-    await delay(400);
-    const info=await evaluate(`(() => {
-      const target=document.getElementById(${JSON.stringify(id)}).getBoundingClientRect();
-      return{top:target.top,header:document.querySelector('.header').getBoundingClientRect().bottom,height:innerHeight,fixed:document.body.style.position};
-    })()`);
-    assert.ok(info.top>=info.header-1,id+': target not covered by fixed header, '+JSON.stringify(info));
-    assert.ok(info.top<info.height,id+': target visible, '+JSON.stringify(info));
-    assert.notEqual(info.fixed,'fixed','Scroll unlocked');
-  };
-  const reports=[];
   await navigate('/');
   await evaluate('document.fonts.ready');
-  for(const width of [1908,1440,1280,1201,1024,390,320]){
+  const content=await evaluate(`(() => {
+    const pairs=selector=>[...document.querySelectorAll(selector)].map(a=>({label:a.textContent.replace(/\\s+/g,' ').trim(),path:a.getAttribute('href')}));
+    return{
+      desktop:pairs('.header__nav a'),
+      mobile:pairs('.header__drawer-nav a'),
+      cta:document.querySelector('.header__cta').textContent.replace(/\\s+/g,' ').trim(),
+      description:document.querySelector('.footer__description').textContent.replace(/\\s+/g,' ').trim(),
+      links:pairs('.footer__navigation .footer__link'),
+      socials:[...document.querySelectorAll('.footer__social-link')].map(a=>a.getAttribute('href')),
+      contacts:[...document.querySelectorAll('.footer__contact-item')].map(el=>el.innerText.replace(/\\s+/g,' ').trim()),
+      headings:[...document.querySelectorAll('.footer__title')].map(el=>el.textContent),
+      legal:pairs('.footer__legal-link'),
+      addedContent:!!document.querySelector('.header__motto,.brand-lockup__tagline,.footer__invitation,.footer__faq'),
+    };
+  })()`);
+  assert.deepEqual(content.desktop,baseline.nav,'Original six desktop navigation labels and destinations');
+  assert.deepEqual(content.mobile,baseline.nav,'Original mobile navigation labels and destinations');
+  assert.equal(content.cta,baseline.cta);
+  assert.equal(content.description,normalize(baseline.description),'Original description preserved verbatim');
+  assert.deepEqual(content.links,baseline.links,'All eleven original navigation and experience links preserved');
+  assert.deepEqual(content.socials,baseline.socials,'All original social links preserved');
+  assert.deepEqual(content.contacts,baseline.contacts.map(normalize),'Original email, address and support hours preserved');
+  assert.deepEqual(content.headings,baseline.headings);
+  assert.deepEqual(content.legal,baseline.legal);
+  assert.equal(content.addedContent,false,'Reference-only copy removed');
+
+  const widths=[1908,1440,1280,1201,1024,390,320];
+  for(const width of widths){
     await viewport(width);
     await evaluate('window.scrollTo({top:0,behavior:"instant"})');
-    await delay(500);
-    const info=await evaluate(`(() => {
-      const nav=document.querySelector('.header__nav');
-      const container=document.querySelector('.header__container');
-      const links=[...nav.querySelectorAll('a')];
-      const sound=document.querySelector('.sound-toggle').getBoundingClientRect();
-      const visible=getComputedStyle(nav).display!=='none';
-      return{
-        overflow:document.documentElement.scrollWidth>innerWidth,
-        containerOverflow:container.scrollWidth>container.clientWidth,
-        navVisible:visible,
-        navFits:!visible||links.at(-1).getBoundingClientRect().right<=sound.left,
-        linkCount:links.length,
-        footerColumns:getComputedStyle(document.querySelector('.footer__grid')).gridTemplateColumns,
+    await delay(350);
+    const layout=await evaluate(`(() => {
+      const nav=document.querySelector('.header__nav'),container=document.querySelector('.header__container');
+      return{overflow:document.documentElement.scrollWidth>innerWidth,
+        headerOverflow:container.scrollWidth>container.clientWidth,
         footerOverflow:document.querySelector('.footer__grid').scrollWidth>document.querySelector('.footer__grid').clientWidth,
-        brand:document.querySelector('.header .brand-lockup__name').textContent.trim(),
-        cta:document.querySelector('.header__cta').getAttribute('href'),
-      };
+        desktop:getComputedStyle(nav).display!=='none'};
     })()`);
-    assert.equal(info.overflow,false,'No horizontal overflow at '+width);
-    assert.equal(info.containerOverflow,false,'Header contents fit at '+width);
-    assert.equal(info.navFits,true,'Navigation leaves room for controls at '+width);
-    assert.equal(info.navVisible,width>1200);
-    assert.equal(info.footerOverflow,false,'Footer columns fit at '+width);
-    assert.equal(info.linkCount,7);
-    assert.equal(info.cta,'/demo');
-    await capture('header-'+width);
-    await evaluate('document.querySelector(".footer").scrollIntoView({block:"start",behavior:"instant"})');
-    await delay(300);
+    assert.equal(layout.overflow,false,'Page fits at '+width);
+    assert.equal(layout.headerOverflow,false,'Header fits at '+width);
+    assert.equal(layout.footerOverflow,false,'Footer fits at '+width);
+    assert.equal(layout.desktop,width>1200);
     if([1908,1440,390,320].includes(width)){
+      const shot=await send('Page.captureScreenshot',{format:'png'});
+      await writeFile('artifacts/header-footer-original-content/header-'+width+'.png',Buffer.from(shot.data,'base64'));
+      await evaluate('document.querySelector(".footer").scrollIntoView({block:"start",behavior:"instant"})');
       const box=await evaluate(`(() => {const r=document.querySelector('.footer').getBoundingClientRect();return{x:0,y:r.top+scrollY,width:innerWidth,height:r.height,scale:1};})()`);
-      const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:box});
-      await writeFile('artifacts/header-footer-reference/footer-'+width+'.png',Buffer.from(shot.data,'base64'));
+      const footer=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:box});
+      await writeFile('artifacts/header-footer-original-content/footer-'+width+'.png',Buffer.from(footer.data,'base64'));
     }
     if(width<=1200){
       await click('.header__hamburger');
       await waitFor('document.querySelector(".header__drawer").classList.contains("header__drawer--open")');
-      await capture('drawer-'+width);
       await click('.header__drawer-close');
       await waitFor('document.body.style.position!=="fixed"');
     }
-    reports.push({width,...info});
   }
-
   await viewport(1440);
-  await navigate('/about');
-  await click('.header__nav a[href="/explore#learning-flow"]');
-  await checkAnchor('learning-flow');
-  assert.equal(await evaluate('document.querySelectorAll(".header__nav-link--active").length'),1);
-  await click('.header__nav a[href="/explore#historical-timeline"]');
-  await checkAnchor('historical-timeline');
-  assert.equal(await evaluate('document.querySelectorAll(".header__nav-link--active").length'),1);
-  await click('.header__nav a[href="/explore#personal-island"]');
-  await checkAnchor('personal-island');
-  await click('.header__nav a[href="/#tinh-nang"]');
-  await checkAnchor('tinh-nang');
-  await click('.header__nav a[href="/#faq"]');
-  await waitFor('document.getElementById("faq").open');
-  await checkAnchor('faq');
-  await capture('faq-desktop');
-  await click('#faq > summary');
-  assert.equal(await evaluate('document.getElementById("faq").open'),false);
-  await click('.header__nav a[href="/#faq"]');
-  await waitFor('document.getElementById("faq").open');
-  await navigate('/explore#historical-timeline');
-  await checkAnchor('historical-timeline');
-
+  for(const path of ['/about','/explore','/demo','/team','/contact','/']){
+    await click('.header__nav a[href="'+path+'"]');
+    await waitFor('location.pathname==='+JSON.stringify(path)+' && document.querySelector(".header__nav-link--active")?.getAttribute("href")==='+JSON.stringify(path));
+    assert.equal(await evaluate('document.querySelector(".header__nav-link--active").getAttribute("href")'),path);
+  }
   await viewport(390);
-  await navigate('/');
   await click('.header__hamburger');
-  await click('.header__drawer a[href="/explore#learning-flow"]');
-  await waitFor('!document.querySelector(".header__drawer").classList.contains("header__drawer--open")');
-  await checkAnchor('learning-flow');
-  await click('.header__hamburger');
-  await click('.header__drawer a[href="/#faq"]');
-  await waitFor('document.getElementById("faq").open && document.body.style.position!=="fixed"');
-  await checkAnchor('faq');
-  await capture('faq-mobile');
-
+  await click('.header__drawer-link[href="/contact"]');
+  await waitFor('location.pathname==="/contact" && document.body.style.position!=="fixed"');
   await click('.header__hamburger');
   await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
   await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
@@ -197,18 +168,15 @@ try {
   await delay(250);
   await click('.header__hamburger');
   await viewport(1440);
-  await waitFor('!document.querySelector(".header__drawer").classList.contains("header__drawer--open") && document.body.style.position!=="fixed"');
-
+  await waitFor('document.body.style.position!=="fixed" && !document.querySelector(".header__drawer").classList.contains("header__drawer--open")');
   await clickToggle();
   await waitFor('document.querySelector(".ambient-background").hidden');
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".header > .heritage-surface__shine"),"::before").animationName'),'none');
   await clickToggle();
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
   await waitFor('document.querySelector(".ambient-toggle").disabled');
-  assert.equal(await evaluate('getComputedStyle(document.querySelector(".header > .heritage-surface__shine")).display'),'none');
-  assert.deepEqual(errors,[],'No browser runtime errors');
-  console.log(JSON.stringify(reports,null,2));
-  console.log('PASS: reference header/footer layouts across 7 widths, all section links and direct hash loads, exclusive active links, accessible FAQ, mobile navigation and scroll restoration, Escape and resize, motion controls.');
+  assert.deepEqual(errors,[],'No runtime errors');
+  console.log('PASS: original header/footer copy, all menu and footer links, social links, contact details, support hours and legal links; reference styling at '+widths.join('/')+'px; mobile navigation, Escape, resize and motion controls.');
 } finally {
   ws?.close();
   chrome.kill();

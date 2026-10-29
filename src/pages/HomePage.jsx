@@ -213,7 +213,7 @@ function CoreFeaturesSection() {
   const [featuresRef, isRevealed] = useScrollReveal(0.1);
 
   return (
-    <section id="tinh-nang" className="section features-section" ref={featuresRef}>
+    <section className="section features-section" ref={featuresRef}>
       <div className="container">
         <SectionHeader
           title="Tính năng cốt lõi"

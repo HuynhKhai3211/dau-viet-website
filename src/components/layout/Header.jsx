@@ -6,13 +6,12 @@ import SoundToggle from '../common/SoundToggle';
 import '../../styles/components/header.css';
 
 const navLinks = [
+  { label: 'Trang chủ', path: '/' },
   { label: 'Giới thiệu', path: '/about' },
-  { label: 'Cách hoạt động', path: '/explore#learning-flow' },
-  { label: '4 thời kỳ', path: '/explore#historical-timeline' },
   { label: 'Khám phá', path: '/explore' },
-  { label: 'Đảo di sản', path: '/explore#personal-island' },
-  { label: 'Tính năng', path: '/#tinh-nang' },
-  { label: 'FAQ', path: '/#faq', faq: true },
+  { label: 'Trải nghiệm', path: '/demo' },
+  { label: 'Đội ngũ', path: '/team' },
+  { label: 'Liên hệ', path: '/contact' },
 ];
 
 export default function Header() {
@@ -81,9 +80,6 @@ export default function Header() {
   return (
     <header className={`header heritage-surface ${isScrolled ? 'header--scrolled' : ''}`}>
       <span className="heritage-surface__shine" aria-hidden="true" />
-      <div className="header__motto">
-        <span>GÌN GIỮ CỘI NGUỒN</span><span className="header__motto-dot" aria-hidden="true">◆</span><span>ĐÁNH THỨC DI SẢN</span>
-      </div>
       <div className="header__container">
         <BrandLockup className="header__logo" />
         <nav className="header__nav" aria-label="Điều hướng chính">
@@ -91,7 +87,7 @@ export default function Header() {
             {navLinks.map(link => (
               <li key={link.path}>
                 <Link to={link.path}
-                  className={`header__nav-link ${isActive(link) ? 'header__nav-link--active' : ''} ${link.faq ? 'header__nav-link--faq' : ''}`}
+                  className={`header__nav-link ${isActive(link) ? 'header__nav-link--active' : ''}`}
                   aria-current={isActive(link) ? 'location' : undefined}>
                   {link.label}
                 </Link>
@@ -102,7 +98,7 @@ export default function Header() {
         <SoundToggle />
         <div className="header__actions">
           <Link to="/demo" className="heritage-ticket header__cta">
-            <Compass size={18} aria-hidden="true" /><span>Nhận vé trải nghiệm</span><ArrowUpRight size={17} aria-hidden="true" />
+            <Compass size={18} aria-hidden="true" /><span>Trải nghiệm ngay</span><ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
         <button ref={toggleRef} type="button"
@@ -138,9 +134,8 @@ export default function Header() {
         </ul>
         <div className="header__drawer-actions">
           <Link to="/demo" className="heritage-ticket header__drawer-cta" onClick={() => setIsMobileMenuOpen(false)}>
-            <Compass size={18} aria-hidden="true" /><span>Nhận vé trải nghiệm</span><ArrowUpRight size={16} aria-hidden="true" />
+            <Compass size={18} aria-hidden="true" /><span>Trải nghiệm ngay</span><ArrowUpRight size={16} aria-hidden="true" />
           </Link>
-          <Link to="/contact" className="header__drawer-contact" onClick={() => setIsMobileMenuOpen(false)}>Liên hệ với Dấu Việt <ArrowUpRight size={15} aria-hidden="true" /></Link>
         </div>
       </aside>
     </header>
