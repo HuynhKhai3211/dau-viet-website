@@ -15,6 +15,11 @@ import AnimatedMascot from '../components/common/AnimatedMascot';
 import IslandShowcase from '../components/explore/IslandShowcase';
 import '../styles/pages/home.css';
 
+// Vite watches this optional asset, including when it is first added.
+const homeBackground = Object.values(import.meta.glob(
+  '/public/images/backgrounds/heritage-background.{jpg,jpeg,png,webp}',
+  { eager: true, query: '?url', import: 'default' },
+))[0];
 
 // Icon dictionary for data-driven icons
 const iconDictionary = {
@@ -565,6 +570,11 @@ function AppDownloadSection() {
 export default function HomePage() {
   return (
     <div className="home-page">
+      <div
+        className="home-backdrop"
+        aria-hidden="true"
+        style={{ '--heritage-landscape': homeBackground ? `url("${homeBackground}")` : 'none' }}
+      />
       <HeroSection />
       <AboutPreviewSection />
       <CoreFeaturesSection />

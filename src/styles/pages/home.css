@@ -7,9 +7,57 @@
    0. SHARED & BASE STYLES
    ------------------------------------------------------------------------- */
 .home-page {
+  --color-parchment: #f3ddb2;
+  --color-parchment-light: #fff3da;
+  --color-parchment-dark: #dcb978;
+  --color-surface: #fff3dd;
+  --color-text-primary: #48321f;
+  --color-text-secondary: #604831;
+  --color-text-muted: #70583e;
+  --color-red: #79502e;
+  --color-red-dark: #58391f;
+  --color-red-light: #926b40;
+  --color-gold: #b58a49;
+  --color-gold-light: #dcb978;
+  --color-gold-dark: #886331;
   position: relative;
+  isolation: isolate;
   overflow-x: hidden;
-  background-color: var(--color-parchment);
+  background: transparent;
+}
+
+/* The supplied landscape remains still while translucent sections scroll. */
+.home-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #f8e3b8;
+  background-image:
+    radial-gradient(ellipse at 48% 36%, #fff5de70, transparent 68%),
+    repeating-linear-gradient(125deg, #fff7de0c 0 1px, #8d693205 1px 2px, transparent 2px 8px),
+    linear-gradient(115deg, #dcb97866, #f8e3b833 46%, #d8b06d55),
+    var(--heritage-landscape, none),
+    linear-gradient(130deg, #dcb978, #f8e3b8 48%, #e6c68c 78%, #dcb978);
+  background-position: center;
+  background-size: cover;
+}
+
+.home-page > .section {
+  background-color: #f8e3b833;
+}
+
+.home-page > .section--alt {
+  background-color: #fff4df9c;
+}
+
+.home-page > .demo-cta-section {
+  background: radial-gradient(ellipse at 50% 0%, #bd945833, transparent 70%), linear-gradient(135deg, #493321, #2c2119);
+}
+
+@media print {
+  .home-backdrop { display: none; }
+  .home-page { background: #fff; }
 }
 
 .section-eyebrow {
@@ -24,10 +72,7 @@
 .hero-section {
   position: relative; min-height: calc(100vh - var(--header-height));
   display: flex; align-items: center; padding: var(--space-4xl) 0;
-  background: 
-    radial-gradient(ellipse at 80% 30%, rgba(205, 164, 103, 0.22) 0%, transparent 60%),
-    radial-gradient(ellipse at 15% 85%, rgba(146, 62, 50, 0.12) 0%, transparent 50%),
-    linear-gradient(180deg, var(--color-parchment-light) 0%, var(--color-parchment) 100%);
+  background: radial-gradient(ellipse at 35% 42%, #fff5df80, transparent 68%);
   overflow: hidden;
 }
 
@@ -36,7 +81,7 @@
 }
 
 .hero-ornament {
-  position: absolute; color: var(--color-gold); opacity: 0.65;
+  position: absolute; color: var(--color-gold); opacity: 0.2;
   filter: drop-shadow(0 2px 6px rgba(205, 164, 103, 0.35));
 }
 .hero-ornament--1 { top: 12%; left: 8%; }

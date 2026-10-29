@@ -17,10 +17,10 @@ export default function PageLayout() {
     <div className="page-layout">
       <Header />
       <main className="main-content">
-        <AmbientBackground />
         <Outlet />
       </main>
       <Footer />
+      <AmbientBackground />
     </div>
   );
 }

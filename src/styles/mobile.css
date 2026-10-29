@@ -12,7 +12,6 @@
   input, textarea, select, .contact-input, .contact-textarea { font-size: 16px; }
 
   /* Avoid repainting large animated, masked layers during touch scrolling. */
-  .ambient-background { display: none; }
   .hero-decorations, .hero-visual__glow { display: none; }
   .float-animation, .float-animation--slow, .float-animation--fast,
   .mascot-float, .water-animation, .island-showcase__water-glow,
