@@ -13,14 +13,14 @@ const particles = Array.from({ length: 42 }, (_, index) => {
     id: index,
     leaf,
     style: {
-      [side]: `${1 + ((index * 17) % 15)}%`,
-      '--particle-size': `${leaf ? 16 + (index * 7) % 11 : 2 + index % 3}px`,
+      [side]: `${0.5 + ((index * 17) % 5)}%`,
+      '--particle-size': `${leaf ? 8 + (index * 7) % 5 : 2 + index % 3}px`,
       '--particle-duration': `${leaf ? 30 + (index * 7) % 19 : 23 + (index * 11) % 21}s`,
       '--particle-delay': `${-((index * 13) % 47)}s`,
       '--particle-drift': `${(side === 'left' ? 1 : -1) * (12 + (index * 7) % 28)}px`,
       '--particle-turn': `${(side === 'left' ? 1 : -1) * (100 + (index * 23) % 180)}deg`,
       '--particle-angle': `${(index * 47) % 360}deg`,
-      '--particle-opacity': leaf ? 0.48 + (index % 4) * 0.06 : 0.34 + (index % 4) * 0.06,
+      '--particle-opacity': leaf ? 0.26 + (index % 4) * 0.03 : 0.34 + (index % 4) * 0.06,
       '--particle-color': index % 2 === 0 ? '#80572f' : '#a57832',
     },
   };
