@@ -65,57 +65,12 @@
 /* ================================
    2. Team Intro
    ================================ */
-.team-intro {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
 
-.team-intro.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-.team-intro__card {
-  padding: var(--space-2xl) var(--space-3xl);
-  text-align: center;
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-md);
-  position: relative;
-}
 
-.team-intro__icon-badge {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-full);
-  background: rgba(205, 164, 103, 0.2);
-  border: 1.5px solid var(--color-gold);
-  color: var(--color-red);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--space-lg);
-}
 
-.team-intro__headline {
-  font-size: var(--text-2xl);
-  color: var(--color-red-dark);
-  margin-bottom: var(--space-md);
-}
 
-.team-intro__text {
-  font-size: var(--text-base);
-  line-height: 1.85;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-md);
-}
 
-.team-intro__subtext {
-  font-size: var(--text-sm);
-  line-height: 1.7;
-  color: var(--color-text-secondary);
-  margin-bottom: 0;
-}
 
 /* ================================
    3. Org Chart
@@ -374,9 +329,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .team-intro__card {
-    padding: var(--space-xl) var(--space-2xl);
-  }
 }
 
 @media (max-width: 768px) {
@@ -388,9 +340,6 @@
     grid-template-columns: 1fr;
   }
 
-  .team-intro__card {
-    padding: var(--space-lg);
-  }
 
   .team-cta {
     padding: var(--space-2xl) var(--space-md);

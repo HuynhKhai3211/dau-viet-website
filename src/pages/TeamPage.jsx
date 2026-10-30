@@ -3,7 +3,6 @@ import {
   Users,
   ArrowRight,
   Sparkles,
-  HeartHandshake,
   Compass,
   IdCard,
 } from 'lucide-react';
@@ -32,7 +31,6 @@ const avatarGradients = [
 
 export default function TeamPage() {
   const [heroRef, heroRevealed] = useScrollReveal(0.1);
-  const [introRef, introRevealed] = useScrollReveal(0.12);
   const [gridRef, gridRevealed] = useScrollReveal(0.08);
   const [ctaRef, ctaRevealed] = useScrollReveal(0.15);
 
@@ -57,41 +55,6 @@ export default function TeamPage() {
           </p>
         </div>
       </section>
-
-      {/* 2. Team Intro Paragraph */}
-      <section
-        ref={introRef}
-        className={`section team-intro ${introRevealed ? 'revealed' : ''}`}
-        aria-labelledby="team-intro-title"
-      >
-        <div className="container container--narrow">
-          <div className="team-intro__card card card--historical">
-            <div className="team-intro__icon-badge" aria-hidden="true">
-              <HeartHandshake size={28} />
-            </div>
-            <h2 id="team-intro-title" className="team-intro__headline">
-              Tâm huyết vì một nền sử học sống động
-            </h2>
-            <p className="team-intro__text">
-              Dấu Việt được sinh ra từ niềm tin chung: Lịch sử Việt Nam xứng đáng
-              được kể lại bằng ngôn ngữ của thời đại số. Chúng tôi là nhóm sinh viên
-              tại Đại học FPT Cần Thơ, kết nối bởi tình yêu với di sản văn hóa cha ông và mong
-              muốn đem đến trải nghiệm học tập truyền cảm hứng, vượt ra khỏi những trang
-              sách giáo khoa đơn thuần.
-            </p>
-            <p className="team-intro__subtext">
-              Mỗi thành viên phụ trách một vai trò chuyên biệt – từ điều hành chiến lược,
-              nghiên cứu và phát triển nội dung lịch sử, thiết kế sản phẩm UI/UX, quản lý
-              công nghệ, truyền thông marketing đến hỗ trợ ngôn ngữ song ngữ.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Decorative Divider */}
-      <div className="divider" role="presentation">
-        <span className="divider__icon">❖</span>
-      </div>
 
       {/* 4. Team Member Cards Grid */}
       <section
