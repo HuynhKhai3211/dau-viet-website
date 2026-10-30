@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Clock, Map, Search, Brain, Puzzle, Palmtree, MapPin, BookOpen, CheckCircle,
   Award, Star, TrendingUp, Zap, Flame, Snowflake, Gift, Palette, Smartphone,
-  ArrowRight, ChevronRight, Play, Sparkles, Compass, Shield, Check, Bell,
+  ArrowRight, ChevronRight, Play, Sparkles, Compass, Check, Bell,
   Anchor, Waves, Info, Trophy
 } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -81,20 +81,6 @@ function HeroSection() {
         </div>
 
         <div className={`hero-visual ${isHeroRevealed ? 'revealed' : ''}`}>
-          <div className="hero-visual__frame">
-            <div className="hero-visual__glow" />
-            <img
-              src="/images/historical/historical-diorama.png"
-              alt="Mô hình sa bàn 3D Khởi nghĩa Bà Triệu năm 248 - Dấu Việt"
-              className="hero-visual__image"
-              loading="eager"
-            />
-            <div className="hero-visual__overlay">
-              <div className="hero-visual__tag hero-visual__tag--top"><Shield size={16} /><span>Mô hình sa bàn 3D tương tác</span></div>
-              <div className="hero-visual__tag hero-visual__tag--bottom"><Compass size={16} /><span>Khởi nghĩa Bà Triệu – Năm 248</span></div>
-            </div>
-          </div>
-
           {/* Official animated mascot — companion */}
           <div className="hero-mascot">
             <AnimatedMascot
