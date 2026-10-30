@@ -6,42 +6,7 @@
 /* -------------------------------------------------------------------------
    0. SHARED & BASE STYLES
    ------------------------------------------------------------------------- */
-.home-page {
-  --color-parchment: #f3ddb2;
-  --color-parchment-light: #fff3da;
-  --color-parchment-dark: #dcb978;
-  --color-surface: #fff3dd;
-  --color-text-primary: #48321f;
-  --color-text-secondary: #604831;
-  --color-text-muted: #70583e;
-  --color-red: #79502e;
-  --color-red-dark: #58391f;
-  --color-red-light: #926b40;
-  --color-gold: #b58a49;
-  --color-gold-light: #dcb978;
-  --color-gold-dark: #886331;
-  position: relative;
-  isolation: isolate;
-  overflow-x: hidden;
-  background: transparent;
-}
-
-/* The supplied landscape remains still while translucent sections scroll. */
-.home-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-color: #f8e3b8;
-  background-image:
-    radial-gradient(ellipse at 48% 36%, #fff5de70, transparent 68%),
-    repeating-linear-gradient(125deg, #fff7de0c 0 1px, #8d693205 1px 2px, transparent 2px 8px),
-    linear-gradient(115deg, #dcb97866, #f8e3b833 46%, #d8b06d55),
-    var(--heritage-landscape, none),
-    linear-gradient(130deg, #dcb978, #f8e3b8 48%, #e6c68c 78%, #dcb978);
-  background-position: center;
-  background-size: cover;
-}
+.home-page { position: relative; overflow-x: hidden; background: transparent; }
 
 .home-page > .section {
   background-color: #f8e3b833;

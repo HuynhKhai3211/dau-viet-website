@@ -92,11 +92,11 @@ try {
         overflowing: document.documentElement.scrollWidth > innerWidth,
         durationCount: new Set(particles.map(p => getComputedStyle(p).animationDuration)).size,
         buttonInside: button.left >= 0 && button.right <= innerWidth && button.bottom <= innerHeight && button.height >= 44,
-        background: getComputedStyle(document.querySelector('.home-backdrop')).backgroundImage,
+        background: getComputedStyle(document.querySelector('.heritage-backdrop')).backgroundImage,
       };
     })()`);
-    assert.equal(scene.count, 28);
-    assert.equal(scene.visibleCount, width < 600 ? 20 : 28);
+    assert.equal(scene.count, 42);
+    assert.equal(scene.visibleCount, width < 600 ? 30 : 42);
     assert.equal(scene.fixed, 'fixed');
     assert.equal(scene.interactive, false);
     assert.equal(scene.overflowing, false);
@@ -125,7 +125,7 @@ try {
   await navigate('/about');
   assert.equal(await evaluate('document.querySelector(".ambient-toggle").getAttribute("aria-pressed")'), 'false');
   await clickToggle();
-  await waitFor('document.querySelectorAll(".ambient-particle").length === 28');
+  await waitFor('document.querySelectorAll(".ambient-particle").length === 42');
 
   // Keyboard access uses the native button activation behavior.
   await evaluate('document.querySelector(".ambient-toggle").focus()');
@@ -151,7 +151,7 @@ try {
   await waitFor('document.querySelector(".ambient-toggle").disabled');
   await screenshot('reduced-motion-320');
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
-  await waitFor('!document.querySelector(".ambient-toggle").disabled && document.querySelectorAll(".ambient-particle").length === 28');
+  await waitFor('!document.querySelector(".ambient-toggle").disabled && document.querySelectorAll(".ambient-particle").length === 42');
 
   // Storage restrictions must not prevent toggling or break rendering.
   await evaluate(`window.originalSetItem = Storage.prototype.setItem; Storage.prototype.setItem = function () { throw new DOMException('Blocked', 'SecurityError'); }`);
@@ -168,8 +168,15 @@ try {
     const r = link.getBoundingClientRect();
     return link.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2));
   })()`));
+  for (const route of ['/', '/about', '/explore', '/demo', '/team', '/contact', '/not-found']) {
+    await navigate(route);
+    await waitFor('!!document.querySelector(".heritage-backdrop")');
+    assert.ok(await evaluate(`getComputedStyle(document.querySelector('.heritage-backdrop')).backgroundImage.includes('heritage-background')`), route + ' shares the landscape');
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('.main-content > div:not(.heritage-backdrop)')).backgroundColor`), 'rgba(0, 0, 0, 0)', route + ' reveals the landscape');
+    assert.equal(await evaluate(`document.querySelectorAll('.ambient-particle--leaf').length`), 28);
+  }
   assert.deepEqual(errors, [], 'No runtime errors');
-  console.log('PASS: 28 desktop / 20 mobile particles; 1440/390/320 layouts; fixed overlay; pointer passthrough; real CSS motion; toggle by pointer and keyboard; persisted preferences; route navigation; tab visibility pause; live reduced-motion changes; blocked storage fallback.');
+  console.log('PASS: 42 desktop / 30 mobile particles; 1440/390/320 layouts; fixed overlay; pointer passthrough; real CSS motion; toggle by pointer and keyboard; persisted preferences; route navigation; tab visibility pause; live reduced-motion changes; blocked storage fallback.');
 } finally {
   ws?.close();
   chrome.kill();

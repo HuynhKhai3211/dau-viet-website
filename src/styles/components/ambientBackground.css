@@ -16,8 +16,8 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000b 8%, transparent 24%, transparent 76%, #000b 92%, #000 100%);
-  mask-image: linear-gradient(90deg, #000 0%, #000b 8%, transparent 24%, transparent 76%, #000b 92%, #000 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000e 10%, transparent 24%, transparent 76%, #000e 90%, #000 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000e 10%, transparent 24%, transparent 76%, #000e 90%, #000 100%);
 }
 
 .ambient-sunlight {
@@ -112,11 +112,11 @@
 
 @media (max-width: 767px) {
   .ambient-background__viewport {
-    -webkit-mask-image: linear-gradient(90deg, #0009, transparent 17%, transparent 83%, #0009);
-    mask-image: linear-gradient(90deg, #0009, transparent 17%, transparent 83%, #0009);
+    -webkit-mask-image: linear-gradient(90deg, #000, #000b 7%, transparent 22%, transparent 78%, #000b 93%, #000);
+    mask-image: linear-gradient(90deg, #000, #000b 7%, transparent 22%, transparent 78%, #000b 93%, #000);
   }
-  .ambient-particle:nth-child(n + 21) { display: none; }
-  .ambient-particle--leaf { width: calc(var(--particle-size) * .75); height: var(--particle-size); }
+  .ambient-particle:nth-child(n + 31) { display: none; }
+  .ambient-particle--leaf { width: calc(var(--particle-size) * .85); height: var(--particle-size); }
   .ambient-sunlight--right { display: none; }
   .ambient-toggle { right: max(12px, env(safe-area-inset-right)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); gap: 6px; padding: 10px 12px; }
 }
