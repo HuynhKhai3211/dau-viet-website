@@ -6,7 +6,6 @@ import {
   HeartHandshake,
   Compass,
   IdCard,
-  Crown,
 } from 'lucide-react';
 import SectionHeader from '../components/common/SectionHeader';
 import useScrollReveal from '../hooks/useScrollReveal';
@@ -31,30 +30,12 @@ const avatarGradients = [
   'linear-gradient(135deg, #7B5EA7, #573D7A)', // Purple — CLO
 ];
 
-// Org chart sub-member card
-function OrgSubCard({ member, gradient }) {
-  return (
-    <div className="org-sub-card">
-      <div className="org-sub-card__avatar" style={{ background: gradient }} aria-hidden="true">
-        <span className="org-sub-card__initials">{getInitials(member.name)}</span>
-      </div>
-      <div className="org-sub-card__info">
-        <span className="org-sub-card__role" title={member.roleTitle}>{member.roleAbbr}</span>
-        <span className="org-sub-card__name">{member.name}</span>
-      </div>
-    </div>
-  );
-}
-
 export default function TeamPage() {
   const [heroRef, heroRevealed] = useScrollReveal(0.1);
   const [introRef, introRevealed] = useScrollReveal(0.12);
-  const [orgRef, orgRevealed] = useScrollReveal(0.1);
   const [gridRef, gridRevealed] = useScrollReveal(0.08);
   const [ctaRef, ctaRevealed] = useScrollReveal(0.15);
 
-  const ceo = teamMembers.find((m) => m.isCEO);
-  const otherMembers = teamMembers.filter((m) => !m.isCEO);
 
   return (
     <div className="team-page">
@@ -111,59 +92,6 @@ export default function TeamPage() {
       <div className="divider" role="presentation">
         <span className="divider__icon">❖</span>
       </div>
-
-      {/* 3. Organizational Structure Chart */}
-      <section
-        ref={orgRef}
-        className={`section org-chart-section ${orgRevealed ? 'revealed' : ''}`}
-        aria-labelledby="org-chart-title"
-      >
-        <div className="container">
-          <SectionHeader
-            title="Cơ cấu tổ chức"
-            subtitle="Cấu trúc lãnh đạo của dự án Dấu Việt"
-          />
-          <div className="org-chart">
-            {/* CEO at the top */}
-            <div className="org-ceo-node">
-              <div className="org-ceo-card">
-                <div className="org-ceo-crown" aria-hidden="true">
-                  <Crown size={20} />
-                </div>
-                <div
-                  className="org-ceo-avatar"
-                  style={{ background: avatarGradients[0] }}
-                  aria-hidden="true"
-                >
-                  <span className="org-ceo-initials">{ceo && getInitials(ceo.name)}</span>
-                </div>
-                <div className="org-ceo-info">
-                  <span className="org-ceo-role">{ceo?.roleAbbr}</span>
-                  <span className="org-ceo-name">{ceo?.name}</span>
-                  <span className="org-ceo-title">{ceo?.roleTitle}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Connector */}
-            <div className="org-connector" aria-hidden="true">
-              <div className="org-connector__vert" />
-              <div className="org-connector__horiz" />
-            </div>
-
-            {/* Sub members */}
-            <div className="org-sub-row">
-              {otherMembers.map((member, idx) => (
-                <OrgSubCard
-                  key={member.id}
-                  member={member}
-                  gradient={avatarGradients[(idx + 1) % avatarGradients.length]}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 4. Team Member Cards Grid */}
       <section

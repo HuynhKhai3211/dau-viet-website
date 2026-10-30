@@ -120,191 +120,31 @@
 /* ================================
    3. Org Chart
    ================================ */
-.org-chart-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
 
-.org-chart-section.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-.org-chart {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  padding-bottom: var(--space-xl);
-}
 
 /* CEO node */
-.org-ceo-node {
-  display: flex;
-  justify-content: center;
-}
 
-.org-ceo-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(205, 164, 103, 0.12) 100%);
-  border: 2px solid var(--color-gold);
-  border-radius: var(--radius-2xl);
-  padding: 1.25rem 2.5rem;
-  box-shadow: 0 6px 24px rgba(146, 62, 50, 0.15), 0 2px 6px rgba(205, 164, 103, 0.2);
-  min-width: 320px;
-}
 
-.org-ceo-crown {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-gold);
-  color: var(--color-surface-dark);
-  border-radius: var(--radius-full);
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(205, 164, 103, 0.4);
-}
 
-.org-ceo-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(56, 43, 37, 0.2);
-  border: 2px solid rgba(255, 249, 238, 0.4);
-}
 
-.org-ceo-initials {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--color-parchment-light);
-}
 
-.org-ceo-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
 
-.org-ceo-role {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--color-red);
-  letter-spacing: 0.08em;
-}
 
-.org-ceo-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-}
 
-.org-ceo-title {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-}
 
 /* Connector */
-.org-connector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 40px;
-  position: relative;
-  width: 100%;
-}
 
-.org-connector__vert {
-  width: 2px;
-  height: 20px;
-  background: var(--color-gold);
-  opacity: 0.6;
-}
 
-.org-connector__horiz {
-  width: min(720px, 90%);
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-  opacity: 0.6;
-}
 
 /* Sub cards row */
-.org-sub-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-  max-width: 900px;
-}
 
-.org-sub-card {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: var(--color-surface);
-  border: 1px solid rgba(205, 164, 103, 0.4);
-  border-radius: var(--radius-xl);
-  padding: 0.75rem 1.25rem;
-  min-width: 160px;
-  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
-}
 
-.org-sub-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--color-gold);
-}
 
-.org-sub-card__avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
 
-.org-sub-card__initials {
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-parchment-light);
-}
 
-.org-sub-card__info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
 
-.org-sub-card__role {
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: var(--color-red);
-}
 
-.org-sub-card__name {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  white-space: nowrap;
-}
 
 /* ================================
    4. Team Grid
@@ -556,18 +396,8 @@
     padding: var(--space-2xl) var(--space-md);
   }
 
-  .org-ceo-card {
-    min-width: unset;
-    padding: 1rem 1.5rem;
-  }
 
-  .org-sub-row {
-    gap: 0.75rem;
-  }
 
-  .org-sub-card {
-    min-width: 140px;
-  }
 
   .team-card--ceo {
     max-width: 100%;
@@ -588,8 +418,4 @@
     font-size: 1.15rem;
   }
 
-  .org-sub-card {
-    min-width: unset;
-    flex: 1 1 130px;
-  }
 }
