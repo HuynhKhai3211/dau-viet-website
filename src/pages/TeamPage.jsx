@@ -50,8 +50,7 @@ export default function TeamPage() {
           </div>
           <h1 className="team-hero__title">Đội ngũ Dấu Việt</h1>
           <p className="team-hero__subtitle">
-            Tập hợp những người trẻ đam mê lịch sử dân tộc, công nghệ tương tác
-            và khát vọng đổi mới phương pháp giáo dục thế hệ tương lai.
+            Gặp gỡ những cá nhân đứng sau thiết kế và phát triển nền tảng Dấu Việt
           </p>
         </div>
       </section>
@@ -65,7 +64,6 @@ export default function TeamPage() {
         <div className="container">
           <SectionHeader
             title="Thành viên dự án"
-            subtitle="Gặp gỡ những cá nhân đứng sau thiết kế và phát triển nền tảng Dấu Việt"
           />
 
           {/* All 6 Members — Equal Grid */}
