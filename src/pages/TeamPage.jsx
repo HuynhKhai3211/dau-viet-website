@@ -6,7 +6,6 @@ import {
   Compass,
   IdCard,
 } from 'lucide-react';
-import SectionHeader from '../components/common/SectionHeader';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { teamMembers } from '../data/team';
 import '../styles/pages/team.css';
@@ -31,7 +30,6 @@ const avatarGradients = [
 
 export default function TeamPage() {
   const [heroRef, heroRevealed] = useScrollReveal(0.1);
-  const [gridRef, gridRevealed] = useScrollReveal(0.08);
   const [ctaRef, ctaRevealed] = useScrollReveal(0.15);
 
 
@@ -53,19 +51,7 @@ export default function TeamPage() {
             Gặp gỡ những cá nhân đứng sau thiết kế và phát triển nền tảng Dấu Việt
           </p>
         </div>
-      </section>
-
-      {/* 4. Team Member Cards Grid */}
-      <section
-        ref={gridRef}
-        className={`section section--alt team-grid-section ${gridRevealed ? 'revealed' : ''}`}
-        aria-labelledby="team-members-title"
-      >
-        <div className="container">
-          <SectionHeader
-            title="Thành viên dự án"
-          />
-
+        <div className="container team-hero__members">
           {/* All 6 Members — Equal Grid */}
           <div className="team-grid">
             {teamMembers.map((member, idx) => {

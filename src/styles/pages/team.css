@@ -33,6 +33,15 @@
   margin: 0 auto;
 }
 
+.team-hero__members {
+  margin-top: var(--space-2xl);
+  text-align: left;
+}
+
+.team-hero__members .team-grid {
+  margin-bottom: 0;
+}
+
 .team-hero__badge {
   display: inline-flex;
   align-items: center;
