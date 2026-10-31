@@ -105,7 +105,7 @@ try {
   await writeFile('artifacts/island-desktop.png', Buffer.from(screenshot.data, 'base64'));
   await send('Page.reload');
   await waitFor("!!document.querySelector('.demo-experience-tabs')");
-  assert.equal(await evaluate("[...document.querySelectorAll('.question-reward-confirm button')].filter(b => b.textContent.includes('Đã hoàn thành')).length"), 1, 'Question progress survives reload');
+  assert.equal(await evaluate("[...document.querySelectorAll('.question-reward-confirm button')].filter(b => b.textContent.includes('Xem l\u1ea1i qu\u00e0')).length"), 1, 'Question progress survives reload');
   await click('.demo-experience-tabs button', 1);
   assert.equal((await savedIsland()).placements[0].cell, 32, 'Island layout survives reload');
   await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });

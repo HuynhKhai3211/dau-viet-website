@@ -104,7 +104,7 @@ export default function IslandDecor({ island, setIsland, initialSelected, onCont
   );
 }
 
-export function IslandRewardDialog({ itemId, onContinue, onDecorate }) {
+export function IslandRewardDialog({ itemId, replay = false, onContinue, onDecorate }) {
   const ref = useRef(null);
   const item = decorItems.find(i => i.id === itemId);
   useEffect(() => {
@@ -114,11 +114,12 @@ export function IslandRewardDialog({ itemId, onContinue, onDecorate }) {
   }, [item]);
   return <dialog ref={ref} className="island-reward" aria-labelledby="reward-heading" onCancel={event => { event.preventDefault(); onContinue(); }}>
     {item && <>
-      <span className="island-eyebrow">MỘT DẤU ẤN MỚI TRÊN ĐẢO</span>
-      <div className="island-reward__art"><DecorArtwork kind={item.kind} /></div>
-      <h2 id="reward-heading">Bạn nhận được {item.name.toLowerCase()}!</h2>
+      <div className="island-reward__burst" key={`burst-${item.id}`} aria-hidden="true">{Array.from({ length: 14 }, (_, index) => <span key={index} style={{ '--burst-x': `${Math.cos(index * Math.PI / 7) * 140}px`, '--burst-y': `${Math.sin(index * Math.PI / 7) * 110}px`, '--burst-turn': `${index * 55}deg`, '--burst-delay': `${index % 3 * 40}ms` }} />)}</div>
+      <span className="island-eyebrow">{replay ? 'KỶ VẬT TRONG KHO CỦA BẠN' : 'MỘT DẤU ẤN MỚI TRÊN ĐẢO'}</span>
+      <div key={item.id} className="island-reward__art"><DecorArtwork kind={item.kind} /></div>
+      <h2 id="reward-heading">{replay ? `Quà của bạn: ${item.name.toLowerCase()}` : `Bạn nhận được ${item.name.toLowerCase()}!`}</h2>
       <p>{item.description}</p>
-      <div className="island-reward__mascot"><AnimatedMascot size="small" interactive={false} /><span><strong>Bé Sử</strong><br />Mình đã cất quà vào kho rồi. Cùng làm đẹp hòn đảo nhé!</span></div>
+      <div className="island-reward__mascot"><AnimatedMascot size="small" interactive={false} /><span><strong>Bé Sử</strong><br />{replay ? 'Quà này đã ở trong kho của bạn. Cùng đặt lên đảo nhé!' : 'Mình đã cất quà vào kho rồi. Cùng làm đẹp hòn đảo nhé!'}</span></div>
       <div className="island-reward__actions"><button autoFocus className="btn btn--secondary" onClick={onContinue}>Tiếp tục</button><button className="btn btn--primary" onClick={() => onDecorate(item.id)}>Đặt lên đảo</button></div>
     </>}
   </dialog>;

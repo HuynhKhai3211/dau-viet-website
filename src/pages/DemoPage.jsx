@@ -26,6 +26,7 @@ const getShuffledReconstructionOrder = () => {
 export default function DemoPage({ embedded = false }) {
   const demoRoot = useRef(null);
   const [engaged, setEngaged] = useState(false);
+  const [rewardPreview, setRewardPreview] = useState(null);
   const [saved] = useState(() => {
     const value = readSaved(JOURNEY_STORAGE_KEY, {});
     if (!value || !Object.values(DEMO_STAGES).includes(value.currentStage)) return {};
@@ -64,15 +65,24 @@ export default function DemoPage({ embedded = false }) {
   }, [island, currentStage, discoveredClues, selectedAnswers, completedQuestions, answersSubmitted, answersVerified, reconstructionOrder, reconstructionSubmitted, reconstructionCorrect, reconstructionAttempts, score]);
 
   const grantReward = useCallback((id) => {
+    setEngaged(true);
+    if (island.earned.includes(id)) {
+      setRewardPreview(id);
+      void playSound('reward');
+      return;
+    }
     setIsland(prev => awardItem(prev, id));
-    if (!island.earned.includes(id)) void playSound('reward');
+    void playSound('reward');
   }, [island.earned]);
   const openIsland = (id = null) => { setSelectedDecor(id); setActiveView('island'); };
-  const dismissReward = () => setIsland(prev => ({ ...prev, pending: prev.pending.slice(1) }));
+  const dismissReward = () => {
+    if (rewardPreview) setRewardPreview(null);
+    else setIsland(prev => ({ ...prev, pending: prev.pending.slice(1) }));
+  };
   const handleCompleteQuestion = (questionId) => {
     const questionIndex = hypothesisQuestions.findIndex(q => q.id === questionId);
-    if (questionIndex < 0 || !selectedAnswers[questionId] || completedQuestions.includes(questionId)) return;
-    setCompletedQuestions(prev => [...prev, questionId]);
+    if (questionIndex < 0 || !selectedAnswers[questionId]) return;
+    setCompletedQuestions(prev => prev.includes(questionId) ? prev : [...prev, questionId]);
     grantReward(questionIndex === 0 ? 'boat' : 'flag');
   };
 
@@ -140,6 +150,7 @@ export default function DemoPage({ embedded = false }) {
 
   // Handle resetting the entire demo experience to starting state
   const handleRestart = useCallback(() => {
+    setRewardPreview(null);
     setCurrentStage(DEMO_STAGES.INTRO);
     setDiscoveredClues(new Set());
     setSelectedAnswers({});
@@ -310,7 +321,7 @@ export default function DemoPage({ embedded = false }) {
           )}
         </div>
         </>}
-        <IslandRewardDialog itemId={!embedded || engaged ? island.pending[0] : null} onContinue={dismissReward} onDecorate={id => { dismissReward(); openIsland(id); }} />
+        <IslandRewardDialog itemId={rewardPreview || (!embedded || engaged ? island.pending[0] : null)} replay={!!rewardPreview} onContinue={dismissReward} onDecorate={id => { dismissReward(); openIsland(id); }} />
       </div>
     </div>
   );

@@ -125,11 +125,11 @@ export default function HypothesisStage({
               </div>
               <div className="question-reward-confirm">
                 <button type="button" className="btn btn--gold btn--small"
-                  disabled={!selectedOptionId || completedQuestions.includes(q.id)}
+                  disabled={!selectedOptionId}
                   onClick={() => onCompleteQuestion(q.id)}>
-                  {completedQuestions.includes(q.id) ? 'Đã hoàn thành câu hỏi' : 'Hoàn thành & nhận quà'}
+                  {completedQuestions.includes(q.id) ? 'Xem lại quà' : 'Hoàn thành & nhận quà'}
                 </button>
-                <span>{completedQuestions.includes(q.id) ? 'Đáp án đã xác nhận. Quà được lưu trong kho đảo.' : 'Xác nhận đáp án để nhận vật phẩm trang trí đảo.'}</span>
+                <span>{completedQuestions.includes(q.id) ? 'Đáp án đã xác nhận. Bạn có thể mở lại quà hoặc đặt vật phẩm lên đảo.' : 'Xác nhận đáp án để nhận vật phẩm trang trí đảo.'}</span>
               </div>
             </div>
           );

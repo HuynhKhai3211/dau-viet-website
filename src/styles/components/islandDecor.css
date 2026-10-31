@@ -52,6 +52,16 @@
 .island-inventory .island-save-note { margin:14px 0 0; font-size:11px; text-align:center; }
 .island-reward { position:fixed; inset:0; margin:auto; width:min(480px,calc(100% - 32px)); max-height:calc(100dvh - 40px); overflow:auto; padding:30px; background:#fff9ee; border:1px solid #d2b275; border-radius:24px; color:#644c38; text-align:center; box-shadow:0 24px 100px #291b1a55; }
 .island-reward::backdrop { background:#2a302c88; backdrop-filter:blur(5px); }
+.island-reward[open] { animation: island-reward-appear 360ms ease-out both; }
+.island-reward[open] .island-reward__art { animation: island-gift-pop 700ms cubic-bezier(.2,.8,.2,1) both; }
+.island-reward__burst { position:absolute; top:32%; left:50%; width:0; height:0; pointer-events:none; }
+.island-reward__burst span { position:absolute; width:7px; height:11px; border-radius:2px; background:#c79a43; opacity:0; animation:island-gift-burst 900ms ease-out var(--burst-delay) both; }
+.island-reward__burst span:nth-child(3n) { background:#a2432c; }
+.island-reward__burst span:nth-child(3n + 1) { background:#6f9471; }
+@keyframes island-reward-appear { from { opacity:0; transform:translateY(12px) scale(.96); } to { opacity:1; transform:none; } }
+@keyframes island-gift-pop { 0% { opacity:0; transform:scale(.5) rotate(-8deg); } 65% { opacity:1; transform:scale(1.12) rotate(3deg); } 100% { opacity:1; transform:scale(1) rotate(0); } }
+@keyframes island-gift-burst { 0% { opacity:0; transform:translate(0,0) scale(.4); } 20% { opacity:1; } 100% { opacity:0; transform:translate(var(--burst-x),var(--burst-y)) rotate(var(--burst-turn)) scale(.7); } }
+@media(prefers-reduced-motion:reduce) { .island-reward[open], .island-reward[open] .island-reward__art, .island-reward__burst span { animation:none; } .island-reward__burst { display:none; } }
 .island-reward h2 { font-family:var(--font-heading); color:#923e32; font-size:25px; margin:12px 0; }
 .island-reward>p { font-size:14px; line-height:1.6; }
 .island-reward__art { margin:20px auto 0; width:150px; background:radial-gradient(circle,#f2dfaf,transparent 72%); }
