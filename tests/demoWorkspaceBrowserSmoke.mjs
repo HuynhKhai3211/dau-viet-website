@@ -66,7 +66,7 @@ try {
   await mkdir('artifacts/demo-workspace',{recursive:true});
   const viewports=[[1920,900],[1440,900],[1366,768],[390,844],[320,740],[390,667]];
   const cases=[['INTRO','.demo-intro__start-btn'],['CLUE_EXPLORATION','.clue-exploration__next-btn'],['HYPOTHESIS','.hypothesis-stage__submit-btn'],['VERIFICATION','.verification-stage__next-btn'],['RECONSTRUCTION','.reconstruction-stage__check-btn'],['RESULTS','.demo-results__actions']];
-  for(const [width,height] of viewports){
+  for(const [width,height] of viewports.filter(([width,height]) => !process.env.WORKSPACE_VIEWPORT || `${width}x${height}` === process.env.WORKSPACE_VIEWPORT)){
     await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<640});
     for(const [stage,action] of cases.filter(([stage]) => !process.env.WORKSPACE_STAGE || stage === process.env.WORKSPACE_STAGE)){
       const marker=stage+'-'+width+'-'+height;
@@ -103,7 +103,7 @@ try {
     }
   }
   assert.deepEqual(browserErrors,[]);
-  console.log('PASS: all six stages keep actions in view; image and tide slider visible together; reward confirmation reachable; five viewports; no runtime errors.');
+  console.log('PASS: requested stages and viewports keep actions reachable, full scene and slider visible together, without overflow or runtime errors.');
   await send('Browser.close');
 } finally {
   ws?.close(); chrome.kill(); await delay(400);

@@ -119,10 +119,7 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
 @media (min-width: 761px) and (max-height: 800px) {
   .demo-workspace .tide-observation { display: none; }
 }
-@media (max-width: 760px) and (max-height: 740px) {
-  .demo-workspace .tide-battle-heading { display: none; }
-  .demo-workspace .clue-context { order: 2; }
-}
+
 @media (max-width: 1000px) {
   .demo-workspace .demo-navbar__title, .demo-workspace .demo-stepper__label { display: none; }
   .demo-workspace .clue-exploration__layout { grid-template-columns: 190px minmax(0, 1fr); }
@@ -137,7 +134,8 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
   .demo-workspace .demo-stepper__line { margin-inline: 2px; }
   .demo-workspace .demo-score-chip { font-size: 10px; padding: 4px 6px; }
   .demo-workspace .demo-restart-icon-btn { width: 34px; height: 34px; }
-  .demo-workspace .demo-experience-tabs { display: flex; flex-wrap: nowrap; width: 100%; }
+  .demo-workspace .demo-experience-tabs { display: flex; flex-direction: row; flex-wrap: nowrap; width: 100%; }
+  .demo-workspace .demo-experience-tabs small { display: none; }
   .demo-workspace .demo-experience-tabs button { flex: 1; width: auto; min-width: 0; justify-content: center; padding: 7px 9px; min-height: 38px; font-size: 10px; }
   .demo-workspace .demo-stage-container > :is(.clue-exploration, .hypothesis-stage, .verification-stage, .reconstruction-stage, .demo-intro) { padding: 9px; gap: 7px; }
   .demo-workspace .clue-exploration__title { font-size: 14px; }
@@ -194,4 +192,11 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
   .demo-workspace .hypothesis-stage__back-btn, .demo-workspace .hypothesis-stage__submit-btn { width: auto; flex: 1; }
   .demo-workspace .question-reward-confirm span { font-size: 9px; }
   .demo-workspace .verification-stage__footer-note, .demo-workspace .reconstruction-stage__tip { display: none; }
+}
+
+@media (max-width: 760px) and (max-height: 740px) {
+  .demo-workspace .tide-battle-heading { display: none; }
+  .demo-workspace .clue-context { order: 2; }
+  .demo-workspace .tide-story { display: none; }
+  .demo-workspace .tide-interaction { grid-template-rows: minmax(60px, 1fr) minmax(111px, auto); grid-template-areas: 'scene' 'controls'; }
 }
