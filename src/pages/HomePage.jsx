@@ -54,7 +54,7 @@ function HeroSection() {
             <span className="hero-title__main">DẤU VIỆT</span>
           </h1>
 
-          <p className="hero-subtitle">Khám phá lịch sử Việt Nam theo cách của bạn</p>
+          <p className="hero-subtitle">Chạm vào quá khứ<br />Hiểu Việt Nam hôm nay</p>
           <p className="hero-description">
             Không còn học thuộc lòng khô khan. Dấu Việt mở ra cánh cổng lịch sử nơi bạn hóa thân
             thành nhà thám hiểm: lần theo các manh mối, giải mã câu đố, suy luận logic và tự tay
