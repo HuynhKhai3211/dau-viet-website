@@ -200,3 +200,31 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
   .demo-workspace .tide-story { display: none; }
   .demo-workspace .tide-interaction { grid-template-rows: minmax(60px, 1fr) minmax(111px, auto); grid-template-areas: 'scene' 'controls'; }
 }
+
+/* Let the exploration grow with its scene and all four clues. */
+.demo-workspace .demo-stage-container:has(> .clue-exploration) { height: auto; }
+.demo-workspace .demo-stage-container > .clue-exploration { height: auto; }
+.demo-workspace .clue-exploration__layout { flex: none; grid-template-rows: auto; overflow: visible; }
+.demo-workspace :is(.clue-map-panel, .clue-detail-panel, .clue-interactive-zone) { overflow: visible; }
+.demo-workspace .clue-map-panel { justify-content: flex-start; }
+.demo-workspace .clue-detail-panel__body { flex: none; }
+.demo-workspace .clue-sub-interaction--tide,
+.demo-workspace .tide-interaction { height: auto; }
+.demo-workspace .tide-interaction { grid-template-rows: auto auto; }
+.demo-workspace .tide-battle-scene { height: auto; align-self: start; }
+.demo-workspace .tide-artwork-scroll { flex: none; height: auto; }
+.demo-workspace .tide-artwork-frame { height: auto; }
+.demo-workspace .river-artwork { width: 100%; height: auto; aspect-ratio: 12 / 7; }
+.demo-workspace .tide-sidebar { overflow: visible; }
+.demo-workspace .tide-sidebar > .tide-story { overflow: visible; flex-shrink: 0; }
+.demo-workspace .tide-observation { display: block; }
+@media (min-width: 761px) {
+  .demo-workspace .clue-exploration__layout { min-height: 600px; }
+}
+@media (max-width: 760px) {
+  .demo-workspace .clue-exploration__layout { grid-template-rows: auto auto; }
+  .demo-workspace .tide-interaction { grid-template-rows: auto auto auto auto; grid-template-areas: 'heading' 'scene' 'controls' 'story'; }
+  .demo-workspace .tide-battle-heading { display: flex; }
+  .demo-workspace .tide-story { display: grid; }
+  .demo-workspace .clue-context { order: 0; }
+}

@@ -81,14 +81,18 @@ try {
       await evaluate('document.querySelector(".demo-workspace").scrollIntoView({block:"start",behavior:"instant"})');
       await delay(100);
       const metrics=await evaluate('(() => {const r=document.querySelector('+JSON.stringify(action)+').getBoundingClientRect();return {top:r.top,bottom:r.bottom,height:innerHeight,stage:document.querySelector(".demo-stage-container").getBoundingClientRect().height};})()');
-      assert.ok(metrics.top>=70&&metrics.bottom<=height+2,marker+' action outside screen '+JSON.stringify(metrics));
-      assert.ok(await evaluate('(() => {const el=document.querySelector('+JSON.stringify(action)+');const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})()'),marker+' action is covered');
+      if(stage!=='CLUE_EXPLORATION'){
+        assert.ok(metrics.top>=70&&metrics.bottom<=height+2,marker+' action outside screen '+JSON.stringify(metrics));
+        assert.ok(await evaluate('(() => {const el=document.querySelector('+JSON.stringify(action)+');const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})()'),marker+' action is covered');
+      }
       assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'),'No overflow '+marker);
       if(stage==='CLUE_EXPLORATION'){
         const scene=await evaluate('document.querySelector(".tide-battle-scene").getBoundingClientRect().toJSON()');
         const slider=await evaluate('document.querySelector(".tide-controls__slider").getBoundingClientRect().toJSON()');
-        assert.ok(scene.top>=70&&scene.bottom<=height&&slider.top>=70&&slider.bottom<=height,marker+' image and slider not together '+JSON.stringify({scene,slider}));
+        assert.ok(Math.abs((scene.width-2)/(scene.height-2)-12/7)<0.05,marker+' full scene keeps its original aspect ratio '+JSON.stringify(scene));
+        assert.ok(await evaluate('[...document.querySelectorAll(".clue-map-panel,.clue-detail-panel,.tide-sidebar,.tide-story")].every(el=>el.scrollHeight<=el.clientHeight+2)'),marker+' clue panels must grow instead of clipping their contents');
         assert.equal(await evaluate('document.querySelector(".river-artwork").getAttribute("preserveAspectRatio")'),'xMidYMid meet','Full scene is visible without cropping');
+        await evaluate('document.querySelector(".tide-controls__slider").scrollIntoView({block:"center",behavior:"instant"})');
         assert.ok(await evaluate('(() => {const el=document.querySelector(".tide-controls__slider");const r=el.getBoundingClientRect();return el===document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);})()'),marker+' slider is clipped or covered');
       }
       if(stage==='HYPOTHESIS'){
