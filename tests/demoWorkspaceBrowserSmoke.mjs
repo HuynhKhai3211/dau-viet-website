@@ -89,7 +89,8 @@ try {
       if(stage==='CLUE_EXPLORATION'){
         const scene=await evaluate('document.querySelector(".tide-battle-scene").getBoundingClientRect().toJSON()');
         const slider=await evaluate('document.querySelector(".tide-controls__slider").getBoundingClientRect().toJSON()');
-        assert.ok(Math.abs((scene.width-2)/(scene.height-2)-12/7)<0.05,marker+' full scene keeps its original aspect ratio '+JSON.stringify(scene));
+        const artwork=await evaluate('document.querySelector(".river-artwork").getBoundingClientRect().toJSON()');
+        assert.ok(Math.abs(artwork.width/artwork.height-12/7)<0.05,marker+' full scene keeps its original aspect ratio '+JSON.stringify(artwork));
         assert.ok(await evaluate('[...document.querySelectorAll(".clue-map-panel,.clue-detail-panel,.tide-sidebar,.tide-story")].every(el=>el.scrollHeight<=el.clientHeight+2)'),marker+' clue panels must grow instead of clipping their contents');
         assert.equal(await evaluate('document.querySelector(".river-artwork").getAttribute("preserveAspectRatio")'),'xMidYMid meet','Full scene is visible without cropping');
         await evaluate('document.querySelector(".tide-controls__slider").scrollIntoView({block:"center",behavior:"instant"})');
