@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import {
   Compass,
   RotateCcw,
@@ -23,7 +23,9 @@ const getShuffledReconstructionOrder = () => {
   return ['event-2', 'event-4', 'event-1', 'event-3'];
 };
 
-export default function DemoPage() {
+export default function DemoPage({ embedded = false }) {
+  const demoRoot = useRef(null);
+  const [engaged, setEngaged] = useState(false);
   const [saved] = useState(() => {
     const value = readSaved(JOURNEY_STORAGE_KEY, {});
     if (!value || !Object.values(DEMO_STAGES).includes(value.currentStage)) return {};
@@ -36,6 +38,7 @@ export default function DemoPage() {
   const [completedQuestions, setCompletedQuestions] = useState(() => Array.isArray(saved.completedQuestions) ? saved.completedQuestions.filter(id => hypothesisQuestions.some(q => q.id === id)) : []);
   // Demo State Machine
   const [currentStage, setCurrentStage] = useState(saved.currentStage || DEMO_STAGES.INTRO);
+  const lastStageView = useRef({ currentStage, activeView });
   const [discoveredClues, setDiscoveredClues] = useState(() => new Set(
     Array.isArray(saved.discoveredClues)
       ? saved.discoveredClues.map(id => ({ 'bai-coc': 'ngo-quyen', 'chien-thuat': 'nam-han' }[id] || id))
@@ -75,8 +78,12 @@ export default function DemoPage() {
 
   // Scroll to top when stage changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: window.matchMedia('(max-width: 768px)').matches ? 'instant' : 'smooth' });
-  }, [currentStage, activeView]);
+    if (lastStageView.current.currentStage === currentStage && lastStageView.current.activeView === activeView) return;
+    lastStageView.current = { currentStage, activeView };
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 768px)').matches ? 'instant' : 'smooth';
+    if (embedded) demoRoot.current?.scrollIntoView({ block: 'start', behavior });
+    else window.scrollTo({ top: 0, behavior });
+  }, [currentStage, activeView, embedded]);
 
   // Handle discovering a new clue (+10 points per unique clue)
   const handleDiscoverClue = useCallback((clueId) => {
@@ -171,7 +178,7 @@ export default function DemoPage() {
   const currentStageIndex = stageList.findIndex((s) => s.key === currentStage);
 
   return (
-    <div className="demo-page parchment-bg">
+    <div className="demo-page parchment-bg" ref={demoRoot} onClickCapture={() => setEngaged(true)} onKeyDownCapture={() => setEngaged(true)}>
       <div className="container">
         <nav className="demo-experience-tabs" aria-label="Không gian trải nghiệm">
           <button type="button" aria-pressed={activeView === 'journey'} onClick={() => setActiveView('journey')}><Compass size={18} /> Hành trình lịch sử</button>
@@ -244,7 +251,7 @@ export default function DemoPage() {
         </header>
 
         {/* Dynamic Stage Rendering */}
-        <main className="demo-stage-container">
+        <div className="demo-stage-container">
           {currentStage === DEMO_STAGES.INTRO && (
             <DemoIntro
               onStart={() => setCurrentStage(DEMO_STAGES.CLUE_EXPLORATION)}
@@ -301,9 +308,9 @@ export default function DemoPage() {
               onRestart={handleRestart}
             />
           )}
-        </main>
+        </div>
         </>}
-        <IslandRewardDialog itemId={island.pending[0]} onContinue={dismissReward} onDecorate={id => { dismissReward(); openIsland(id); }} />
+        <IslandRewardDialog itemId={!embedded || engaged ? island.pending[0] : null} onContinue={dismissReward} onDecorate={id => { dismissReward(); openIsland(id); }} />
       </div>
     </div>
   );

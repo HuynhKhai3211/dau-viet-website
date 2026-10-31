@@ -35,7 +35,7 @@ export default function DemoIntro({ onStart }) {
           <Sparkles size={16} />
           <span>Trải nghiệm Tương Tác Lịch Sử 360°</span>
         </div>
-        <h1 className="demo-intro__title">{demoIntro.title}</h1>
+        <h2 className="demo-intro__title">{demoIntro.title}</h2>
         <p className="demo-intro__subtitle">{demoIntro.subtitle}</p>
       </div>
 

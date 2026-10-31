@@ -66,17 +66,17 @@ export default function NotFoundPage() {
           <nav className="not-found-links" aria-label="Lối tắt điều hướng">
             <span className="not-found-links__label">Hoặc tiếp tục hành trình:</span>
             <div className="not-found-links__group">
-              <Link to="/explore" className="not-found-link">
+              <Link to="/#kham-pha" className="not-found-link">
                 <Map size={15} aria-hidden="true" />
                 <span>Khám phá 4 thời kỳ</span>
               </Link>
               <span aria-hidden="true">•</span>
-              <Link to="/demo" className="not-found-link">
+              <Link to="/#trai-nghiem" className="not-found-link">
                 <Compass size={15} aria-hidden="true" />
                 <span>Trải nghiệm Bạch Đằng 938</span>
               </Link>
               <span aria-hidden="true">•</span>
-              <Link to="/about" className="not-found-link">
+              <Link to="/#gioi-thieu" className="not-found-link">
                 <span>Về dự án Dấu Việt</span>
               </Link>
             </div>

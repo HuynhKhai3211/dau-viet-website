@@ -28,7 +28,7 @@ export default function IslandDecor({ island, setIsland, initialSelected, onCont
   return (
     <section className="island-workshop" aria-labelledby="island-heading">
       <div className="island-workshop__heading">
-        <div><span className="island-eyebrow">GÓC NHỎ CỦA NHÀ THÁM HIỂM</span><h1 id="island-heading">Đảo của tôi</h1><p>Mỗi điều học được, một dấu ấn trên đảo.</p></div>
+        <div><span className="island-eyebrow">GÓC NHỎ CỦA NHÀ THÁM HIỂM</span><h2 id="island-heading">Đảo của tôi</h2><p>Mỗi điều học được, một dấu ấn trên đảo.</p></div>
         <button className="btn btn--secondary" onClick={onContinue}><ArrowLeft size={17} /> Tiếp tục hành trình</button>
       </div>
       <div className="island-workspace">

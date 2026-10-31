@@ -63,8 +63,8 @@ function HeroSection() {
           </p>
 
           <div className="hero-actions">
-            <Link to="/explore" className="btn btn--primary btn--large hero-btn-primary"><span>Khám phá Dấu Việt</span><ArrowRight size={20} /></Link>
-            <Link to="/demo" className="btn btn--secondary btn--large hero-btn-secondary"><Play size={18} /><span>Trải nghiệm demo</span></Link>
+            <Link to="/#kham-pha" className="btn btn--primary btn--large hero-btn-primary"><span>Khám phá Dấu Việt</span><ArrowRight size={20} /></Link>
+            <Link to="/#trai-nghiem" className="btn btn--secondary btn--large hero-btn-secondary"><Play size={18} /><span>Trải nghiệm demo</span></Link>
           </div>
 
           <div className="hero-stats">
@@ -139,7 +139,7 @@ function AboutPreviewSection() {
             </div>
 
             <div className="about-preview-cta">
-              <Link to="/about" className="btn btn--primary">
+              <Link to="/#gioi-thieu" className="btn btn--primary">
                 <span>Tìm hiểu thêm về Dấu Việt</span><ArrowRight size={18} />
               </Link>
             </div>
@@ -269,9 +269,9 @@ function HistoricalPeriodSection() {
 
                 <div className="period-scroll-card__action">
                   {period.hasDemo ? (
-                    <Link to="/demo" className="btn btn--primary btn--small period-btn"><span>Chơi thử trận đánh</span><Play size={14} /></Link>
+                    <Link to="/#trai-nghiem" className="btn btn--primary btn--small period-btn"><span>Chơi thử trận đánh</span><Play size={14} /></Link>
                   ) : (
-                    <Link to="/explore" className="btn btn--secondary btn--small period-btn"><span>Khám phá thời kỳ</span><ChevronRight size={14} /></Link>
+                    <Link to="/#kham-pha" className="btn btn--secondary btn--small period-btn"><span>Khám phá thời kỳ</span><ChevronRight size={14} /></Link>
                   )}
                 </div>
               </div>
@@ -390,8 +390,8 @@ function DemoCtaSection() {
           </div>
 
           <div className="demo-cta-actions">
-            <Link to="/demo" className="btn btn--gold btn--large demo-cta-btn"><Play size={20} /><span>Trải nghiệm miễn phí</span></Link>
-            <Link to="/explore" className="btn btn--secondary btn--large demo-cta-btn-alt"><span>Tìm hiểu các thời kỳ khác</span><ArrowRight size={20} /></Link>
+            <Link to="/#trai-nghiem" className="btn btn--gold btn--large demo-cta-btn"><Play size={20} /><span>Trải nghiệm miễn phí</span></Link>
+            <Link to="/#kham-pha" className="btn btn--secondary btn--large demo-cta-btn-alt"><span>Tìm hiểu các thời kỳ khác</span><ArrowRight size={20} /></Link>
           </div>
         </div>
       </div>
@@ -506,7 +506,10 @@ function AppDownloadSection() {
 /* =========================================================================
    MAIN HOME PAGE COMPONENT
    ========================================================================= */
-export default function HomePage() {
+export { CoreFeaturesSection, AppDownloadSection };
+
+export default function HomePage({ landingOnly = false }) {
+  if (landingOnly) return <div className="home-page"><HeroSection /></div>;
   return (
     <div className="home-page">
       <HeroSection />

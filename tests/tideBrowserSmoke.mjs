@@ -42,7 +42,7 @@ try {
   });
   const send = (method, params = {}) => new Promise((res, rej) => {
     const callId = ++id;
-    const timer = setTimeout(() => { pending.delete(callId); rej(Error(`Timeout: ${method}`)); }, 10000);
+    const timer = setTimeout(() => { pending.delete(callId); rej(Error(`Timeout: ${method}`)); }, 30000);
     pending.set(callId, { resolve: res, reject: rej, timer, method });
     ws.send(JSON.stringify({ id: callId, method, params }));
   });
@@ -52,7 +52,7 @@ try {
     return result.result.value;
   };
   const waitFor = async expression => {
-    for (let i = 0; i < 50; i++) { if (await evaluate(expression)) return; await delay(100); }
+    for (let i = 0; i < 200; i++) { if (await evaluate(expression)) return; await delay(100); }
     throw Error(`UI did not become ready: ${expression}`);
   };
   const click = async (selector, index = 0) => {

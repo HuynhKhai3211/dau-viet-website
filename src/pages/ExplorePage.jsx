@@ -79,7 +79,7 @@ export default function ExplorePage() {
             <Compass size={16} aria-hidden="true" />
             <span>Hệ thống học tập tương tác</span>
           </div>
-          <h1 className="explore-hero__title">Khám phá Dấu Việt</h1>
+          <h2 className="explore-hero__title">Khám phá Dấu Việt</h2>
           <p className="explore-hero__subtitle">
             Đi qua sáu chặng: chọn thời kỳ, mở bản đồ, tìm dấu vết, đặt giả thuyết,
             dựng câu chuyện và tạo hòn đảo di sản của bạn. Chỉ cần cuộn xuống để bắt đầu.
@@ -205,7 +205,7 @@ export default function ExplorePage() {
                                   Bạn có thể trực tiếp trải nghiệm sự kiện Trận thủy chiến Bạch Đằng ngay hôm nay!
                                 </p>
                               </div>
-                              <Link to="/demo" className="btn btn--primary btn--small">
+                              <Link to="/#trai-nghiem" className="btn btn--primary btn--small">
                                 <span>Trải nghiệm ngay</span>
                                 <ArrowRight size={16} aria-hidden="true" />
                               </Link>
@@ -368,7 +368,7 @@ export default function ExplorePage() {
               dấu vết, đặt giả thuyết và tái hiện trang sử hào hùng của Đại Việt.
             </p>
             <div className="explore-cta__actions">
-              <Link to="/demo" className="btn btn--primary btn--large">
+              <Link to="/#trai-nghiem" className="btn btn--primary btn--large">
                 <span>Vào phòng trải nghiệm Demo</span>
                 <ArrowRight size={20} aria-hidden="true" />
               </Link>

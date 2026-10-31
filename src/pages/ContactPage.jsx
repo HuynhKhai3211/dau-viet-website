@@ -173,7 +173,7 @@ export default function ContactPage() {
             <MessageSquare size={16} aria-hidden="true" />
             <span>Kênh thông tin & Đóng góp</span>
           </div>
-          <h1 className="contact-hero__title">Liên hệ</h1>
+          <h2 className="contact-hero__title">Liên hệ</h2>
           <p className="contact-hero__subtitle">
             Chúng tôi luôn lắng nghe mọi phản hồi, ý kiến đóng góp về nội dung lịch sử
             và cơ hội hợp tác phát triển dự án giáo dục Dấu Việt.
@@ -281,7 +281,7 @@ export default function ContactPage() {
             </aside>
 
             {/* Right Column: Contact Form */}
-            <main className="contact-form-section">
+            <div className="contact-form-section">
               <div className="contact-form-card card card--historical">
                 <div className="contact-form-header">
                   <h2 className="contact-form-title">Gửi thông tin góp ý</h2>
@@ -438,7 +438,7 @@ export default function ContactPage() {
                   </div>
                 </form>
               </div>
-            </main>
+            </div>
           </div>
         </div>
       </section>

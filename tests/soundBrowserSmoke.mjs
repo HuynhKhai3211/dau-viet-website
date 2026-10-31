@@ -96,7 +96,7 @@ try {
   await trustedClick('.sound-toggle');
   await waitFor('window.__audioAudit.voices.length === 2');
   assert.equal(await evaluate('window.__audioAudit.contexts[0].state'), 'running', 'AudioContext runs after a trusted gesture');
-  await trustedClick('.header__nav a[href="/about"]');
+  await trustedClick('.header__nav a[href="/#gioi-thieu"]');
   assert.equal(await voiceCount(), 3, 'One generic click cue, including under React StrictMode');
   const beforeReward = await voiceCount();
   assert.equal(await evaluate('import("/src/utils/interactionSounds.js").then(m => m.playSound("reward"))'), true);
@@ -104,7 +104,7 @@ try {
   assert.equal(await voiceCount(), beforeReward + 5, 'Reward has five softly voiced notes');
   assert.ok(await evaluate('window.__audioAudit.stops > 0'), 'Mute stops scheduled notes immediately');
   const mutedCount = await voiceCount();
-  await trustedClick('.header__cta[href="/demo"]');
+  await trustedClick('.header__cta[href="/#trai-nghiem"]');
   assert.equal(await voiceCount(), mutedCount, 'Navigation remains silent when muted');
   await trustedClick('.sound-toggle');
   await trustedClick('.demo-intro button.btn--primary');

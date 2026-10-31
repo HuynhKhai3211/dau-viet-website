@@ -70,7 +70,7 @@ try {
   };
 
 
-const baseline={"nav":[{"label":"Trang chủ","path":"/"},{"label":"Giới thiệu","path":"/about"},{"label":"Khám phá","path":"/explore"},{"label":"Trải nghiệm","path":"/demo"},{"label":"Đội ngũ","path":"/team"},{"label":"Liên hệ","path":"/contact"}],"links":[{"label":"Trang chủ","path":"/"},{"label":"Giới thiệu dự án","path":"/about"},{"label":"Khám phá thời kỳ","path":"/explore"},{"label":"Trải nghiệm tương tác","path":"/demo"},{"label":"Đội ngũ phát triển","path":"/team"},{"label":"Liên hệ đóng góp","path":"/contact"},{"label":"Phòng suy luận lịch sử","path":"/explore"},{"label":"Bản đồ di sản tương tác","path":"/explore"},{"label":"Tái hiện các trận chiến hào hùng","path":"/demo"},{"label":"Hệ thống thu thập dấu vết","path":"/demo"},{"label":"Kho tư liệu thời đại","path":"/about"}],"cta":"Trải nghiệm ngay","description":"Dấu Việt là nền tảng số hóa và giáo dục lịch sử Việt Nam tương tác. \n              Chúng tôi đưa người học vào hành trình khám phá quá khứ qua thu thập chứng cứ, \n              suy luận bối cảnh và tái hiện những thời khắc vẻ vang của dân tộc.","socials":["https://www.facebook.com/dauviet05","https://youtube.com","https://tiktok.com","https://github.com"],"contacts":["Hộp thư điện tử:  \n                   \n                    contact@historydauviet.id.vn","Địa điểm phát triển:  \n                   Trường Đại học FPT Cần Thơ, số 600, đường Nguyễn Văn Cừ nối dài, phường An Bình, thành phố Cần Thơ, Việt Nam, 900000.","Thời gian hỗ trợ:  \n                   08:00 – 17:30 (Thứ 2 đến Thứ 6)"],"headings":["Điều hướng","Trải nghiệm","Liên hệ"],"legal":[{"path":"/about","label":"Về chúng tôi"},{"path":"/contact","label":"Hỗ trợ kỹ thuật"},{"path":"#root","label":"Lên đầu trang ↑"}]};
+const baseline={"nav":[{"label":"Trang chủ","path":"/#trang-chu"},{"label":"Giới thiệu","path":"/#gioi-thieu"},{"label":"Khám phá","path":"/#kham-pha"},{"label":"Trải nghiệm","path":"/#trai-nghiem"},{"label":"Đội ngũ","path":"/#doi-ngu"},{"label":"Liên hệ","path":"/#lien-he"}],"links":[{"label":"Trang chủ","path":"/#trang-chu"},{"label":"Giới thiệu dự án","path":"/#gioi-thieu"},{"label":"Khám phá thời kỳ","path":"/#kham-pha"},{"label":"Trải nghiệm tương tác","path":"/#trai-nghiem"},{"label":"Đội ngũ phát triển","path":"/#doi-ngu"},{"label":"Liên hệ đóng góp","path":"/#lien-he"},{"label":"Phòng suy luận lịch sử","path":"/#kham-pha"},{"label":"Bản đồ di sản tương tác","path":"/#kham-pha"},{"label":"Tái hiện các trận chiến hào hùng","path":"/#trai-nghiem"},{"label":"Hệ thống thu thập dấu vết","path":"/#trai-nghiem"},{"label":"Kho tư liệu thời đại","path":"/#gioi-thieu"}],"cta":"Trải nghiệm ngay","description":"Dấu Việt là nền tảng số hóa và giáo dục lịch sử Việt Nam tương tác. \n              Chúng tôi đưa người học vào hành trình khám phá quá khứ qua thu thập chứng cứ, \n              suy luận bối cảnh và tái hiện những thời khắc vẻ vang của dân tộc.","socials":["https://www.facebook.com/dauviet05","https://youtube.com","https://tiktok.com","https://github.com"],"contacts":["Hộp thư điện tử:  \n                   \n                    contact@historydauviet.id.vn","Địa điểm phát triển:  \n                   Trường Đại học FPT Cần Thơ, số 600, đường Nguyễn Văn Cừ nối dài, phường An Bình, thành phố Cần Thơ, Việt Nam, 900000.","Thời gian hỗ trợ:  \n                   08:00 – 17:30 (Thứ 2 đến Thứ 6)"],"headings":["Điều hướng","Trải nghiệm","Liên hệ"],"legal":[{"path":"/#gioi-thieu","label":"Về chúng tôi"},{"path":"/#lien-he","label":"Hỗ trợ kỹ thuật"},{"path":"#root","label":"Lên đầu trang ↑"}]};
 
   await send('Page.enable');
   await send('Runtime.enable');
@@ -152,15 +152,15 @@ const baseline={"nav":[{"label":"Trang chủ","path":"/"},{"label":"Giới thi�
     }
   }
   await viewport(1440);
-  for(const path of ['/about','/explore','/demo','/team','/contact','/']){
+  for(const path of ['/#gioi-thieu','/#kham-pha','/#trai-nghiem','/#doi-ngu','/#lien-he','/#trang-chu']){
     await click('.header__nav a[href="'+path+'"]');
-    await waitFor('location.pathname==='+JSON.stringify(path)+' && document.querySelector(".header__nav-link--active")?.getAttribute("href")==='+JSON.stringify(path));
+    await waitFor('location.pathname==="/" && location.hash==='+JSON.stringify(path.slice(1))+' && document.querySelector(".header__nav-link--active")?.getAttribute("href")==='+JSON.stringify(path));
     assert.equal(await evaluate('document.querySelector(".header__nav-link--active").getAttribute("href")'),path);
   }
   await viewport(390);
   await click('.header__hamburger');
-  await click('.header__drawer-link[href="/contact"]');
-  await waitFor('location.pathname==="/contact" && document.body.style.position!=="fixed"');
+  await click('.header__drawer-link[href="/#lien-he"]');
+  await waitFor('location.hash==="#lien-he" && document.body.style.position!=="fixed"');
   await click('.header__hamburger');
   await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
   await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});

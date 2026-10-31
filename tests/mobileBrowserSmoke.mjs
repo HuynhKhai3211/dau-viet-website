@@ -154,8 +154,8 @@ try {
   await tap('.header__drawer-close');
   assert.ok(Math.abs(await evaluate('scrollY') - previousScroll) < 2, 'Closing menu preserves scroll');
   await tap('.header__hamburger');
-  await tap('.header__drawer-link[href="/contact"]');
-  await waitFor('location.pathname === "/contact" && document.body.style.position !== "fixed"');
+  await tap('.header__drawer-link[href="/#lien-he"]');
+  await waitFor('location.hash === "#lien-he" && document.body.style.position !== "fixed"');
   assert.equal(await evaluate('scrollY'), 0, 'Menu navigation starts at top');
   await tap('.header__hamburger');
   await viewport(1280);
@@ -167,7 +167,7 @@ try {
   await navigate('/');
   await tap('.header__hamburger');
   await tap('.header__drawer-cta');
-  await waitFor('location.pathname === "/demo" && document.body.style.position !== "fixed"');
+  await waitFor('location.hash === "#trai-nghiem" && document.body.style.position !== "fixed"');
   await viewport(390);
   await navigate('/demo');
   await tap('.demo-intro__start-btn');

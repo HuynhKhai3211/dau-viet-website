@@ -6,34 +6,44 @@ import SoundToggle from '../common/SoundToggle';
 import '../../styles/components/header.css';
 
 const navLinks = [
-  { label: 'Trang chủ', path: '/' },
-  { label: 'Giới thiệu', path: '/about' },
-  { label: 'Khám phá', path: '/explore' },
-  { label: 'Trải nghiệm', path: '/demo' },
-  { label: 'Đội ngũ', path: '/team' },
-  { label: 'Liên hệ', path: '/contact' },
+  { label: 'Trang chủ', path: '/#trang-chu' },
+  { label: 'Giới thiệu', path: '/#gioi-thieu' },
+  { label: 'Khám phá', path: '/#kham-pha' },
+  { label: 'Trải nghiệm', path: '/#trai-nghiem' },
+  { label: 'Đội ngũ', path: '/#doi-ngu' },
+  { label: 'Liên hệ', path: '/#lien-he' },
 ];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('trang-chu');
   const location = useLocation();
   const drawerRef = useRef(null);
   const toggleRef = useRef(null);
 
   const isActive = ({ path }) => {
-    const [pathname, hash = ''] = path.split('#');
-    return location.pathname === pathname && location.hash.slice(1) === hash;
+    return location.pathname === '/' && activeSection === path.split('#')[1];
   };
 
   useEffect(() => { setIsMobileMenuOpen(false); }, [location.key]);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 15);
+    let frame;
+    const update = () => {
+      setIsScrolled(window.scrollY > 15);
+      const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) + 140;
+      const current = [...navLinks].reverse().find(link => {
+        const section = document.getElementById(link.path.split('#')[1]);
+        return section && section.getBoundingClientRect().top <= offset;
+      });
+      if (current) setActiveSection(current.path.split('#')[1]);
+    };
+    const handleScroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => { window.removeEventListener('scroll', handleScroll); cancelAnimationFrame(frame); };
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!isMobileMenuOpen) return;
@@ -46,7 +56,12 @@ export default function Header() {
     return () => {
       Object.assign(body.style, previous);
       const address = window.location.pathname + window.location.hash;
-      window.scrollTo({ top: address === openedAddress ? scrollY : 0, behavior: 'instant' });
+      if (address === openedAddress) window.scrollTo({ top: scrollY, behavior: 'instant' });
+      else requestAnimationFrame(() => {
+        const section = document.getElementById(window.location.hash.slice(1));
+        if (section) section.scrollIntoView({ block: 'start', behavior: 'instant' });
+        else window.scrollTo({ top: 0, behavior: 'instant' });
+      });
       toggleRef.current?.focus({ preventScroll: true });
     };
   }, [isMobileMenuOpen]);
@@ -97,7 +112,7 @@ export default function Header() {
         </nav>
         <SoundToggle />
         <div className="header__actions">
-          <Link to="/demo" className="heritage-ticket header__cta">
+          <Link to="/#trai-nghiem" className="heritage-ticket header__cta">
             <Compass size={18} aria-hidden="true" /><span>Trải nghiệm ngay</span><ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
@@ -132,7 +147,7 @@ export default function Header() {
           ))}
         </ul>
         <div className="header__drawer-actions">
-          <Link to="/demo" className="heritage-ticket header__drawer-cta" onClick={() => setIsMobileMenuOpen(false)}>
+          <Link to="/#trai-nghiem" className="heritage-ticket header__drawer-cta" onClick={() => setIsMobileMenuOpen(false)}>
             <Compass size={18} aria-hidden="true" /><span>Trải nghiệm ngay</span><ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </div>

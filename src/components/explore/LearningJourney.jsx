@@ -146,7 +146,7 @@ export default function LearningJourney() {
           <button type="button" className="learning-journey__previous" disabled={activeIndex === 0} onClick={() => selectStep(activeIndex - 1)} data-sound="select"><ArrowLeft size={17} aria-hidden="true" /> Bước trước</button>
           <button type="button" className="learning-journey__next" disabled={activeIndex === learningJourney.length - 1} onClick={() => selectStep(activeIndex + 1)} data-sound="select">Bước tiếp theo <ArrowRight size={17} aria-hidden="true" /></button>
         </div>
-        <Link to="/demo" className="learning-journey__demo">Tự mình trải nghiệm <ArrowRight size={15} aria-hidden="true" /></Link>
+        <Link to="/#trai-nghiem" className="learning-journey__demo">Tự mình trải nghiệm <ArrowRight size={15} aria-hidden="true" /></Link>
       </div>
     </div>
   </div>;

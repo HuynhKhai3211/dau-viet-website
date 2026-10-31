@@ -14,7 +14,7 @@ const heritageBackground = Object.values(import.meta.glob(
 ))[0];
 
 export default function PageLayout() {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, key } = useLocation();
   useEffect(() => installInteractionSounds(), []);
   
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function PageLayout() {
       document.getElementById(hash.slice(1))?.scrollIntoView({ block: 'start' });
     });
     return () => cancelAnimationFrame(frame);
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
 
   return (
     <div className="page-layout">

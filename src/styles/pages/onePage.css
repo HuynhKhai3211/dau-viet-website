@@ -1,0 +1,18 @@
+.one-page-section { position: relative; scroll-margin-top: 0; }
+.one-page-section + .one-page-section { border-top: 1px solid #b08b4d4d; }
+.one-page-experience-heading { padding-top: var(--space-4xl); padding-bottom: var(--space-xl); text-align: center; }
+.one-page-experience-heading > span { color: #886038; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; }
+.one-page-experience-heading h2 { margin: 14px 0; font-size: clamp(2rem, 4.5vw, 3.5rem); }
+.one-page .demo-page { background: transparent; }
+.one-page .demo-page::before, .one-page .demo-page::after { display: none; }
+.one-page .team-page, .one-page .about-page, .one-page .contact-page { overflow-x: clip; }
+.one-page-section > div > .section { background-color: #f8e3b833; }
+.one-page-section > div > .section--alt { background-color: #fff4df9c; }
+.one-page .about-hero, .one-page .explore-hero, .one-page .team-hero, .one-page .contact-hero {
+  background: radial-gradient(ellipse at 50% 0%, #fff5de60, transparent 70%);
+}
+.one-page #gioi-thieu > .features-section { background: #fff4df66; }
+.one-page #trai-nghiem > .app-download-section { background: #fff4df66; }
+@media (prefers-reduced-motion: reduce) {
+  .one-page-section { scroll-behavior: auto; }
+}

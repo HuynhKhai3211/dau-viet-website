@@ -48,7 +48,7 @@ export default function DemoResults({
           <Sparkles size={16} />
           <span>Hành Trình Khép Lại Xuất Sắc</span>
         </div>
-        <h1 className="demo-results__title">Hoàn Thành Hành Trình!</h1>
+        <h2 className="demo-results__title">Hoàn Thành Hành Trình!</h2>
         <p className="demo-results__subtitle">
           Giải Mã Chiến Thắng Bạch Đằng Năm 938 — Vị Vua Tiền Ngô Vương
         </p>
@@ -161,7 +161,7 @@ export default function DemoResults({
             Trải nghiệm sa bàn lịch sử thực tế ảo tăng cường 3D tương tác đa điểm, tái hiện chân thực hơn 20 chiến trường vang danh như Chi Lăng, Rạch Gầm - Xoài Mút, Điện Biên Phủ ngay trong phòng khách của bạn!
           </p>
         </div>
-        <Link to="/explore" className="btn btn--gold demo-results__invitation-btn">
+        <Link to="/#kham-pha" className="btn btn--gold demo-results__invitation-btn">
           <span>Tìm hiểu thêm</span>
           <ArrowRight size={16} />
         </Link>
@@ -192,7 +192,7 @@ export default function DemoResults({
           <span>Về trang chủ</span>
         </Link>
 
-        <Link to="/explore" className="btn btn--gold btn--large demo-results__explore-btn">
+        <Link to="/#kham-pha" className="btn btn--gold btn--large demo-results__explore-btn">
           <Compass size={18} />
           <span>Khám phá di tích khác</span>
         </Link>

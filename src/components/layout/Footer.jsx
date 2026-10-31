@@ -7,20 +7,20 @@ export default function Footer() {
   const currentYear = 2025;
 
   const quickLinks = [
-    { label: 'Trang chủ', path: '/' },
-    { label: 'Giới thiệu dự án', path: '/about' },
-    { label: 'Khám phá thời kỳ', path: '/explore' },
-    { label: 'Trải nghiệm tương tác', path: '/demo' },
-    { label: 'Đội ngũ phát triển', path: '/team' },
-    { label: 'Liên hệ đóng góp', path: '/contact' },
+    { label: 'Trang chủ', path: '/#trang-chu' },
+    { label: 'Giới thiệu dự án', path: '/#gioi-thieu' },
+    { label: 'Khám phá thời kỳ', path: '/#kham-pha' },
+    { label: 'Trải nghiệm tương tác', path: '/#trai-nghiem' },
+    { label: 'Đội ngũ phát triển', path: '/#doi-ngu' },
+    { label: 'Liên hệ đóng góp', path: '/#lien-he' },
   ];
 
   const exploreFeatures = [
-    { label: 'Phòng suy luận lịch sử', path: '/explore' },
-    { label: 'Bản đồ di sản tương tác', path: '/explore' },
-    { label: 'Tái hiện các trận chiến hào hùng', path: '/demo' },
-    { label: 'Hệ thống thu thập dấu vết', path: '/demo' },
-    { label: 'Kho tư liệu thời đại', path: '/about' },
+    { label: 'Phòng suy luận lịch sử', path: '/#kham-pha' },
+    { label: 'Bản đồ di sản tương tác', path: '/#kham-pha' },
+    { label: 'Tái hiện các trận chiến hào hùng', path: '/#trai-nghiem' },
+    { label: 'Hệ thống thu thập dấu vết', path: '/#trai-nghiem' },
+    { label: 'Kho tư liệu thời đại', path: '/#gioi-thieu' },
   ];
 
   return (
@@ -165,9 +165,9 @@ export default function Footer() {
             © {currentYear} Dấu Việt. Tất cả quyền được bảo lưu.
           </p>
           <div className="footer__legal-links">
-            <Link to="/about" className="footer__legal-link">Về chúng tôi</Link>
+            <Link to="/#gioi-thieu" className="footer__legal-link">Về chúng tôi</Link>
             <span aria-hidden="true">•</span>
-            <Link to="/contact" className="footer__legal-link">Hỗ trợ kỹ thuật</Link>
+            <Link to="/#lien-he" className="footer__legal-link">Hỗ trợ kỹ thuật</Link>
             <span aria-hidden="true">•</span>
             <a href="#root" className="footer__legal-link">Lên đầu trang ↑</a>
           </div>

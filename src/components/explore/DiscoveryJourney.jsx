@@ -157,7 +157,7 @@ export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#
                 <p>{stage.description}</p>
                 <aside className="discovery-insight"><span>Một góc nhìn gợi mở</span><p>{stage.insight}</p></aside>
                 <ul>{stage.features.map(feature => <li key={feature}><Check size={15} aria-hidden="true" />{feature}</li>)}</ul>
-                <a className="discovery-link" href={stage.link === 'periods' ? periodsHref : stage.link === 'island' ? islandHref : '/demo'}>{stage.action}<ArrowUpRight size={16} aria-hidden="true" /></a>
+                <a className="discovery-link" href={stage.link === 'periods' ? periodsHref : stage.link === 'island' ? islandHref : '/#trai-nghiem'}>{stage.action}<ArrowUpRight size={16} aria-hidden="true" /></a>
                 {index < 5 && <a className="discovery-next" href={`#${id}-step-${index + 2}`}>Tiếp theo: {stages[index + 1].title}<ArrowDown size={14} aria-hidden="true" /></a>}
               </div>
             </article>

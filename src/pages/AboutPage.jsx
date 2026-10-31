@@ -101,7 +101,7 @@ export default function AboutPage() {
             <Compass size={16} aria-hidden="true" />
             <span>Hành trình số hóa di sản</span>
           </div>
-          <h1 className="about-hero__title">Về Dấu Việt</h1>
+          <h2 className="about-hero__title">Về Dấu Việt</h2>
           <p className="about-hero__subtitle">
             Dự án giáo dục lịch sử Việt Nam tương tác – nơi quá khứ không còn là
             những trang giấy cũ, mà trở thành cuộc phiêu lưu tri thức sống động,
@@ -402,11 +402,11 @@ export default function AboutPage() {
                 cọc gỗ và tái hiện chiến công hiển hách của Ngô Quyền ngay trên bản demo tương tác.
               </p>
               <div className="about-cta__buttons">
-                <Link to="/demo" className="btn btn--primary btn--large">
+                <Link to="/#trai-nghiem" className="btn btn--primary btn--large">
                   <span>Trải nghiệm bản thử nghiệm</span>
                   <ArrowRight size={20} aria-hidden="true" />
                 </Link>
-                <Link to="/explore" className="btn btn--secondary btn--large">
+                <Link to="/#kham-pha" className="btn btn--secondary btn--large">
                   <span>Xem lộ trình khám phá</span>
                 </Link>
               </div>

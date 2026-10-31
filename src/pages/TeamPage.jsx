@@ -46,7 +46,7 @@ export default function TeamPage() {
             <Users size={16} aria-hidden="true" />
             <span>Những người kiến tạo</span>
           </div>
-          <h1 className="team-hero__title">Đội ngũ Dấu Việt</h1>
+          <h2 className="team-hero__title">Đội ngũ Dấu Việt</h2>
           <p className="team-hero__subtitle">
             Gặp gỡ những cá nhân đứng sau thiết kế và phát triển nền tảng Dấu Việt
           </p>
@@ -121,7 +121,7 @@ export default function TeamPage() {
                 Chúng tôi luôn chào đón các cố vấn sử học, giáo viên, nhà thiết kế
                 hoặc bất kỳ ai chung đam mê số hóa di sản dân tộc. Hãy gửi lời nhắn cho chúng tôi!
               </p>
-              <Link to="/contact" className="btn btn--primary btn--large team-cta__btn">
+              <Link to="/#lien-he" className="btn btn--primary btn--large team-cta__btn">
                 <span>Liên hệ với đội ngũ</span>
                 <ArrowRight size={20} aria-hidden="true" />
               </Link>
