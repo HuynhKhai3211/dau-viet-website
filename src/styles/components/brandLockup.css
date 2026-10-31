@@ -30,10 +30,24 @@
   white-space: nowrap;
 }
 .brand-lockup__name > span { color: #bd944f; font: 400 9px/1 var(--font-body); align-self: center; }
-.brand-lockup__slogan { color: #6a4b2f; font: 400 11px/1.5 var(--font-body); letter-spacing: .025em; }
-.header .brand-lockup__copy { gap: 1px; }
+.brand-lockup__slogan {
+  color: #795c37;
+  font: 400 10px/1.6 var(--font-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.header .brand-lockup__copy { align-items: flex-start; gap: 3px; }
+.header .brand-lockup__name {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .09em;
+  color: #58391f;
+}
+.header__drawer .brand-lockup__slogan { font-size: 9px; letter-spacing: .12em; }
 @media (max-width: 600px) {
-  .header .brand-lockup__slogan { font-size: 9px; line-height: 1.4; }
+  .header .brand-lockup__copy { gap: 3px; }
+  .header .brand-lockup__slogan { font-size: 8px; line-height: 1.5; letter-spacing: .1em; }
 }
 
 .heritage-ticket {
