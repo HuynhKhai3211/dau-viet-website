@@ -171,8 +171,8 @@ export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#
                 <p>{stage.description}</p>
                 <aside className="discovery-insight"><span>Một góc nhìn gợi mở</span><p>{stage.insight}</p></aside>
                 <ul>{stage.features.map(feature => <li key={feature}><Check size={15} aria-hidden="true" />{feature}</li>)}</ul>
-                <a className="discovery-link" href={stage.link === 'periods' ? periodsHref : stage.link === 'island' ? islandHref : '/#trai-nghiem'}>{stage.action}<ArrowUpRight size={16} aria-hidden="true" /></a>
-                {index < 5 && <button type="button" className="discovery-next" onClick={() => setActive(index + 1)}>Tiếp theo: {stages[index + 1].title}<ArrowUpRight size={14} aria-hidden="true" /></button>}
+                <a className="discovery-link heritage-ticket heritage-ticket--compact" href={stage.link === 'periods' ? periodsHref : stage.link === 'island' ? islandHref : '/#trai-nghiem'}>{stage.action}<ArrowUpRight size={16} aria-hidden="true" /></a>
+                {index < 5 && <button type="button" className="discovery-next heritage-ticket heritage-ticket--compact" onClick={() => setActive(index + 1)}>Tiếp theo: {stages[index + 1].title}<ArrowUpRight size={14} aria-hidden="true" /></button>}
               </div>
             </article>
           ))}

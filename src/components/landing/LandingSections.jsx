@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArrowUpRight, Search, Lightbulb, Puzzle, Waves, UserRound, MapPin, Swords, Gift, Palette, Save, Volume2, Sparkles, Mail } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Compass, Search, Lightbulb, Puzzle, Waves, UserRound, MapPin, Swords, Gift, Palette, Save, Volume2, Sparkles, Mail } from 'lucide-react';
 import { historicalPeriods } from '../../data/historicalPeriods';
 import { personalIslands } from '../../data/islands';
 import DemoPage from '../../pages/DemoPage';
@@ -43,10 +43,13 @@ export function LandingPeriods() {
     <div className="landing-periods">{historicalPeriods.map((period, index) => <article className={`landing-period landing-period--${index + 1}`} key={period.id}>
       <div className="landing-period__era">{period.era}</div><div className="landing-period__art"><span>Chương 0{index + 1}</span><PeriodArt index={index} /></div>
       <div className="landing-period__copy"><span className="landing-period__place"><MapPin size={13} aria-hidden="true" />{locations[index]}</span><h3>{period.title}</h3><p>{period.shortDescription}</p>
-        <details><summary>Mở hồ sơ lịch sử <ArrowUpRight size={16} aria-hidden="true" /></summary><p>{period.description}</p></details>
-        {period.hasDemo && <a href="/#trai-nghiem" className="landing-text-link">Trải nghiệm Bạch Đằng <ArrowUpRight size={15} aria-hidden="true" /></a>}
+        <details><summary className="heritage-ticket heritage-ticket--compact">Khám phá ngay <ArrowRight size={16} aria-hidden="true" /></summary><p>{period.description}</p></details>
       </div>
     </article>)}</div>
+    <aside className="landing-period-demo" aria-labelledby="period-demo-title">
+      <div><h3 id="period-demo-title">Trải nghiệm trận Bạch Đằng 938</h3><p>Tự tay điều chỉnh thủy triều, tìm 4 dấu vết và giải mã chiến thắng của Ngô Quyền.</p></div>
+      <a href="/#trai-nghiem" className="heritage-ticket heritage-ticket--compact"><Compass size={17} aria-hidden="true" />Chơi thử Bạch Đằng<ArrowRight size={17} aria-hidden="true" /></a>
+    </aside>
   </div></section>;
 }
 
@@ -63,7 +66,8 @@ export function LandingInvestigation() {
       <div className="landing-battle-preview"><img src={battlefield} alt="Minh họa sông nước và chiến trường Bạch Đằng" loading="lazy" /><span>Bạch Đằng · Năm 938</span></div>
       <div className="landing-investigation__copy"><Heading eyebrow="Khám phá" title="Đi tìm lời giải trên sông Bạch Đằng">Kéo mực nước để phát hiện bãi cọc, tìm hiểu người chỉ huy, chiến trường và đối thủ. Từ bốn dấu vết, tự mình giải mã chiến thắng.</Heading>
         <div className="landing-clues">{[[Waves, 'Thủy triều'], [UserRound, 'Ngô Quyền'], [MapPin, 'Sông Bạch Đằng'], [Swords, 'Quân Nam Hán']].map(([Icon, title]) => <span key={title}><Icon size={16} aria-hidden="true" />{title}</span>)}</div>
-        <button type="button" className="btn btn--primary landing-open-demo" onClick={open} aria-expanded={opened} aria-controls="trai-nghiem">Mở trải nghiệm tương tác <ArrowUpRight size={17} aria-hidden="true" /></button>
+        <button type="button" className="heritage-ticket heritage-ticket--compact landing-open-demo" onClick={open} aria-expanded={opened} aria-controls="trai-nghiem"><Compass size={17} aria-hidden="true" />Trải nghiệm Bạch Đằng<ArrowRight size={17} aria-hidden="true" /></button>
+        <p className="landing-demo-note">Chơi trực tiếp trên website · Có thể thu gọn và tiếp tục hành trình.</p>
       </div>
     </div>
     <div id="trai-nghiem" ref={panel} className="landing-demo-panel" hidden={!opened}>
@@ -82,7 +86,7 @@ export function LandingIslands() {
       <div className="landing-islands__copy"><div className="landing-island-options" role="group" aria-label="Xem trước quy mô đảo">{personalIslands.map((item, index) => <button type="button" key={item.id} aria-pressed={active === index} onClick={() => setActive(index)}>{item.title}</button>)}</div>
         <div aria-live="polite"><h3>{island.title}</h3><p>{island.description.split('. ')[0]}.</p></div>
         <ul><li>Thu thập vật phẩm qua thử thách</li><li>Tự chọn vị trí và xoay hướng khi bài trí</li><li>Tiến trình được lưu trên trình duyệt</li></ul>
-        <a className="landing-text-link" href="/#trai-nghiem">Mở trải nghiệm và khám phá đảo của tôi <ArrowUpRight size={16} aria-hidden="true" /></a>
+        <a className="heritage-ticket heritage-ticket--compact" href="/#trai-nghiem">Khám phá đảo của tôi <ArrowRight size={16} aria-hidden="true" /></a>
       </div>
     </div>
   </div></section>;

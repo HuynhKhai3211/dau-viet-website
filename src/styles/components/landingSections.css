@@ -28,7 +28,13 @@
 .landing-period details { border-top: 1px solid #b8976345; padding-top: 14px; }
 .landing-period summary { display: flex; justify-content: space-between; gap: 8px; color: #88603c; font-size: 10px; cursor: pointer; list-style: none; }
 .landing-period summary::-webkit-details-marker { display: none; }
+.landing-period summary.heritage-ticket { width: 100%; }
 .landing-period details p { margin: 12px 0 0; }
+.landing-period-demo { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 20px; padding: 18px 22px; border: 1px solid #b8894b77; border-radius: 9px; background: linear-gradient(115deg, #f2dfb7, #fff4de); }
+.landing-period-demo h3 { font-size: 18px; margin-bottom: 5px; }
+.landing-period-demo p { font-size: 12px; line-height: 1.7; margin: 0; }
+.landing-period-demo .heritage-ticket { flex-shrink: 0; }
+.landing-demo-note { margin: 12px 0 0; color: #796348; font-size: 11px; line-height: 1.7; }
 .landing-text-link { display: inline-flex; align-items: center; gap: 10px; color: #865732; text-decoration: none; font-size: 12px; border-bottom: 1px solid #bc94674d; padding-bottom: 5px; }
 .landing-period .landing-text-link { margin-top: 12px; font-size: 10px; }
 .landing-investigation, .landing-islands { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
@@ -75,6 +81,8 @@
   .landing-investigation, .landing-islands { gap: 24px; }
 }
 @media (max-width: 640px) {
+  .landing-period-demo { flex-direction: column; align-items: flex-start; padding: 18px; }
+  .landing-period-demo .heritage-ticket { width: 100%; }
   .landing-pillars, .landing-investigation, .landing-islands, .landing-contact__links { grid-template-columns: 1fr; }
   .landing-pillars { gap: 12px; }
   .landing-periods { grid-template-columns: 1fr; gap: 24px; }

@@ -72,3 +72,29 @@
 .heritage-ticket > svg { flex-shrink: 0; }
 .heritage-ticket:hover { color: #fff8e9; transform: translateY(-2px); box-shadow: 0 5px 0 #632216, 0 10px 22px #7a3b2038, inset 0 1px 0 #efb78b40; }
 .heritage-ticket:active { transform: translateY(1px); box-shadow: 0 2px 0 #632216; }
+
+.heritage-ticket.heritage-ticket--compact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  max-width: 100%;
+  gap: 9px;
+  padding: 11px 16px;
+  border: 1px solid #c69b64;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ac452c, #842a1c);
+  box-shadow: 0 4px 0 #642719, inset 0 1px 0 #f2c69b55;
+  color: #fff6e4;
+  font: 600 13px/1.5 var(--font-body);
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+}
+.heritage-ticket.heritage-ticket--compact:hover {
+  background: linear-gradient(135deg, #ba5033, #952f20);
+  color: #fffaf0;
+  box-shadow: 0 5px 0 #642719, 0 6px 14px #7a3b2026;
+}
+.heritage-ticket.heritage-ticket--compact:active { box-shadow: 0 2px 0 #642719; }
+.heritage-ticket.heritage-ticket--compact:focus-visible { outline: 2px solid #713b23; outline-offset: 5px; }

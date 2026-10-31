@@ -63,7 +63,7 @@ function HeroSection() {
           </p>
 
           <div className="hero-actions">
-            <Link to="/#kham-pha" className="btn btn--primary btn--large hero-btn-primary"><span>Khám phá Dấu Việt</span><ArrowRight size={20} /></Link>
+            <Link to="/#kham-pha" className="heritage-ticket hero-btn-primary"><span>Khám phá Dấu Việt</span><ArrowRight size={20} /></Link>
             <Link to="/#trai-nghiem" className="btn btn--secondary btn--large hero-btn-secondary"><Play size={18} /><span>Trải nghiệm demo</span></Link>
           </div>
 
