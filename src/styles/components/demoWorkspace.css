@@ -119,6 +119,10 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
 @media (min-width: 761px) and (max-height: 800px) {
   .demo-workspace .tide-observation { display: none; }
 }
+@media (max-width: 760px) and (max-height: 740px) {
+  .demo-workspace .tide-battle-heading { display: none; }
+  .demo-workspace .clue-context { order: 2; }
+}
 @media (max-width: 1000px) {
   .demo-workspace .demo-navbar__title, .demo-workspace .demo-stepper__label { display: none; }
   .demo-workspace .clue-exploration__layout { grid-template-columns: 190px minmax(0, 1fr); }
