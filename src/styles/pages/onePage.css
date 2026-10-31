@@ -1,6 +1,22 @@
+.one-page { --section-space: clamp(32px, 3.5vw, 48px); }
+.one-page .section { padding-block: var(--section-space); }
+.one-page .section:has(+ .divider) { padding-bottom: 24px; }
+.one-page .divider { height: 20px; margin: 0 auto; }
+.one-page .divider + .section { padding-top: 24px; }
+.one-page .section-header { margin-bottom: clamp(24px, 2.5vw, 36px); }
+.one-page .section-header p { margin-bottom: 0; }
+.one-page .discovery-heading { margin-bottom: 24px; }
+.one-page .about-hero, .one-page .explore-hero, .one-page .contact-hero {
+  padding-top: var(--section-space);
+  padding-bottom: 24px;
+}
+.one-page .team-hero { padding-block: var(--section-space); }
+.one-page .team-hero__members { margin-top: 28px; }
+.one-page .about-hero__subtitle, .one-page .explore-hero__subtitle { margin-bottom: 24px; }
+.one-page .about-cta-section, .one-page .demo-page { padding-bottom: var(--section-space); }
 .one-page-section { position: relative; scroll-margin-top: 0; }
 .one-page-section + .one-page-section { border-top: 1px solid #b08b4d4d; }
-.one-page-experience-heading { padding-top: var(--space-4xl); padding-bottom: var(--space-xl); text-align: center; }
+.one-page-experience-heading { padding-top: var(--section-space); padding-bottom: 24px; text-align: center; }
 .one-page-experience-heading > span { color: #886038; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; }
 .one-page-experience-heading h2 { margin: 14px 0; font-size: clamp(2rem, 4.5vw, 3.5rem); }
 .one-page .demo-page { background: transparent; }
