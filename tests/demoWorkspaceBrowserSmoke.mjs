@@ -64,11 +64,11 @@ try {
   await send('Page.enable');await send('Runtime.enable');
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
   await mkdir('artifacts/demo-workspace',{recursive:true});
-  const viewports=[[1440,900],[1366,768],[390,844],[320,740],[390,667]];
+  const viewports=[[1920,900],[1440,900],[1366,768],[390,844],[320,740],[390,667]];
   const cases=[['INTRO','.demo-intro__start-btn'],['CLUE_EXPLORATION','.clue-exploration__next-btn'],['HYPOTHESIS','.hypothesis-stage__submit-btn'],['VERIFICATION','.verification-stage__next-btn'],['RECONSTRUCTION','.reconstruction-stage__check-btn'],['RESULTS','.demo-results__actions']];
   for(const [width,height] of viewports){
     await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<640});
-    for(const [stage,action] of cases){
+    for(const [stage,action] of cases.filter(([stage]) => !process.env.WORKSPACE_STAGE || stage === process.env.WORKSPACE_STAGE)){
       const marker=stage+'-'+width+'-'+height;
       const journey={currentStage:stage,selectedAnswers:{q1:'q1b',q2:'q2c'},completedQuestions:stage==='HYPOTHESIS'?[]:['q1','q2'],discoveredClues:['thuy-trieu','ngo-quyen','dia-hinh','nam-han'],score:40,reconstructionOrder:['event-2','event-4','event-1','event-3']};
       const island={earned:['tree','house','stakes','boat','flag'],placements:[],pending:[]};
@@ -88,6 +88,8 @@ try {
         const scene=await evaluate('document.querySelector(".tide-battle-scene").getBoundingClientRect().toJSON()');
         const slider=await evaluate('document.querySelector(".tide-controls__slider").getBoundingClientRect().toJSON()');
         assert.ok(scene.top>=70&&scene.bottom<=height&&slider.top>=70&&slider.bottom<=height,marker+' image and slider not together '+JSON.stringify({scene,slider}));
+        assert.equal(await evaluate('document.querySelector(".river-artwork").getAttribute("preserveAspectRatio")'),'xMidYMid meet','Full scene is visible without cropping');
+        assert.ok(await evaluate('(() => {const el=document.querySelector(".tide-controls__slider");const r=el.getBoundingClientRect();return el===document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);})()'),marker+' slider is clipped or covered');
       }
       if(stage==='HYPOTHESIS'){
         assert.equal(await evaluate('document.querySelectorAll(".hypothesis-card:not([hidden])").length'),1);

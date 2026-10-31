@@ -47,24 +47,27 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
 .demo-workspace .clue-interactive-zone { flex: 1; min-height: 0; padding: 0; background: transparent; border: 0; order: 1; overflow-y: auto; }
 .demo-workspace .clue-sub-interaction--tide { height: 100%; min-height: 0; }
 .demo-workspace .clue-interactive-zone__header { display: none; }
-.demo-workspace .tide-interaction { display: grid; height: 100%; min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(225px, .52fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: 'heading heading' 'scene controls' 'scene story'; gap: 8px 12px; }
+.demo-workspace .tide-interaction { display: grid; height: 100%; min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(225px, .52fr); grid-template-rows: auto minmax(0, 1fr); grid-template-areas: 'heading heading' 'scene sidebar'; gap: 8px 12px; }
 .demo-workspace .tide-battle-heading { grid-area: heading; align-items: center; gap: 10px; }
 .demo-workspace .tide-eyebrow { display: none; }
 .demo-workspace .tide-battle-heading h4 { font-size: 17px; margin: 0; }
 .demo-workspace .tide-battle-heading p { font-size: 11px; line-height: 1.5; margin: 4px 0; }
 .demo-workspace .tide-interaction__toggle-btn { padding: 8px 10px; font-size: 10px; }
+.demo-workspace .tide-sidebar { grid-area: sidebar; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; min-height: 0; overflow: hidden; }
+.demo-workspace .tide-sidebar > * { flex-shrink: 0; width: 100%; }
+.demo-workspace .tide-sidebar > .tide-story { flex-shrink: 1; min-height: 0; overflow-y: auto; }
 .demo-workspace .tide-battle-scene { grid-area: scene; min-height: 0; height: 100%; display: flex; flex-direction: column; }
 .demo-workspace .tide-artwork-scroll { flex: 1; height: 100%; min-height: 0; overflow: auto; }
 .demo-workspace .tide-artwork-frame { height: 100%; }
 .demo-workspace .river-artwork { max-height: none; height: 100%; aspect-ratio: auto; }
 .demo-workspace .tide-battle-scene:has(.tide-zoom[aria-pressed=true]) .river-artwork { height: auto; aspect-ratio: 12/7; }
-.demo-workspace .tide-control-panel { grid-area: controls; padding: 12px; min-height: 0; overflow-y: auto; }
+.demo-workspace .tide-control-panel { grid-area: controls; padding: 12px; min-height: 125px; overflow: visible; align-self: start; }
 .demo-workspace .tide-control-panel__heading { margin-bottom: 8px; gap: 6px; }
 .demo-workspace .tide-control-panel__heading label { font-size: 12px; line-height: 1.5; gap: 5px; }
 .demo-workspace .tide-control-panel__heading output { font-size: 12px; }
 .demo-workspace .tide-controls__slider { height: 30px; }
 .demo-workspace .tide-observation { padding: 7px 9px; margin: 8px 0; font-size: 10px; line-height: 1.6; }
-.demo-workspace .tide-art-note { font-size: 8px; line-height: 1.4; }
+.demo-workspace .tide-art-note { display: none; }
 .demo-workspace .tide-story { grid-area: story; grid-template-columns: 1fr; gap: 5px; }
 .demo-workspace .tide-story-card { padding: 7px 9px; flex-direction: row; align-items: center; gap: 8px; }
 .demo-workspace .tide-story-card p, .demo-workspace .tide-story-card__number > span { display: none; }
@@ -113,6 +116,9 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
 .demo-workspace .demo-intro__actions .btn { min-height: 44px; padding: 10px 20px; }
 .demo-workspace .demo-results { max-width: none; height: 100%; overflow-y: auto; padding: 20px; }
 .demo-workspace .demo-results__actions { position: sticky; bottom: 0; background: #fff8e9f5; padding: 10px; }
+@media (min-width: 761px) and (max-height: 800px) {
+  .demo-workspace .tide-observation { display: none; }
+}
 @media (max-width: 1000px) {
   .demo-workspace .demo-navbar__title, .demo-workspace .demo-stepper__label { display: none; }
   .demo-workspace .clue-exploration__layout { grid-template-columns: 190px minmax(0, 1fr); }
@@ -152,7 +158,8 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
   .demo-workspace .tide-battle-heading h4 { font-size: 13px; }
   .demo-workspace .tide-battle-heading p, .demo-workspace .tide-interaction__quick-toggles { display: none; }
   .demo-workspace .river-artwork { max-height: none; }
-  .demo-workspace .tide-control-panel { padding: 7px 9px; }
+  .demo-workspace .tide-sidebar { display: contents; }
+  .demo-workspace .tide-control-panel { padding: 7px 9px; min-height: 0; }
   .demo-workspace .tide-control-panel__heading { margin-bottom: 4px; }
   .demo-workspace .tide-control-panel__heading label { font-size: 10px; }
   .demo-workspace .tide-controls__slider { min-height: 44px; height: 44px; }

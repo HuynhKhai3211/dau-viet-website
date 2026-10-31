@@ -57,7 +57,7 @@ export default function BachDangRiverScene({ level, phase }) {
   const trapped = phase === 'ambush';
   const enemyY = Math.min(waterY + 2, 474);
 
-  return <svg className="river-artwork" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby={`${id}-title ${id}-description`}>
+  return <svg className="river-artwork" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby={`${id}-title ${id}-description`}>
     <title id={`${id}-title`}>Trận địa Bạch Đằng năm 938 · {trapped ? 'Triều rút, thuyền Nam Hán gãy làm đôi trên bãi cọc' : phase === 'ebb' ? 'Nước đang rút, những đầu cọc dần xuất hiện' : 'Triều dâng che kín trận địa cọc'}</title>
     <desc id={`${id}-description`}>Cảnh núi rừng ven sông, thuyền quân Ngô Quyền, chiến thuyền Nam Hán và bãi cọc được ghép từ bộ ảnh của nhóm. Mặt nước thay đổi theo thanh thủy triều, để lộ cọc nhọn và lòng sông khi nước rút.</desc>
     <defs>

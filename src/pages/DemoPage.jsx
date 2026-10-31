@@ -74,7 +74,8 @@ export default function DemoPage({ embedded = false }) {
       const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 76;
       const controls = frame.getBoundingClientRect().top - root.getBoundingClientRect().top;
       const viewport = window.visualViewport?.height || window.innerHeight;
-      root.style.setProperty('--demo-stage-height', `${Math.max(260, Math.floor(viewport - header - controls - 32))}px`);
+      const bottomSpace = currentStage === DEMO_STAGES.CLUE_EXPLORATION ? 12 : 32;
+      root.style.setProperty('--demo-stage-height', `${Math.max(260, Math.floor(viewport - header - controls - bottomSpace))}px`);
     };
     resize();
     const observer = new ResizeObserver(resize);
