@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { HelpCircle, ArrowRight, Lightbulb, Compass } from 'lucide-react';
 import { hypothesisQuestions, clues } from '../../data/bachDangDemo';
 import AnimatedMascot from '../common/AnimatedMascot';
@@ -15,6 +16,14 @@ export default function HypothesisStage({
     (qId) => selectedAnswers[qId]
   ).length;
   const allAnswered = completedQuestions.length === totalQuestions;
+  const [activeQuestion, setActiveQuestion] = useState(() => Math.max(0, hypothesisQuestions.findIndex(q => !completedQuestions.includes(q.id))));
+  const questionList = useRef(null);
+  useEffect(() => { questionList.current?.scrollTo({ top: 0, behavior: 'instant' }); }, [activeQuestion]);
+  const canAdvance = allAnswered || completedQuestions.includes(hypothesisQuestions[activeQuestion].id);
+  const advance = () => {
+    if (allAnswered) onSubmit();
+    else setActiveQuestion(Math.max(0, hypothesisQuestions.findIndex(q => !completedQuestions.includes(q.id))));
+  };
 
   // Helper to get clue title from id
   const getClueTitle = (clueId) => {
@@ -64,12 +73,15 @@ export default function HypothesisStage({
       </div>
 
       {/* List of Multiple Choice Questions */}
-      <div className="hypothesis-stage__questions-list">
+      <div className="question-page-nav" role="group" aria-label="Chọn câu hỏi">
+        {hypothesisQuestions.map((q, index) => <button key={q.id} type="button" aria-pressed={activeQuestion === index} onClick={() => setActiveQuestion(index)}>Câu {index + 1}{completedQuestions.includes(q.id) ? ' · Đã xác nhận' : ''}</button>)}
+      </div>
+      <div className="hypothesis-stage__questions-list" ref={questionList}>
         {hypothesisQuestions.map((q, index) => {
           const selectedOptionId = selectedAnswers[q.id];
 
           return (
-            <div key={q.id} className="hypothesis-card">
+            <div key={q.id} className="hypothesis-card" hidden={activeQuestion !== index}>
               <div className="hypothesis-card__header">
                 <div className="hypothesis-card__number-tag">
                   Câu hỏi 0{index + 1}
@@ -123,7 +135,17 @@ export default function HypothesisStage({
                   );
                 })}
               </div>
-              <div className="question-reward-confirm">
+
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="question-reward-list">
+        {hypothesisQuestions.map((q, index) => {
+          const selectedOptionId = selectedAnswers[q.id];
+          return (
+              <div className="question-reward-confirm" key={q.id} hidden={activeQuestion !== index}>
                 <button type="button" className="btn btn--gold btn--small"
                   disabled={!selectedOptionId}
                   onClick={() => onCompleteQuestion(q.id)}>
@@ -131,7 +153,6 @@ export default function HypothesisStage({
                 </button>
                 <span>{completedQuestions.includes(q.id) ? 'Đáp án đã xác nhận. Bạn có thể mở lại quà hoặc đặt vật phẩm lên đảo.' : 'Xác nhận đáp án để nhận vật phẩm trang trí đảo.'}</span>
               </div>
-            </div>
           );
         })}
       </div>
@@ -164,10 +185,10 @@ export default function HypothesisStage({
         <button
           type="button"
           className="btn btn--primary btn--large hypothesis-stage__submit-btn"
-          disabled={!allAnswered}
-          onClick={onSubmit}
+          disabled={!canAdvance}
+          onClick={advance}
         >
-          <span>Kiểm tra giả thuyết</span>
+          <span>{allAnswered ? 'Kiểm tra giả thuyết' : 'Câu hỏi tiếp theo'}</span>
           <ArrowRight size={20} />
         </button>
       </div>

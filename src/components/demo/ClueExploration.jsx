@@ -254,6 +254,8 @@ export default function ClueExploration({
 
           {/* Historical Description Card */}
           <div className="clue-detail-panel__body">
+            <details className="clue-context">
+              <summary>Bối cảnh và gợi ý lịch sử</summary>
             <div className="clue-text-box">
               <p className="clue-text-box__full">{activeClue.fullDescription}</p>
               <div className="clue-text-box__detail">
@@ -262,6 +264,7 @@ export default function ClueExploration({
               </div>
             </div>
 
+            </details>
             {/* Clue-Specific Unique Interaction */}
             <div className="clue-interactive-zone">
               <div className="clue-interactive-zone__header">

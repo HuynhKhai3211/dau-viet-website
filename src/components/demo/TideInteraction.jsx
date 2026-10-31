@@ -32,9 +32,6 @@ export default function TideInteraction() {
       <button type="button" className="tide-zoom" onClick={() => setZoomed(prev => !prev)} aria-pressed={zoomed} aria-label={zoomed ? 'Thu nhỏ cảnh thủy triều' : 'Phóng to cảnh thủy triều'} title={zoomed ? 'Thu nhỏ' : 'Phóng to'}>{zoomed ? <ZoomOut size={18} /> : <ZoomIn size={18} />}</button>
       <div className="tide-scene-legend" aria-label="Chú giải thuyền"><span>Thuyền quân Ngô Quyền</span><span>Chiến thuyền Nam Hán</span></div>
     </figure>
-    <div className="tide-story" role="group" aria-label="Ba giai đoạn của thế trận thủy triều">
-      {phases.map((item, index) => <button type="button" key={item.id} className="tide-story-card" aria-pressed={phase.id === item.id} onClick={() => setLevel(item.level)} data-sound="water"><span className="tide-story-card__number">0{index + 1}<span> / THẾ TRẬN</span></span><strong>{item.title}</strong><p>{item.description}</p></button>)}
-    </div>
     <div className="tide-control-panel">
       <div className="tide-control-panel__heading"><label htmlFor={sliderId}><Waves size={20} /> Thủy triều sông Bạch Đằng</label><output htmlFor={sliderId}>{level}<span>%</span></output></div>
       <input id={sliderId} type="range" min="0" max="100" step="1" value={level} onChange={event => setLevel(Number(event.target.value))} className="tide-controls__slider" style={{ '--tide-level': `${level}%` }} aria-label="Điều chỉnh mực nước thủy triều" aria-valuetext={`${level}% · ${phase.status}`} />
@@ -42,5 +39,9 @@ export default function TideInteraction() {
       <p className="tide-observation"><strong>Quan sát thế trận:</strong> {phase.description}</p>
       <p className="tide-art-note">Minh họa nghệ thuật phục vụ học tập. Mực nước và tỉ lệ cảnh vật được mô phỏng.</p>
     </div>
+    <div className="tide-story" role="group" aria-label="Ba giai đoạn của thế trận thủy triều">
+      {phases.map((item, index) => <button type="button" key={item.id} className="tide-story-card" aria-pressed={phase.id === item.id} onClick={() => setLevel(item.level)} data-sound="water"><span className="tide-story-card__number">0{index + 1}<span> / THẾ TRẬN</span></span><strong>{item.title}</strong><p>{item.description}</p></button>)}
+    </div>
+
   </section>;
 }

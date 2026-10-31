@@ -1,0 +1,186 @@
+/* The lesson fits the available screen; reading areas scroll, action bars do not. */
+body:has(.demo-workspace[data-in-view]) .ambient-toggle { bottom: 4px; min-height: 24px; height: 24px; padding: 2px 9px; font-size: 10px; }
+body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; height: 12px; }
+.one-page .demo-page.demo-workspace { min-height: 0; padding-bottom: 0; }
+.demo-workspace > .container { display: flex; flex-direction: column; gap: 10px; }
+.demo-workspace .demo-experience-tabs { margin: 0; padding: 0; gap: 8px; }
+.demo-workspace .demo-experience-tabs button { min-height: 42px; padding: 8px 14px; font-size: 12px; }
+.demo-workspace .demo-navbar { position: static; margin: 0; padding: 10px 14px; min-height: 54px; gap: 12px; border-radius: 12px; flex-shrink: 0; }
+.demo-workspace .demo-navbar__title { font-size: 13px; }
+.demo-workspace .demo-navbar__badge { padding: 7px 10px; font-size: 11px; }
+.demo-workspace .demo-stepper__circle { width: 28px; height: 28px; font-size: 12px; }
+.demo-workspace .demo-stepper__label { font-size: 9px; }
+.demo-workspace .demo-score-chip { padding: 6px 10px; font-size: 12px; }
+.demo-workspace .demo-stage-container { height: var(--demo-stage-height, calc(100dvh - var(--header-height) - 150px)); min-height: 0; margin: 0; padding: 0; }
+.demo-workspace .demo-stage-container > :is(.clue-exploration, .hypothesis-stage, .verification-stage, .reconstruction-stage, .demo-intro) { display: flex; flex-direction: column; gap: 10px; height: 100%; min-height: 0; max-width: none; margin: 0; padding: 14px; }
+.demo-workspace :is(.clue-exploration__topbar, .hypothesis-stage__header, .reconstruction-stage__header, .verification-banner) { flex-shrink: 0; margin: 0; padding: 0; gap: 10px; }
+.demo-workspace :is(.clue-exploration__title, .hypothesis-stage__title, .reconstruction-stage__title, .verification-banner__title) { font-size: 18px; margin: 0; }
+.demo-workspace :is(.clue-exploration__subtitle, .hypothesis-stage__subtitle, .reconstruction-stage__subtitle, .verification-banner__subtitle) { font-size: 11px; line-height: 1.5; margin: 4px 0 0; }
+.demo-workspace :is(.clue-mascot-companion, .hypothesis-mascot-wrap, .verification-mascot-wrap, .clue-exploration__icon-badge, .hypothesis-stage__icon-badge, .reconstruction-stage__icon-badge) { display: none; }
+.demo-workspace :is(.hypothesis-stage__step-tag, .reconstruction-stage__step-tag) { font-size: 9px; margin: 0; }
+.demo-workspace .clue-meter { min-width: 170px; padding: 0; }
+.demo-workspace .clue-meter__points { display: none; }
+.demo-workspace .clue-exploration__layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); align-items: stretch; gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
+.demo-workspace .clue-map-panel { display: flex; flex-direction: column; padding: 10px; gap: 10px; min-height: 0; overflow-y: auto; }
+.demo-workspace .clue-map-panel__header { margin: 0; font-size: 10px; }
+.demo-workspace .clue-map-panel__hint { display: none; }
+.demo-workspace .clue-map-panel .historical-map { height: 150px; min-height: 150px; width: 100%; }
+.demo-workspace .clue-marker__bubble { width: 34px; height: 34px; }
+.demo-workspace .clue-marker__title { font-size: 8px; max-width: 95px; }
+.demo-workspace .clue-marker__number { width: 16px; height: 16px; font-size: 9px; }
+.demo-workspace .historical-map__geo-tag { font-size: 8px; padding: 3px; }
+.demo-workspace .clue-tabs { display: grid; grid-template-columns: 1fr; gap: 7px; margin: 0; width: 100%; }
+.demo-workspace .clue-tab { min-height: 44px; padding: 7px; gap: 7px; }
+.demo-workspace .clue-tab__name { font-size: 11px; }
+.demo-workspace .clue-tab__num { font-size: 8px; }
+.demo-workspace .clue-tab__status { font-size: 9px; }
+.demo-workspace .clue-detail-panel { display: flex; flex-direction: column; gap: 8px; padding: 12px; min-height: 0; overflow-y: auto; }
+.demo-workspace .clue-detail-panel__header { padding: 0; margin: 0; flex-shrink: 0; gap: 8px; }
+.demo-workspace .clue-detail-panel__title { font-size: 18px; }
+.demo-workspace .clue-detail-panel__number, .demo-workspace .clue-detail-panel__badge { font-size: 9px; }
+.demo-workspace .clue-detail-panel__short-desc { display: none; }
+.demo-workspace .clue-detail-panel__body { display: flex; flex-direction: column; align-items: stretch; gap: 8px; min-height: 0; flex: 1; }
+.demo-workspace .clue-context { flex-shrink: 0; order: 0; }
+.demo-workspace .clue-context summary { cursor: pointer; font-size: 11px; color: #88603d; padding: 4px 0; }
+.demo-workspace .clue-context[open] { max-height: 160px; overflow-y: auto; }
+.demo-workspace .clue-text-box { padding: 10px; font-size: 12px; }
+.demo-workspace .clue-interactive-zone { flex: 1; min-height: 0; padding: 0; background: transparent; border: 0; order: 1; overflow-y: auto; }
+.demo-workspace .clue-sub-interaction--tide { height: 100%; min-height: 0; }
+.demo-workspace .clue-interactive-zone__header { display: none; }
+.demo-workspace .tide-interaction { display: grid; height: 100%; min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(225px, .52fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: 'heading heading' 'scene controls' 'scene story'; gap: 8px 12px; }
+.demo-workspace .tide-battle-heading { grid-area: heading; align-items: center; gap: 10px; }
+.demo-workspace .tide-eyebrow { display: none; }
+.demo-workspace .tide-battle-heading h4 { font-size: 17px; margin: 0; }
+.demo-workspace .tide-battle-heading p { font-size: 11px; line-height: 1.5; margin: 4px 0; }
+.demo-workspace .tide-interaction__toggle-btn { padding: 8px 10px; font-size: 10px; }
+.demo-workspace .tide-battle-scene { grid-area: scene; min-height: 0; height: 100%; display: flex; flex-direction: column; }
+.demo-workspace .tide-artwork-scroll { flex: 1; height: 100%; min-height: 0; overflow: auto; }
+.demo-workspace .tide-artwork-frame { height: 100%; }
+.demo-workspace .river-artwork { max-height: none; height: 100%; aspect-ratio: auto; }
+.demo-workspace .tide-battle-scene:has(.tide-zoom[aria-pressed=true]) .river-artwork { height: auto; aspect-ratio: 12/7; }
+.demo-workspace .tide-control-panel { grid-area: controls; padding: 12px; min-height: 0; overflow-y: auto; }
+.demo-workspace .tide-control-panel__heading { margin-bottom: 8px; gap: 6px; }
+.demo-workspace .tide-control-panel__heading label { font-size: 12px; line-height: 1.5; gap: 5px; }
+.demo-workspace .tide-control-panel__heading output { font-size: 12px; }
+.demo-workspace .tide-controls__slider { height: 30px; }
+.demo-workspace .tide-observation { padding: 7px 9px; margin: 8px 0; font-size: 10px; line-height: 1.6; }
+.demo-workspace .tide-art-note { font-size: 8px; line-height: 1.4; }
+.demo-workspace .tide-story { grid-area: story; grid-template-columns: 1fr; gap: 5px; }
+.demo-workspace .tide-story-card { padding: 7px 9px; flex-direction: row; align-items: center; gap: 8px; }
+.demo-workspace .tide-story-card p, .demo-workspace .tide-story-card__number > span { display: none; }
+.demo-workspace .tide-story-card > strong { font-size: 10px; line-height: 1.5; }
+.demo-workspace .tide-story-card__number { font-size: 11px; }
+.demo-workspace .tide-scene-status { top: 8px; left: 8px; padding: 6px 9px; }
+.demo-workspace .tide-scene-status > span { display: none; }
+.demo-workspace .tide-scene-status strong { font-size: 9px; }
+.demo-workspace .tide-zoom { top: 8px; right: 8px; }
+.demo-workspace .tide-scene-legend { bottom: 8px; right: 8px; left: 8px; gap: 5px; }
+.demo-workspace .tide-scene-legend span { font-size: 8px; padding: 4px 6px; }
+.demo-workspace :is(.clue-exploration__bottom-action, .hypothesis-stage__bottom-bar, .verification-stage__footer, .reconstruction-stage__footer) { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0 0; margin: 0; border-top: 1px solid #c5a16c55; background: #fff8e9; }
+.demo-workspace :is(.clue-exploration__bottom-action, .hypothesis-stage__bottom-bar, .verification-stage__footer, .reconstruction-stage__footer) .btn { min-height: 42px; padding: 9px 14px; font-size: 12px; gap: 6px; }
+.demo-workspace :is(.clue-success-pill, .clue-pending-pill, .hypothesis-stage__status-notice, .verification-stage__footer-note, .reconstruction-stage__tip) { font-size: 10px; line-height: 1.5; }
+.demo-workspace :is(.clue-success-pill, .clue-pending-pill) { padding: 0; background: none; border: 0; }
+.demo-workspace .question-page-nav { display: flex; gap: 8px; flex-shrink: 0; }
+.demo-workspace .question-page-nav button { min-height: 36px; padding: 7px 12px; border: 1px solid #c5a16c77; border-radius: 6px; background: #fff3d9; color: #775133; font-size: 11px; }
+.demo-workspace .question-page-nav button[aria-pressed=true] { background: #805533; color: #fff5df; }
+.demo-workspace :is(.hypothesis-stage__questions-list, .verification-stage__cards-list, .reconstruction-list) { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; margin: 0; gap: 10px; }
+.demo-workspace .hypothesis-card[hidden] { display: none; }
+.demo-workspace .hypothesis-card { padding: 14px; }
+.demo-workspace .hypothesis-card__header { margin-bottom: 8px; }
+.demo-workspace .hypothesis-card__related { font-size: 9px; }
+.demo-workspace .hypothesis-card__question-text { font-size: 17px; margin-bottom: 12px; line-height: 1.45; }
+.demo-workspace .hypothesis-options-grid { gap: 7px; }
+.demo-workspace .hypothesis-option-label { padding: 10px 12px; min-height: 42px; gap: 10px; }
+.demo-workspace .hypothesis-option-text { font-size: 13px; line-height: 1.55; }
+.demo-workspace .question-reward-confirm { padding-top: 9px; margin-top: 10px; gap: 8px; }
+.demo-workspace .question-reward-confirm .btn { padding: 8px 12px; min-height: 40px; font-size: 12px; }
+.demo-workspace .question-reward-confirm span { font-size: 10px; }
+.demo-workspace .question-reward-list { flex-shrink: 0; }
+.demo-workspace .question-reward-confirm[hidden] { display: none; }
+.demo-workspace .question-reward-list .question-reward-confirm { margin: 0; }
+.demo-workspace .hypothesis-progress { min-width: 120px; }
+.demo-workspace .verification-card { padding: 16px; }
+.demo-workspace .reconstruction-item { padding: 12px; margin: 0; }
+.demo-workspace .reconstruction-item__title { font-size: 15px; }
+.demo-workspace .reconstruction-item__desc { font-size: 12px; line-height: 1.6; }
+.demo-workspace .reconstruction-notice { max-height: 95px; overflow-y: auto; margin: 0; padding: 10px; flex-shrink: 0; }
+.demo-workspace .demo-intro__body { flex: 1; min-height: 0; overflow-y: auto; margin: 0; padding-right: 4px; }
+.demo-workspace .demo-intro__hero { margin: 0; }
+.demo-workspace .demo-mascot-welcome { display: none; }
+.demo-workspace .demo-intro__title { font-size: 25px; margin: 4px 0; }
+.demo-workspace .demo-intro__subtitle { margin: 0; font-size: 13px; }
+.demo-workspace .demo-intro__actions { flex-shrink: 0; margin: 0; padding-top: 10px; border-top: 1px solid #c5a16c55; }
+.demo-workspace .demo-intro__actions .btn { min-height: 44px; padding: 10px 20px; }
+.demo-workspace .demo-results { max-width: none; height: 100%; overflow-y: auto; padding: 20px; }
+.demo-workspace .demo-results__actions { position: sticky; bottom: 0; background: #fff8e9f5; padding: 10px; }
+@media (max-width: 1000px) {
+  .demo-workspace .demo-navbar__title, .demo-workspace .demo-stepper__label { display: none; }
+  .demo-workspace .clue-exploration__layout { grid-template-columns: 190px minmax(0, 1fr); }
+  .demo-workspace .tide-interaction { grid-template-columns: minmax(0, 1fr) 210px; }
+}
+@media (max-width: 760px) {
+  .demo-workspace > .container { gap: 7px; }
+  .demo-workspace .demo-navbar { display: flex; padding: 7px 9px; gap: 8px; }
+  .demo-workspace .demo-navbar__brand { display: none; }
+  .demo-workspace .demo-stepper { margin: 0; width: auto; flex: 1; }
+  .demo-workspace .demo-stepper__circle { width: 22px; height: 22px; font-size: 10px; }
+  .demo-workspace .demo-stepper__line { margin-inline: 2px; }
+  .demo-workspace .demo-score-chip { font-size: 10px; padding: 4px 6px; }
+  .demo-workspace .demo-restart-icon-btn { width: 34px; height: 34px; }
+  .demo-workspace .demo-experience-tabs { display: flex; flex-wrap: nowrap; width: 100%; }
+  .demo-workspace .demo-experience-tabs button { flex: 1; width: auto; min-width: 0; justify-content: center; padding: 7px 9px; min-height: 38px; font-size: 10px; }
+  .demo-workspace .demo-stage-container > :is(.clue-exploration, .hypothesis-stage, .verification-stage, .reconstruction-stage, .demo-intro) { padding: 9px; gap: 7px; }
+  .demo-workspace .clue-exploration__title { font-size: 14px; }
+  .demo-workspace .clue-exploration__subtitle, .demo-workspace .hypothesis-stage__subtitle, .demo-workspace .clue-meter__track { display: none; }
+  .demo-workspace .clue-exploration__topbar { flex-direction: row; align-items: center; flex-wrap: nowrap; }
+  .demo-workspace .clue-meter { min-width: 45px; border: 0; background: none; }
+  .demo-workspace .clue-meter__header { margin: 0; font-size: 10px; }
+  .demo-workspace .clue-meter__label { display: none; }
+  .demo-workspace .clue-exploration__layout { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); gap: 7px; }
+  .demo-workspace .clue-map-panel { padding: 5px; gap: 0; overflow: visible; }
+  .demo-workspace .clue-map-panel__header, .demo-workspace .clue-map-panel .historical-map { display: none; }
+  .demo-workspace .clue-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .demo-workspace .clue-tab { min-height: 44px; padding: 5px; display: block; text-align: center; }
+  .demo-workspace .clue-tab__icon, .demo-workspace .clue-tab__num, .demo-workspace .clue-tab__status { display: none; }
+  .demo-workspace .clue-tab__name { font-size: 9px; line-height: 1.4; }
+  .demo-workspace .clue-detail-panel { padding: 7px; gap: 5px; }
+  .demo-workspace .clue-detail-panel__title { font-size: 14px; }
+  .demo-workspace .clue-detail-panel__number { display: none; }
+  .demo-workspace .clue-detail-panel__badge { padding: 4px; font-size: 8px; }
+  .demo-workspace .clue-context summary { padding: 1px 0; font-size: 10px; }
+  .demo-workspace .tide-interaction { grid-template-columns: 1fr; grid-template-rows: auto minmax(65px, 1fr) auto auto; grid-template-areas: 'heading' 'scene' 'controls' 'story'; gap: 6px; }
+  .demo-workspace .tide-battle-heading h4 { font-size: 13px; }
+  .demo-workspace .tide-battle-heading p, .demo-workspace .tide-interaction__quick-toggles { display: none; }
+  .demo-workspace .river-artwork { max-height: none; }
+  .demo-workspace .tide-control-panel { padding: 7px 9px; }
+  .demo-workspace .tide-control-panel__heading { margin-bottom: 4px; }
+  .demo-workspace .tide-control-panel__heading label { font-size: 10px; }
+  .demo-workspace .tide-controls__slider { min-height: 44px; height: 44px; }
+  .demo-workspace .tide-control-limits { margin-top: 3px; font-size: 8px; }
+  .demo-workspace .tide-observation, .demo-workspace .tide-art-note { display: none; }
+  .demo-workspace .tide-story { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  .demo-workspace .tide-story-card { display: flex; min-height: 40px; padding: 4px; gap: 4px; }
+  .demo-workspace .tide-story-card > strong { font-size: 10px; }
+  .demo-workspace .tide-story-card__number { display: none; }
+  .demo-workspace .tide-scene-status { padding: 4px; }
+  .demo-workspace .tide-scene-status strong { font-size: 8px; }
+  .demo-workspace .tide-scene-legend span { font-size: 7px; padding: 3px; }
+  .demo-workspace .tide-zoom { width: 30px; height: 30px; min-width: 30px; min-height: 30px; }
+  .demo-workspace :is(.clue-exploration__bottom-action, .hypothesis-stage__bottom-bar, .verification-stage__footer, .reconstruction-stage__footer) { flex-direction: row; flex-wrap: wrap; padding-top: 7px; gap: 6px; }
+  .demo-workspace .clue-exploration__bottom-status { flex: 1; min-width: 90px; }
+  .demo-workspace :is(.clue-success-pill, .clue-pending-pill) { font-size: 8px; }
+  .demo-workspace .clue-exploration__next-btn { width: auto; max-width: 60%; }
+  .demo-workspace .hypothesis-stage__title { font-size: 15px; }
+  .demo-workspace .hypothesis-stage__title-group { flex-basis: auto; }
+  .demo-workspace .hypothesis-progress { display: none; }
+  .demo-workspace .hypothesis-card { padding: 9px; }
+  .demo-workspace .hypothesis-card__header { margin-bottom: 5px; }
+  .demo-workspace .hypothesis-card__related { display: none; }
+  .demo-workspace .hypothesis-card__question-text { font-size: 14px; margin-bottom: 9px; }
+  .demo-workspace .hypothesis-option-label { padding: 9px; }
+  .demo-workspace .hypothesis-option-text { font-size: 12px; }
+  .demo-workspace .hypothesis-stage__status-notice { display: none; }
+  .demo-workspace .hypothesis-stage__back-btn, .demo-workspace .hypothesis-stage__submit-btn { width: auto; flex: 1; }
+  .demo-workspace .question-reward-confirm span { font-size: 9px; }
+  .demo-workspace .verification-stage__footer-note, .demo-workspace .reconstruction-stage__tip { display: none; }
+}

@@ -73,6 +73,7 @@ try {
     await send('Page.navigate',{url:base+'/?reward-case='+scenario.name+'#trai-nghiem'});
     await waitFor('window.__rewardCase === '+JSON.stringify(scenario.name)+' && !!document.querySelector(".question-reward-confirm button")');
     await send('Page.removeScriptToEvaluateOnNewDocument',{identifier:script.identifier});
+    await evaluate('document.querySelectorAll(".question-page-nav button")[0].click()');
     assert.equal(await evaluate('document.querySelector(".question-reward-confirm button").disabled'),false);
     await evaluate('document.querySelector(".question-reward-confirm button").click()');
     await waitFor('document.querySelector(".island-reward")?.open');
@@ -88,6 +89,12 @@ try {
     }
     await evaluate('document.querySelector(".island-reward__actions button").click()');
     await waitFor('!document.querySelector(".island-reward").open');
+    if(scenario.name==='fresh'){
+      await evaluate('document.querySelector(".hypothesis-stage__submit-btn").click()');
+      await waitFor('document.querySelectorAll(".question-page-nav button")[1].getAttribute("aria-pressed") === "true"');
+      assert.equal(await evaluate('document.querySelector(".hypothesis-stage__submit-btn").disabled'),true,'Next question requires confirmation');
+      await evaluate('document.querySelectorAll(".question-page-nav button")[0].click()');
+    }
     await evaluate('document.querySelector(".question-reward-confirm button").click()');
     await waitFor('document.querySelector(".island-reward").open');
     assert.equal(await evaluate('JSON.parse(localStorage.getItem("dau-viet-island-v1")).pending.length'),0,'Replay does not enqueue another gift');

@@ -109,6 +109,7 @@ export default function DemoIntro({ onStart }) {
           <p>{demoIntro.disclaimer}</p>
         </div>
 
+      </div>
         {/* CTA Launch Button */}
         <div className="demo-intro__actions">
           <button
@@ -123,7 +124,6 @@ export default function DemoIntro({ onStart }) {
             Thang điểm hoàn hảo: <strong>{scoring.maxScore} điểm</strong>
           </span>
         </div>
-      </div>
     </div>
   );
 }

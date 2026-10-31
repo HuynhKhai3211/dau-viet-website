@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { useState, useCallback, useMemo, useEffect, useLayoutEffect, useRef } from 'react';
 import {
   Compass,
   RotateCcw,
@@ -16,6 +16,7 @@ import DemoResults from '../components/demo/DemoResults';
 import IslandDecor, { IslandRewardDialog } from '../components/demo/IslandDecor';
 import { awardItem, readIsland, readSaved, ISLAND_STORAGE_KEY, JOURNEY_STORAGE_KEY } from '../data/islandDecor';
 import '../styles/pages/demo.css';
+import '../styles/components/demoWorkspace.css';
 import { playSound } from '../utils/interactionSounds';
 
 // Initial shuffled events helper (guaranteed not in default sorted order)
@@ -25,6 +26,7 @@ const getShuffledReconstructionOrder = () => {
 
 export default function DemoPage({ embedded = false }) {
   const demoRoot = useRef(null);
+  const stageFrame = useRef(null);
   const [engaged, setEngaged] = useState(false);
   const [rewardPreview, setRewardPreview] = useState(null);
   const [saved] = useState(() => {
@@ -53,6 +55,35 @@ export default function DemoPage({ embedded = false }) {
   const [reconstructionCorrect, setReconstructionCorrect] = useState(!!saved.reconstructionCorrect);
   const [reconstructionAttempts, setReconstructionAttempts] = useState(Number.isInteger(saved.reconstructionAttempts) ? saved.reconstructionAttempts : 0);
   const [score, setScore] = useState(Number.isFinite(saved.score) ? Math.max(0, Math.min(scoring.maxScore, saved.score)) : 0);
+
+  useEffect(() => {
+    const root = demoRoot.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      root.toggleAttribute('data-in-view', entry.isIntersecting);
+    }, { threshold: 0.4 });
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
+  useLayoutEffect(() => {
+    const root = demoRoot.current;
+    const frame = stageFrame.current;
+    if (!root || !frame) return;
+    const resize = () => {
+      const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 76;
+      const controls = frame.getBoundingClientRect().top - root.getBoundingClientRect().top;
+      const viewport = window.visualViewport?.height || window.innerHeight;
+      root.style.setProperty('--demo-stage-height', `${Math.max(260, Math.floor(viewport - header - controls - 32))}px`);
+    };
+    resize();
+    const observer = new ResizeObserver(resize);
+    observer.observe(root);
+    root.querySelectorAll('.demo-navbar, .demo-experience-tabs').forEach(node => observer.observe(node));
+    window.addEventListener('resize', resize);
+    window.visualViewport?.addEventListener('resize', resize);
+    return () => { observer.disconnect(); window.removeEventListener('resize', resize); window.visualViewport?.removeEventListener('resize', resize); };
+  }, [currentStage, activeView]);
 
   useEffect(() => {
     try {
@@ -189,7 +220,7 @@ export default function DemoPage({ embedded = false }) {
   const currentStageIndex = stageList.findIndex((s) => s.key === currentStage);
 
   return (
-    <div className="demo-page parchment-bg" ref={demoRoot} onClickCapture={() => setEngaged(true)} onKeyDownCapture={() => setEngaged(true)}>
+    <div className="demo-page demo-workspace parchment-bg" ref={demoRoot} onClickCapture={() => setEngaged(true)} onKeyDownCapture={() => setEngaged(true)}>
       <div className="container">
         <nav className="demo-experience-tabs" aria-label="Không gian trải nghiệm">
           <button type="button" aria-pressed={activeView === 'journey'} onClick={() => setActiveView('journey')}><Compass size={18} /> Hành trình lịch sử</button>
@@ -262,7 +293,7 @@ export default function DemoPage({ embedded = false }) {
         </header>
 
         {/* Dynamic Stage Rendering */}
-        <div className="demo-stage-container">
+        <div className="demo-stage-container" ref={stageFrame}>
           {currentStage === DEMO_STAGES.INTRO && (
             <DemoIntro
               onStart={() => setCurrentStage(DEMO_STAGES.CLUE_EXPLORATION)}

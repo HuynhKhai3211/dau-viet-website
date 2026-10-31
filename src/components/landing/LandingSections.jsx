@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { ArrowUpRight, ArrowRight, Compass, Search, Lightbulb, Puzzle, Waves, UserRound, MapPin, Swords, Gift, Palette, Save, Volume2, Sparkles, Mail } from 'lucide-react';
 import { historicalPeriods } from '../../data/historicalPeriods';
 import { personalIslands } from '../../data/islands';
@@ -54,26 +53,16 @@ export function LandingPeriods() {
 }
 
 export function LandingInvestigation() {
-  const { hash, key } = useLocation();
-  const isDemoLink = hash === '#trai-nghiem' || hash === '#demo';
-  const [opened, setOpened] = useState(isDemoLink);
-  const [visited, setVisited] = useState(isDemoLink);
-  const panel = useRef(null);
-  useEffect(() => { if (isDemoLink) { setOpened(true); setVisited(true); } }, [hash, key]);
-  const open = () => { setVisited(true); setOpened(true); requestAnimationFrame(() => panel.current?.scrollIntoView({ block: 'start', behavior: 'instant' })); };
   return <section id="investigation" className="section one-page-section landing-section">
     <div className="container landing-investigation">
       <div className="landing-battle-preview"><img src={battlefield} alt="Minh họa sông nước và chiến trường Bạch Đằng" loading="lazy" /><span>Bạch Đằng · Năm 938</span></div>
       <div className="landing-investigation__copy"><Heading eyebrow="Khám phá" title="Đi tìm lời giải trên sông Bạch Đằng">Kéo mực nước để phát hiện bãi cọc, tìm hiểu người chỉ huy, chiến trường và đối thủ. Từ bốn dấu vết, tự mình giải mã chiến thắng.</Heading>
         <div className="landing-clues">{[[Waves, 'Thủy triều'], [UserRound, 'Ngô Quyền'], [MapPin, 'Sông Bạch Đằng'], [Swords, 'Quân Nam Hán']].map(([Icon, title]) => <span key={title}><Icon size={16} aria-hidden="true" />{title}</span>)}</div>
-        <button type="button" className="heritage-ticket heritage-ticket--compact landing-open-demo" onClick={open} aria-expanded={opened} aria-controls="trai-nghiem"><Compass size={17} aria-hidden="true" />Trải nghiệm Bạch Đằng<ArrowRight size={17} aria-hidden="true" /></button>
-        <p className="landing-demo-note">Chơi trực tiếp trên website · Có thể thu gọn và tiếp tục hành trình.</p>
+        <a href="/#trai-nghiem" className="heritage-ticket heritage-ticket--compact landing-open-demo"><Compass size={17} aria-hidden="true" />Trải nghiệm Bạch Đằng<ArrowRight size={17} aria-hidden="true" /></a>
+        <p className="landing-demo-note">Trải nghiệm luôn hiển thị ngay bên dưới. Kéo xuống hoặc chọn nút để bắt đầu.</p>
       </div>
     </div>
-    <div id="trai-nghiem" ref={panel} className="landing-demo-panel" hidden={!opened}>
-      <div className="container landing-demo-toolbar"><span>Trải nghiệm Bạch Đằng 938</span><button type="button" className="btn btn--secondary btn--small landing-close-demo" onClick={() => { setOpened(false); document.getElementById('investigation').scrollIntoView({ block: 'start', behavior: 'instant' }); }}>Thu gọn trải nghiệm</button></div>
-      {visited && <DemoPage embedded />}
-    </div>
+    <div id="trai-nghiem" className="landing-demo-panel"><DemoPage embedded /></div>
   </section>;
 }
 

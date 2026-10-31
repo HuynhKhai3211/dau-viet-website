@@ -78,8 +78,8 @@ try {
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".landing-quote"),"::after").content'),'none');
   assert.equal(await evaluate('document.querySelector(".landing-quote").textContent.split(String.fromCharCode(8220)).length-1'),1);
   assert.equal(await evaluate('document.querySelector(".landing-quote").textContent.split(String.fromCharCode(8221)).length-1'),1);
-  assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),true,'Full demo is collapsed by default');
-  assert.equal(await evaluate('document.querySelectorAll(".demo-intro").length'),0);
+  assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),false,'Full demo is always visible');
+  assert.equal(await evaluate('document.querySelectorAll(".demo-intro").length'),1);
   assert.ok(await evaluate('document.getElementById("about").getBoundingClientRect().height<800'),'Introduction fits one desktop screen');
   assert.ok(await evaluate('document.getElementById("periods").getBoundingClientRect().height<900'),'Four chapters are compact');
   const duplicateIds=await evaluate('(() => {const ids=[...document.querySelectorAll("[id]")].map(el=>el.id);return ids.filter((id,index)=>ids.indexOf(id)!==index);})()');
@@ -109,11 +109,11 @@ try {
   await evaluate('document.querySelector(".demo-intro button.btn--primary").click()');
   await waitFor('!!document.querySelector(".tide-interaction")');
   await evaluate('document.querySelectorAll(".clue-tabs button")[1].click()');
-  await evaluate('document.querySelector(".landing-close-demo").click()');
-  assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),true);
+  await evaluate('document.getElementById("about").scrollIntoView({behavior:"instant"})');
+  assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),false);
   await evaluate('document.querySelector(".landing-open-demo").click()');
   await waitFor('!document.querySelector(".landing-demo-panel").hidden');
-  assert.equal(await evaluate('document.querySelectorAll(".clue-tab--discovered").length'),1,'Collapsing demo preserves live progress');
+  assert.equal(await evaluate('document.querySelectorAll(".clue-tab--discovered").length'),1,'Section navigation preserves live progress');
   await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
   await evaluate('document.querySelector(".header__hamburger").click()');
   await waitFor('document.querySelector(".header__hamburger").getAttribute("aria-expanded") === "true"');
@@ -127,7 +127,7 @@ try {
   await send('Page.navigate',{url:base+'/#learning-flow-step-4'});
   await waitFor('document.querySelectorAll(".discovery-nav button")[3]?.getAttribute("aria-selected") === "true"');
   assert.deepEqual(browserErrors,[]);
-  console.log('PASS: ordered eight-section landing; one quote pair; compact intro and four chapters; five widths; profiles; island previews; demo expand/collapse without losing progress; mobile menu; legacy links and step aliases.');
+  console.log('PASS: ordered eight-section landing; one quote pair; compact intro and four chapters; five widths; profiles; island previews; always visible demo without losing progress; mobile menu; legacy links and step aliases.');
   await send('Browser.close');
 } finally {
   ws?.close(); chrome.kill(); await delay(400);
