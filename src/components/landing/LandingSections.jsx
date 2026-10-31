@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import EarlyAccessSignup from './EarlyAccessSignup';
 import { ArrowUpRight, ArrowRight, Compass, Search, Lightbulb, Puzzle, Waves, UserRound, MapPin, Swords, Gift, Palette, Save, Volume2, Sparkles, Mail } from 'lucide-react';
 import { historicalPeriods } from '../../data/historicalPeriods';
 import { personalIslands } from '../../data/islands';
@@ -91,6 +92,7 @@ export function LandingFeatures() {
 export function LandingContact() {
   return <section id="contact" className="section one-page-section landing-section"><div className="container landing-contact">
     <Heading eyebrow="Liên hệ" title="Cùng đánh thức những câu chuyện di sản">Bạn muốn góp ý, hợp tác hoặc đồng hành cùng Dấu Việt? Hãy gửi lời nhắn cho chúng mình.</Heading>
+    <EarlyAccessSignup />
     <div className="landing-contact__links"><a href="mailto:contact@historydauviet.id.vn"><Mail size={20} aria-hidden="true" /><span><small>Email Dấu Việt</small>contact@historydauviet.id.vn</span><ArrowUpRight size={17} aria-hidden="true" /></a><a href="https://www.facebook.com/dauviet05" target="_blank" rel="noopener noreferrer"><UserRound size={20} aria-hidden="true" /><span><small>Kết nối với dự án</small>Facebook Dấu Việt</span><ArrowUpRight size={17} aria-hidden="true" /></a></div>
     <p className="landing-contact__address"><MapPin size={16} aria-hidden="true" />Trường Đại học FPT Cần Thơ · 600 Nguyễn Văn Cừ nối dài, Cần Thơ</p>
   </div></section>;

@@ -68,6 +68,29 @@
 .compact-landing .team-card__name { font-size: 1.15rem; }
 .compact-landing .team-card__bio { font-size: 12px; line-height: 1.8; }
 .landing-contact { max-width: 960px; }
+.early-access { display: grid; grid-template-columns: .9fr 1.1fr; gap: 32px; padding: 30px; margin-bottom: 24px; border: 1px solid #b58b4f88; border-radius: 14px; background: linear-gradient(120deg, #e8c991e8, #fff7e8f2); box-shadow: 0 8px 28px #6846230d; }
+.early-access__eyebrow { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: .12em; font-weight: 600; color: #895932; }
+.early-access__intro h3 { margin: 14px 0 12px; font-size: clamp(1.5rem, 2.5vw, 2rem); line-height: 1.35; }
+.early-access__intro p { margin: 0; font-size: 13px; line-height: 1.8; }
+.early-access__signature { display: block; margin-top: 24px; color: #8d633e; font: italic 500 18px/1.6 var(--font-heading); }
+.early-access__form { display: flex; flex-direction: column; align-items: stretch; gap: 15px; min-width: 0; }
+.early-access__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.early-access__form label { display: flex; flex-direction: column; gap: 7px; color: #68492f; font-size: 12px; font-weight: 600; }
+.early-access__form label > span { display: inline; font-size: 10px; font-weight: 400; }
+.early-access__form input, .early-access__form select { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #b28b585e; border-radius: 7px; background: #fffcf4; color: #513925; font: 14px var(--font-body); }
+.early-access__form input:focus-visible, .early-access__form select:focus-visible { outline: 2px solid #98412b; outline-offset: 2px; }
+.early-access__form .heritage-ticket { justify-content: center; width: 100%; }
+.early-access__note, .early-access__status { margin: 0; font-size: 11px; line-height: 1.7; color: #7b6247; }
+.early-access__status { padding: 10px 12px; border-radius: 7px; background: #fff9ea; border: 1px solid #b58b4f66; overflow-wrap: anywhere; }
+.early-access__status a { color: #943d2c; }
+@media (max-width: 760px) {
+  .early-access { grid-template-columns: 1fr; gap: 22px; padding: 22px; }
+  .early-access__signature { display: none; }
+}
+@media (max-width: 420px) {
+  .early-access__fields { grid-template-columns: 1fr; }
+  .early-access { padding: 18px; }
+}
 .landing-contact__links { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .landing-contact__links > a { display: flex; align-items: center; gap: 13px; padding: 20px; border-radius: 8px; border: 1px solid #ad854d66; background: #fff6e38c; color: #684b30; font-size: 14px; text-decoration: none; overflow-wrap: anywhere; }
 .landing-contact__links small { display: block; font-size: 11px; margin-bottom: 5px; color: #8c7354; }

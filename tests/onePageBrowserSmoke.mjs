@@ -73,6 +73,14 @@ try {
   assert.deepEqual(await evaluate('[...document.querySelectorAll(".header__nav-link")].map(el=>el.hash.slice(1))'),ids);
   assert.equal(await evaluate('document.querySelectorAll("main").length'),1);
   assert.equal(await evaluate('document.querySelectorAll("h1").length'),1);
+  assert.equal(await evaluate('document.querySelectorAll("#contact .early-access__form").length'),1);
+  assert.equal(await evaluate('document.querySelector(".early-access__form").checkValidity()'),false,'Signup requires an email');
+  await evaluate('document.getElementById("early-access-email").value="invalid-email"');
+  assert.equal(await evaluate('document.querySelector(".early-access__form").checkValidity()'),false,'Signup rejects invalid email');
+  await evaluate('document.getElementById("early-access-email").value="tester@example.com"');
+  assert.equal(await evaluate('document.querySelector(".early-access__form").checkValidity()'),true,'Name and device are optional');
+  assert.equal(await evaluate('document.querySelectorAll("#early-access-platform option").length'),3);
+  await evaluate('document.querySelector(".early-access__form").reset()');
   assert.equal(await evaluate('document.querySelectorAll(".landing-period").length'),4);
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".landing-quote"),"::before").content'),'none');
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".landing-quote"),"::after").content'),'none');
