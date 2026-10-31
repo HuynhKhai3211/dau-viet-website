@@ -90,7 +90,11 @@ function HeroSection() {
               interactive={true}
               message="Xin chào! Mình là bé Sử. Cùng mình giải mã lịch sử Việt Nam nhé!"
             />
-            <p className="hero-mascot__greeting">Xin chào mình là bé Sử !</p>
+            <div className="hero-mascot__intro">
+              <span className="hero-mascot__eyebrow">Người bạn đồng hành của Dấu Việt</span>
+              <h2 className="hero-mascot__greeting">Xin chào, mình là Bé Sử!</h2>
+              <p className="hero-mascot__description">Cùng mình khám phá những câu chuyện lịch sử Việt Nam nhé.</p>
+            </div>
           </div>
         </div>
       </div>
