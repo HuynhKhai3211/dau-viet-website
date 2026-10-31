@@ -6,7 +6,7 @@
 /* -------------------------------------------------------------------------
    0. SHARED & BASE STYLES
    ------------------------------------------------------------------------- */
-.home-page { position: relative; overflow-x: hidden; background: transparent; }
+.home-page { position: relative; overflow-x: clip; background: transparent; }
 
 .home-page > .section {
   background-color: #f8e3b833;

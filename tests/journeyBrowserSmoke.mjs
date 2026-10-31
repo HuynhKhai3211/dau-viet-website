@@ -58,118 +58,53 @@ try {
     return result.result.value;
   };
   const waitFor = async expression => {
-    for (let i = 0; i < 60; i++) { if (await evaluate(expression)) return; await delay(100); }
+    for (let i = 0; i < 200; i++) { if (await evaluate(expression)) return; await delay(100); }
     throw Error('UI did not become ready: ' + expression + '\nErrors: ' + JSON.stringify(browserErrors) + '\nPage: ' + await evaluate('document.body.innerText.slice(0,1000)'));
   };
-  const selected = () => evaluate(`Array.from(document.querySelectorAll('.learning-journey__step')).findIndex(el => el.getAttribute('aria-selected') === 'true') + 1`);
-  const click = async (selector, index = 0) => {
-    await evaluate(`document.querySelectorAll(${JSON.stringify(selector)})[${index}].click()`);
-    await delay(80);
-  };
-  const stablePanelHeight = async viewport => {
-    const heights = [];
-    for (let index = 0; index < 10; index++) {
-      await click('.learning-journey__step', index);
-      heights.push(await evaluate(`document.querySelector('.learning-journey__panel').getBoundingClientRect().height`));
-    }
-    assert.ok(heights.every(height => Math.abs(height - heights[0]) < .5), viewport + ' panel height changes across steps: ' + JSON.stringify(heights));
-    console.log(viewport + ' stable panel heights: ' + heights.join(', '));
-  };
-  const point = async index => {
-    await evaluate(`document.querySelectorAll('.learning-journey__step')[${index}].scrollIntoView({block:'center',behavior:'instant'})`);
-    return evaluate(`(() => {const r = document.querySelectorAll('.learning-journey__step')[${index}].getBoundingClientRect(); return {x:r.x+r.width/2,y:r.y+r.height/2};})()`);
-  };
-  const move = ({ x, y }) => send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
-  const key = async (key, code = key) => {
-    await send('Input.dispatchKeyEvent', { type: 'keyDown', key, code });
-    await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code });
-    await delay(60);
-  };
-  const screenshot = async name => {
-    const clip = await evaluate(`(() => {const r=document.querySelector('.learning-journey').getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height,scale:1};})()`);
-    const result = await send('Page.captureScreenshot', { format: 'png', clip, captureBeyondViewport: true });
-    await writeFile('artifacts/' + name + '.png', Buffer.from(result.data, 'base64'));
-  };
-
   await send('Page.enable');
   await send('Runtime.enable');
-  await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 1100, deviceScaleFactor: 1, mobile: false });
-  await send('Page.navigate', { url: base + '/explore' });
-  await waitFor(`document.querySelectorAll('.learning-journey__step').length === 10`);
-  await evaluate('document.fonts.ready.then(() => true)');
-  await evaluate(`document.querySelector('.learning-journey').scrollIntoView({block:'center',behavior:'instant'})`);
-  await delay(450);
-  assert.equal(await selected(), 1, 'First step is open by default');
-  assert.ok(await evaluate(`document.querySelector('.learning-journey__panel').textContent.includes('Bản đồ cá nhân')`));
-  assert.equal(await evaluate(`document.querySelector('.learning-journey__previous').disabled`), true);
-  assert.ok(await evaluate(`(() => {const list=document.querySelector('.learning-journey [role=tablist]').getBoundingClientRect(); const panel=document.querySelector('.learning-journey__panel').getBoundingClientRect(); return panel.left >= list.right-1;})()`), 'Desktop details sit to the right of the step list');
-  await stablePanelHeight('1440px desktop');
-  await click('.learning-journey__step', 0);
-
-  // Actual mouse movement exercises the hover delay and prevents a quick pass from switching content.
-  const second = await point(1);
-  await move({ x: 2, y: 200 });
-  await move(second);
-  await delay(70);
-  assert.equal(await selected(), 1, 'Hover does not change content immediately');
-  await delay(230);
-  assert.equal(await selected(), 2, 'Dwelling over a step opens it');
-  const panelHeight = await evaluate(`document.querySelector('.learning-journey__panel').getBoundingClientRect().height`);
-  await move({ x: 2, y: 200 });
-  await delay(300);
-  assert.equal(await selected(), 2, 'Leaving the list keeps the content open');
-  const third = await point(2);
-  await move(third);
-  await delay(50);
-  await move({ x: 2, y: 200 });
-  await delay(250);
-  assert.equal(await selected(), 2, 'Leaving before the hover delay cancels the pending step');
-  assert.equal(await evaluate(`document.querySelector('.learning-journey__panel').getBoundingClientRect().height`), panelHeight, 'Leaving the steps does not collapse the panel');
-
-  await evaluate(`document.querySelectorAll('.learning-journey__step')[4].focus()`);
-  await delay(60);
-  assert.equal(await selected(), 5, 'Keyboard focus selects a step immediately');
-  await key('ArrowRight');
-  assert.equal(await selected(), 6);
-  await key('ArrowLeft');
-  assert.equal(await selected(), 5);
-  await key('End');
-  assert.equal(await selected(), 10);
-  assert.equal(await evaluate(`document.querySelector('.learning-journey__next').disabled`), true);
-  await key('Home');
-  assert.equal(await selected(), 1);
-  assert.equal(await evaluate(`document.querySelectorAll('.learning-journey__step[tabindex="0"]').length`), 1, 'Tabs have one keyboard entry point');
-  await click('.learning-journey__next');
-  assert.equal(await selected(), 2);
-  await click('.learning-journey__previous');
-  assert.equal(await selected(), 1);
-  assert.ok(await evaluate(`(() => {const panel=document.querySelector('.learning-journey__panel');return document.getElementById(panel.getAttribute('aria-labelledby'))?.getAttribute('aria-selected') === 'true';})()`), 'Details are associated with the selected tab');
-  await mkdir('artifacts', { recursive: true });
-  await screenshot('journey-desktop');
-
-  await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
-  await send('Emulation.setTouchEmulationEnabled', { enabled: true });
-  await delay(200);
-  assert.ok(await evaluate(`document.documentElement.scrollWidth <= innerWidth`), 'No horizontal overflow on mobile');
-  assert.ok(await evaluate(`(() => {const list=document.querySelector('.learning-journey [role=tablist]').getBoundingClientRect();const panel=document.querySelector('.learning-journey__panel').getBoundingClientRect();return panel.top >= list.bottom-1;})()`), 'Mobile steps appear above the details');
-  await evaluate(`document.querySelectorAll('.learning-journey__step')[2].dispatchEvent(new PointerEvent('pointerover', {bubbles:true,pointerType:'touch'}))`);
-  await delay(300);
-  assert.equal(await selected(), 1, 'Touch pointer entry alone does not select a step');
-  await evaluate(`document.querySelectorAll('.learning-journey__step')[2].dispatchEvent(new PointerEvent('pointerout', {bubbles:true,pointerType:'touch'}))`);
-  await stablePanelHeight('390px mobile');
-  await click('.learning-journey__step', 0);
-  const ninth = await point(8);
-  await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ ...ninth, radiusX: 3, radiusY: 3, force: 1 }] });
-  await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-  await delay(100);
-  assert.equal(await selected(), 9, 'Touch selects a step');
-  await screenshot('journey-mobile');
-  await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
-  await click('.learning-journey__next');
-  assert.equal(await selected(), 10, 'Reduced motion preserves navigation');
-  assert.ok(await evaluate(`document.querySelector('.learning-journey').getAnimations({subtree:true}).every(animation => animation.effect.getTiming().duration <= 1)`), 'Reduced motion removes long content animations');
-  assert.deepEqual(browserErrors, [], 'No browser runtime errors');
-  console.log('PASS: delayed hover, cancelled hover, persistent details, keyboard tabs, previous/next boundaries, touch, mobile layout and reduced motion.');
+  await mkdir('artifacts/discovery-journey', { recursive: true });
+  for (const route of ['/', '/explore']) {
+    for (const width of [1440, 1024, 390, 320]) {
+      await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 640 });
+      await send('Page.navigate', { url: base + route });
+      await waitFor('document.querySelectorAll(".discovery-step").length === 6');
+      await evaluate('document.fonts.ready.then(() => true)');
+      await evaluate('document.documentElement.style.scrollBehavior = "auto"');
+      assert.equal(await evaluate('document.querySelectorAll(".discovery-nav a").length'), 6);
+      assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), route + ' no overflow at ' + width);
+      assert.ok(await evaluate('[...document.querySelectorAll(".discovery-step")].every(el => getComputedStyle(el).display !== "none" && el.getBoundingClientRect().height > 100)'), 'All six stages readable by scrolling');
+      assert.ok(await evaluate('[...document.querySelectorAll(".discovery-journey a")].filter(a => a.hash).every(a => !!document.getElementById(a.hash.slice(1)))'), 'All local calls to action resolve');
+      let lastTop = -1;
+      for (let i = 0; i < 6; i++) {
+        await evaluate('document.querySelectorAll(".discovery-step")[' + i + '].scrollIntoView({block:"start",behavior:"instant"})');
+        await waitFor('document.querySelectorAll(".discovery-nav a")[' + i + '].getAttribute("aria-current") === "step"');
+        const positions = await evaluate('(() => {const a=document.querySelectorAll(".discovery-step")[' + i + '].getBoundingClientRect(); const n=document.querySelector(".discovery-nav").getBoundingClientRect(); return {top:a.top+scrollY, navTop:n.top, navBottom:n.bottom, articleTop:a.top};})()');
+        assert.ok(positions.top > lastTop, 'Stages follow reading order');
+        lastTop = positions.top;
+        assert.ok(positions.navTop >= 0 && positions.navTop < 160, route + ' width ' + width + ' step ' + i + ' navigation: ' + JSON.stringify(positions));
+        assert.ok(positions.articleTop >= positions.navBottom - 2, 'Step heading is not covered by navigation');
+      }
+      await evaluate('document.querySelectorAll(".discovery-nav a")[0].click()');
+      await waitFor('location.hash.endsWith("-step-1") && document.querySelectorAll(".discovery-nav a")[0].getAttribute("aria-current") === "step"');
+      if (width === 1440 || width === 390) {
+        await delay(250);
+        const screenshot = await send('Page.captureScreenshot', { format:'png' });
+        await writeFile('artifacts/discovery-journey/' + (route === '/' ? 'home' : 'explore') + '-' + width + '.png', Buffer.from(screenshot.data, 'base64'));
+      }
+    }
+  }
+  await send('Emulation.setEmulatedMedia', { features: [{name:'prefers-reduced-motion',value:'reduce'}] });
+  await send('Page.navigate', {url:base + '/explore#learning-flow-step-4'});
+  await waitFor('!!document.querySelector("#learning-flow-step-4")');
+  await waitFor('document.querySelectorAll(".discovery-nav a")[3].getAttribute("aria-current") === "step"');
+  assert.ok(await evaluate('document.querySelector("#learning-flow-step-4").getBoundingClientRect().top < innerHeight'), 'Direct links reach the requested step');
+  await evaluate('document.querySelectorAll(".discovery-nav a")[2].focus()');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  await waitFor('location.hash.endsWith("step-3")');
+  assert.deepEqual(browserErrors, [], 'No runtime errors');
+  console.log('PASS: Home and Explore; six visible sequential stages; 1440/1024/390/320 layouts; sticky navigation, scroll tracking, anchor links, direct entry, keyboard, reduced motion.');
   await send('Browser.close');
 } finally {
   ws?.close(); chrome.kill(); await delay(400);

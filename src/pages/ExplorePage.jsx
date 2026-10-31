@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import SectionHeader from '../components/common/SectionHeader';
 import IslandShowcase from '../components/explore/IslandShowcase';
-import LearningJourney from '../components/explore/LearningJourney';
+import DiscoveryJourney from '../components/explore/DiscoveryJourney';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 import {
@@ -45,7 +45,6 @@ const gamificationIconMap = {
 
 export default function ExplorePage() {
   const [heroRef, heroRevealed] = useScrollReveal(0.1);
-  const [flowRef, flowRevealed] = useScrollReveal(0.12);
   const [timelineRef, timelineRevealed] = useScrollReveal(0.12);
   const [islandRef, islandRevealed] = useScrollReveal(0.12);
   const [gamifyRef, gamifyRevealed] = useScrollReveal(0.12);
@@ -82,12 +81,12 @@ export default function ExplorePage() {
           </div>
           <h1 className="explore-hero__title">Khám phá Dấu Việt</h1>
           <p className="explore-hero__subtitle">
-            Khám phá quy trình học tập 10 bước độc đáo, du hành qua 4 thời kỳ lịch sử
-            hào hùng và kiến tạo vương quốc tri thức trên hòn đảo của riêng bạn.
+            Đi qua sáu chặng: chọn thời kỳ, mở bản đồ, tìm dấu vết, đặt giả thuyết,
+            dựng câu chuyện và tạo hòn đảo di sản của bạn. Chỉ cần cuộn xuống để bắt đầu.
           </p>
           <div className="explore-hero__quick-nav">
             <a href="#learning-flow" className="explore-hero__nav-link">
-              Lộ trình 10 bước
+              Cách hoạt động
             </a>
             <span aria-hidden="true">•</span>
             <a href="#historical-timeline" className="explore-hero__nav-link">
@@ -99,28 +98,14 @@ export default function ExplorePage() {
             </a>
             <span aria-hidden="true">•</span>
             <a href="#gamification" className="explore-hero__nav-link">
-              Hệ thống Gamification
+              Phần thưởng & động lực
             </a>
           </div>
         </div>
       </section>
 
       {/* 2. Learning Flow Section */}
-      <section
-        id="learning-flow"
-        ref={flowRef}
-        className={`section explore-flow ${flowRevealed ? 'revealed' : ''}`}
-        aria-label="Quy trình học tập tương tác"
-      >
-        <div className="container">
-          <SectionHeader
-            title="Quy trình học tập tương tác"
-            subtitle="Hành trình 10 bước biến mỗi sự kiện lịch sử thành một cuộc điều tra hấp dẫn"
-          />
-
-          <LearningJourney />
-        </div>
-      </section>
+      <DiscoveryJourney id="learning-flow" />
 
       {/* Decorative Divider */}
       <div className="divider" role="presentation">

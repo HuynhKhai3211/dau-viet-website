@@ -9,10 +9,11 @@ import {
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import SectionHeader from '../components/common/SectionHeader';
 import { features, featureIconMap } from '../data/features';
-import { historicalPeriods, learningJourney, islandLevels } from '../data/historicalPeriods';
+import { historicalPeriods, islandLevels } from '../data/historicalPeriods';
 import { gamificationFeatures, energySystem } from '../data/gamification';
 import AnimatedMascot from '../components/common/AnimatedMascot';
 import IslandShowcase from '../components/explore/IslandShowcase';
+import DiscoveryJourney from '../components/explore/DiscoveryJourney';
 import '../styles/pages/home.css';
 
 // Icon dictionary for data-driven icons
@@ -69,7 +70,7 @@ function HeroSection() {
           <div className="hero-stats">
             {[
               { num: '4+', label: 'Thời kỳ lịch sử' },
-              { num: '10', label: 'Bước khám phá' },
+              { num: '6', label: 'Chặng khám phá' },
               { num: '3D', label: 'Sa bàn tương tác' }
             ].map((st, idx) => (
               <div key={idx} className="hero-stat-wrap">
@@ -105,7 +106,7 @@ function AboutPreviewSection() {
   const [revealRef, isRevealed] = useScrollReveal(0.15);
 
   return (
-    <section className="section section--alt about-preview-section" ref={revealRef}>
+    <section id="home-about" className="section section--alt about-preview-section" ref={revealRef}>
       <div className="container">
         <div className={`about-preview-grid ${isRevealed ? 'revealed' : ''}`}>
           <div className="about-preview-text">
@@ -193,7 +194,7 @@ function CoreFeaturesSection() {
   const [featuresRef, isRevealed] = useScrollReveal(0.1);
 
   return (
-    <section className="section features-section" ref={featuresRef}>
+    <section id="home-features" className="section features-section" ref={featuresRef}>
       <div className="container">
         <SectionHeader
           title="Tính năng cốt lõi"
@@ -228,55 +229,13 @@ function CoreFeaturesSection() {
 }
 
 /* =========================================================================
-   4. LEARNING JOURNEY SECTION
-   ========================================================================= */
-function LearningJourneySection() {
-  const [journeyRef, isRevealed] = useScrollReveal(0.1);
-
-  return (
-    <section className="section section--alt journey-section" ref={journeyRef}>
-      <div className="container">
-        <SectionHeader
-          title="Hành trình khám phá lịch sử"
-          subtitle="Chuỗi 10 chặng đường khép kín giúp bạn từ người mới bắt đầu trở thành nhà giải mã lịch sử tài ba"
-        />
-
-        <div className={`journey-path ${isRevealed ? 'revealed' : ''}`}>
-          <div className="journey-line" aria-hidden="true" />
-          {learningJourney.map((stepItem, index) => {
-            const isEven = index % 2 === 1;
-            return (
-              <div key={stepItem.step} className={`journey-step ${isEven ? 'journey-step--right' : 'journey-step--left'}`}>
-                <div className="journey-step__node">
-                  <span className="journey-step__number">{stepItem.step < 10 ? `0${stepItem.step}` : stepItem.step}</span>
-                </div>
-                <div className="journey-step__card">
-                  <div className="journey-step__card-header">
-                    <div className="journey-step__icon-box"><DynamicIcon name={stepItem.icon} size={22} /></div>
-                    <div>
-                      <span className="journey-step__badge">Chặng {stepItem.step}</span>
-                      <h4 className="journey-step__title">{stepItem.title}</h4>
-                    </div>
-                  </div>
-                  <p className="journey-step__description">{stepItem.description}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================================
-   5. HISTORICAL PERIOD PREVIEW SECTION
+   4. HISTORICAL PERIOD PREVIEW
    ========================================================================= */
 function HistoricalPeriodSection() {
   const [periodRef, isRevealed] = useScrollReveal(0.1);
 
   return (
-    <section className="section periods-section" ref={periodRef}>
+    <section id="home-periods" className="section periods-section" ref={periodRef}>
       <div className="container">
         <SectionHeader
           title="Các thời kỳ lịch sử tiêu biểu"
@@ -331,7 +290,7 @@ function PersonalIslandSection() {
   const [islandRef, isRevealed] = useScrollReveal(0.1);
 
   return (
-    <section className="section section--alt island-section" ref={islandRef}>
+    <section id="home-island" className="section section--alt island-section" ref={islandRef}>
       <div className="container">
         <SectionHeader
           title="Hòn đảo cá nhân của riêng bạn"
@@ -407,7 +366,7 @@ function DemoCtaSection() {
   const [ctaRef, isRevealed] = useScrollReveal(0.15);
 
   return (
-    <section className="section section--dark demo-cta-section" ref={ctaRef}>
+    <section id="home-demo" className="section section--dark demo-cta-section" ref={ctaRef}>
       <div className="demo-cta-backdrop" aria-hidden="true" />
       <div className="container demo-cta-container">
         <div className={`demo-cta-content ${isRevealed ? 'revealed' : ''}`}>
@@ -551,12 +510,20 @@ export default function HomePage() {
   return (
     <div className="home-page">
       <HeroSection />
+      <nav className="home-reading-nav" aria-label="Tìm hiểu Dấu Việt từ trên xuống">
+        <a href="#home-about">Về Dấu Việt</a>
+        <a href="#how-it-works">Cách hoạt động</a>
+        <a href="#home-periods">Bốn thời kỳ</a>
+        <a href="#home-island">Đảo di sản</a>
+        <a href="#home-features">Tính năng</a>
+        <a href="#home-demo">Trải nghiệm</a>
+      </nav>
       <AboutPreviewSection />
-      <CoreFeaturesSection />
-      <LearningJourneySection />
+      <DiscoveryJourney periodsHref="#home-periods" islandHref="#home-island" />
       <HistoricalPeriodSection />
       <PersonalIslandSection />
       <GamificationSection />
+      <CoreFeaturesSection />
       <DemoCtaSection />
       <AppDownloadSection />
     </div>
