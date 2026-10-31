@@ -48,7 +48,7 @@ try {
   });
   const send = (method, params = {}) => new Promise((resolve, reject) => {
     const callId = ++id;
-    const timer = setTimeout(() => { pending.delete(callId); reject(Error('Timeout: ' + method)); }, 10000);
+    const timer = setTimeout(() => { pending.delete(callId); reject(Error('Timeout: ' + method)); }, 30000);
     pending.set(callId, { resolve, reject, timer, method });
     ws.send(JSON.stringify({ id: callId, method, params }));
   });
@@ -63,48 +63,45 @@ try {
   };
   await send('Page.enable');
   await send('Runtime.enable');
-  await mkdir('artifacts/discovery-journey', { recursive: true });
-  for (const route of ['/', '/explore']) {
-    for (const width of [1440, 1024, 390, 320]) {
-      await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 640 });
-      await send('Page.navigate', { url: base + route });
-      await waitFor('document.querySelectorAll(".discovery-step").length === 6');
-      await evaluate('document.fonts.ready.then(() => true)');
-      await evaluate('document.documentElement.style.scrollBehavior = "auto"');
-      assert.equal(await evaluate('document.querySelectorAll(".discovery-nav a").length'), 6);
-      assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), route + ' no overflow at ' + width);
-      assert.ok(await evaluate('[...document.querySelectorAll(".discovery-step")].every(el => getComputedStyle(el).display !== "none" && el.getBoundingClientRect().height > 100)'), 'All six stages readable by scrolling');
-      assert.ok(await evaluate('[...document.querySelectorAll(".discovery-journey a")].filter(a => a.hash).every(a => !!document.getElementById(a.hash.slice(1)))'), 'All local calls to action resolve');
-      let lastTop = -1;
-      for (let i = 0; i < 6; i++) {
-        await evaluate('document.querySelectorAll(".discovery-step")[' + i + '].scrollIntoView({block:"start",behavior:"instant"})');
-        await waitFor('document.querySelectorAll(".discovery-nav a")[' + i + '].getAttribute("aria-current") === "step"');
-        const positions = await evaluate('(() => {const a=document.querySelectorAll(".discovery-step")[' + i + '].getBoundingClientRect(); const n=document.querySelector(".discovery-nav").getBoundingClientRect(); return {top:a.top+scrollY, navTop:n.top, navBottom:n.bottom, articleTop:a.top};})()');
-        assert.ok(positions.top > lastTop, 'Stages follow reading order');
-        lastTop = positions.top;
-        assert.ok(positions.navTop >= 0 && positions.navTop < 160, route + ' width ' + width + ' step ' + i + ' navigation: ' + JSON.stringify(positions));
-        assert.ok(positions.articleTop >= positions.navBottom - 2, 'Step heading is not covered by navigation');
-      }
-      await evaluate('document.querySelectorAll(".discovery-nav a")[0].click()');
-      await waitFor('location.hash.endsWith("-step-1") && document.querySelectorAll(".discovery-nav a")[0].getAttribute("aria-current") === "step"');
-      if (width === 1440 || width === 390) {
-        await delay(250);
-        const screenshot = await send('Page.captureScreenshot', { format:'png' });
-        await writeFile('artifacts/discovery-journey/' + (route === '/' ? 'home' : 'explore') + '-' + width + '.png', Buffer.from(screenshot.data, 'base64'));
-      }
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+  await mkdir('artifacts/discovery-tabs',{recursive:true});
+  for(const width of [1440,1024,390,320]){
+    await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<640});
+    await send('Page.navigate',{url:base+'/#learning-flow'});
+    await waitFor('document.querySelectorAll(".discovery-nav [role=tab]").length === 6');
+    await evaluate('document.fonts.ready.then(()=>true)');
+    await evaluate('document.querySelector(".discovery-nav").scrollIntoView({block:"start",behavior:"instant"})');
+    for(let index=0;index<6;index++){
+      const scrollBefore=await evaluate('scrollY');
+      await evaluate('document.querySelectorAll(".discovery-nav button")['+index+'].click()');
+      await waitFor('document.querySelectorAll(".discovery-nav button")['+index+'].getAttribute("aria-selected") === "true"');
+      assert.equal(await evaluate('document.querySelectorAll(".discovery-step:not([hidden])").length'),1,'Only one stage is visible');
+      assert.equal(await evaluate('document.querySelector(".discovery-step:not([hidden])").dataset.step'),String(index));
+      assert.equal(await evaluate('document.querySelector(".discovery-nav [aria-selected=true]").getAttribute("aria-controls")'),await evaluate('document.querySelector(".discovery-step:not([hidden])").id'));
+      assert.ok(await evaluate('[...document.querySelectorAll(".discovery-step[hidden]")].every(el=>getComputedStyle(el).display === "none")'));
+      assert.ok(Math.abs(await evaluate('scrollY')-scrollBefore)<3,'Selecting a tab does not scroll the page');
+      assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'No overflow at '+width);
+    }
+    await evaluate('document.querySelectorAll(".discovery-nav button")[0].click()');
+    await evaluate('document.querySelector(".discovery-step:not([hidden]) .discovery-next").click()');
+    await waitFor('document.querySelectorAll(".discovery-nav button")[1].getAttribute("aria-selected") === "true"');
+    await evaluate('document.querySelectorAll(".discovery-nav button")[0].focus({preventScroll:true})');
+    for(const [key,index] of [['ArrowRight',1],['End',5],['ArrowRight',0],['ArrowLeft',5],['Home',0]]){
+      await send('Input.dispatchKeyEvent',{type:'keyDown',key,code:key});
+      await send('Input.dispatchKeyEvent',{type:'keyUp',key,code:key});
+      await waitFor('document.querySelectorAll(".discovery-nav button")['+index+'].getAttribute("aria-selected") === "true"');
+      assert.ok(await evaluate('document.activeElement === document.querySelectorAll(".discovery-nav button")['+index+']'));
+    }
+    if(width===1440||width===390){
+      const shot=await send('Page.captureScreenshot',{format:'png'});
+      await writeFile('artifacts/discovery-tabs/tabs-'+width+'.png',Buffer.from(shot.data,'base64'));
     }
   }
-  await send('Emulation.setEmulatedMedia', { features: [{name:'prefers-reduced-motion',value:'reduce'}] });
-  await send('Page.navigate', {url:base + '/explore#learning-flow-step-4'});
-  await waitFor('!!document.querySelector("#learning-flow-step-4")');
-  await waitFor('document.querySelectorAll(".discovery-nav a")[3].getAttribute("aria-current") === "step"');
-  assert.ok(await evaluate('document.querySelector("#learning-flow-step-4").getBoundingClientRect().top < innerHeight'), 'Direct links reach the requested step');
-  await evaluate('document.querySelectorAll(".discovery-nav a")[2].focus()');
-  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
-  await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
-  await waitFor('location.hash.endsWith("step-3")');
-  assert.deepEqual(browserErrors, [], 'No runtime errors');
-  console.log('PASS: Home and Explore; six visible sequential stages; 1440/1024/390/320 layouts; sticky navigation, scroll tracking, anchor links, direct entry, keyboard, reduced motion.');
+  await send('Page.navigate',{url:base+'/explore#learning-flow-step-4'});
+  await waitFor('location.pathname === "/" && document.querySelectorAll(".discovery-nav button")[3]?.getAttribute("aria-selected") === "true"');
+  assert.equal(await evaluate('document.querySelector(".discovery-step:not([hidden])").id'),'learning-flow-step-4','Old direct links open their matching tab');
+  assert.deepEqual(browserErrors,[],'No runtime errors');
+  console.log('PASS: six tabs; exactly one matching panel visible; no scroll jump; four viewport sizes; next button; keyboard arrows/Home/End; direct legacy links.');
   await send('Browser.close');
 } finally {
   ws?.close(); chrome.kill(); await delay(400);

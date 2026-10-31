@@ -118,7 +118,7 @@ try {
     await waitFor('document.querySelector(".header__nav-link--active").hash === '+JSON.stringify('#'+id));
   }
   await send('Page.navigate',{url:base+'/#learning-flow-step-4'});
-  await waitFor('!!document.querySelector("#learning-flow-step-4") && document.querySelectorAll(".discovery-nav a")[3].getAttribute("aria-current") === "step"');
+  await waitFor('!!document.querySelector("#learning-flow-step-4") && document.querySelectorAll(".discovery-nav button")[3].getAttribute("aria-selected") === "true"');
   assert.deepEqual(browserErrors,[],'No runtime errors across the full one-page flow');
   console.log('PASS: six ordered sections; home load; single main and h1; unique IDs; 1440/1024/390/320; active navigation; mobile drawer scroll; demo state retained; legacy redirects; direct step links.');
   await send('Browser.close');

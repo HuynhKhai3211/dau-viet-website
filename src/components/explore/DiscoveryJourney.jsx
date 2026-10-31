@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Clock, Map, Search, Lightbulb, GitBranch, Palmtree, Check, ArrowUpRight, ArrowDown } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Clock, Map, Search, Lightbulb, GitBranch, Palmtree, Check, ArrowUpRight } from 'lucide-react';
 import '../../styles/components/discoveryJourney.css';
 
 const stages = [
@@ -107,16 +108,28 @@ function JourneyArt({ step }) {
 
 export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#historical-timeline', islandHref = '#personal-island' }) {
   const root = useRef(null);
-  const [active, setActive] = useState(0);
+  const { hash } = useLocation();
+  const stepFromHash = () => {
+    const prefix = `#${id}-step-`;
+    const step = hash.startsWith(prefix) ? Number(hash.slice(prefix.length)) - 1 : -1;
+    return Number.isInteger(step) && step >= 0 && step < stages.length ? step : null;
+  };
+  const [active, setActive] = useState(() => stepFromHash() ?? 0);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      if (visible.length) setActive(Number(visible[0].target.dataset.step));
-    }, { rootMargin: '-20% 0px -35% 0px', threshold: [0, .15, .4, .7] });
-    root.current.querySelectorAll('.discovery-step').forEach(node => observer.observe(node));
-    return () => observer.disconnect();
-  }, []);
+    const step = stepFromHash();
+    if (step !== null) setActive(step);
+  }, [hash, id]);
+
+  const handleTabKey = (event, index) => {
+    const next = event.key === 'ArrowRight' ? (index + 1) % stages.length
+      : event.key === 'ArrowLeft' ? (index + stages.length - 1) % stages.length
+        : event.key === 'Home' ? 0 : event.key === 'End' ? stages.length - 1 : null;
+    if (next === null) return;
+    event.preventDefault();
+    setActive(next);
+    root.current.querySelectorAll('[role="tab"]')[next].focus({ preventScroll: true });
+  };
 
   useEffect(() => {
     const nav = root.current.querySelector('.discovery-nav');
@@ -132,20 +145,19 @@ export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#
         <header className="discovery-heading">
           <span className="discovery-eyebrow">Cách hoạt động</span>
           <h2 id={`${id}-title`}>Một hành trình, sáu bước khám phá</h2>
-          <p>Từ chọn thời kỳ đến tạo đảo di sản. Cuộn xuống để theo dõi từng bước và hình dung trải nghiệm của bạn.</p>
-          <span className="discovery-scroll"><ArrowDown size={15} aria-hidden="true" /> Cuộn để khám phá trọn hành trình</span>
+          <p>Từ chọn thời kỳ đến tạo đảo di sản. Chọn một chặng bên dưới để xem minh họa và tìm hiểu cách trải nghiệm.</p>
         </header>
-        <nav className="discovery-nav" aria-label="Sáu chặng khám phá">
+        <div className="discovery-nav" role="tablist" aria-label="Sáu chặng khám phá">
           {stages.map(({ title, icon: Icon }, index) => (
-            <a key={title} href={`#${id}-step-${index + 1}`} className={active === index ? 'is-current' : ''} aria-current={active === index ? 'step' : undefined}>
+            <button key={title} type="button" role="tab" id={`${id}-tab-${index + 1}`} aria-controls={`${id}-step-${index + 1}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} className={active === index ? 'is-current' : ''} onClick={() => setActive(index)} onKeyDown={event => handleTabKey(event, index)}>
               <span className="discovery-nav__top"><span>0{index + 1}</span><Icon size={17} aria-hidden="true" /></span>
               <span>{title}</span>
-            </a>
+            </button>
           ))}
-        </nav>
+        </div>
         <div className="discovery-stages">
           {stages.map((stage, index) => (
-            <article className="discovery-step" id={`${id}-step-${index + 1}`} data-step={index} key={stage.title} aria-labelledby={`${id}-heading-${index}`}>
+            <article className="discovery-step" id={`${id}-step-${index + 1}`} data-step={index} key={stage.title} role="tabpanel" aria-labelledby={`${id}-tab-${index + 1}`} hidden={active !== index} tabIndex={0}>
               <div className={`discovery-scene discovery-scene--${index + 1}`}>
                 <span className="discovery-scene__label">Sổ tay nhà khám phá</span>
                 <JourneyArt step={index} />
@@ -158,7 +170,7 @@ export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#
                 <aside className="discovery-insight"><span>Một góc nhìn gợi mở</span><p>{stage.insight}</p></aside>
                 <ul>{stage.features.map(feature => <li key={feature}><Check size={15} aria-hidden="true" />{feature}</li>)}</ul>
                 <a className="discovery-link" href={stage.link === 'periods' ? periodsHref : stage.link === 'island' ? islandHref : '/#trai-nghiem'}>{stage.action}<ArrowUpRight size={16} aria-hidden="true" /></a>
-                {index < 5 && <a className="discovery-next" href={`#${id}-step-${index + 2}`}>Tiếp theo: {stages[index + 1].title}<ArrowDown size={14} aria-hidden="true" /></a>}
+                {index < 5 && <button type="button" className="discovery-next" onClick={() => setActive(index + 1)}>Tiếp theo: {stages[index + 1].title}<ArrowUpRight size={14} aria-hidden="true" /></button>}
               </div>
             </article>
           ))}
