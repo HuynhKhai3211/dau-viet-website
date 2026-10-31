@@ -36,7 +36,11 @@ export default function DemoPage() {
   const [completedQuestions, setCompletedQuestions] = useState(() => Array.isArray(saved.completedQuestions) ? saved.completedQuestions.filter(id => hypothesisQuestions.some(q => q.id === id)) : []);
   // Demo State Machine
   const [currentStage, setCurrentStage] = useState(saved.currentStage || DEMO_STAGES.INTRO);
-  const [discoveredClues, setDiscoveredClues] = useState(() => new Set(Array.isArray(saved.discoveredClues) ? saved.discoveredClues : []));
+  const [discoveredClues, setDiscoveredClues] = useState(() => new Set(
+    Array.isArray(saved.discoveredClues)
+      ? saved.discoveredClues.map(id => ({ 'bai-coc': 'ngo-quyen', 'chien-thuat': 'nam-han' }[id] || id))
+      : [],
+  ));
   const [selectedAnswers, setSelectedAnswers] = useState(saved.selectedAnswers && typeof saved.selectedAnswers === 'object' ? saved.selectedAnswers : {});
   const [answersSubmitted, setAnswersSubmitted] = useState(!!saved.answersSubmitted);
   const [answersVerified, setAnswersVerified] = useState(!!saved.answersVerified);

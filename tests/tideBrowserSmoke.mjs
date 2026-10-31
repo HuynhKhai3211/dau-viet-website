@@ -135,6 +135,34 @@ try {
   assert.equal(await evaluate('!!document.querySelector(".clue-detail-panel--panoramic")'), false, 'Other clue layouts are unchanged');
   await click('.clue-tabs button', 0);
   assert.ok(await evaluate('!!document.querySelector(".river-artwork")'), 'Scene works after switching clues');
+  const clueTitles = ['Ngô Quyền', 'Sông Bạch Đằng', 'Quân Nam Hán'];
+  for (let index = 1; index <= 3; index++) {
+    await click('.clue-tabs button', index);
+    assert.equal(await evaluate('document.querySelector(".clue-detail-panel__title").textContent'), clueTitles[index - 1]);
+    assert.equal(await evaluate('document.querySelectorAll(".clue-sub-interaction--facts .terrain-zone-btn").length'), 3);
+    assert.equal(await evaluate('!!document.querySelector(".stake-schematic, .strategy-stepper")'), false);
+    for (let fact = 0; fact < 3; fact++) {
+      await click('.clue-sub-interaction--facts .terrain-zone-btn', fact);
+      assert.equal(await evaluate(`document.querySelectorAll('.terrain-zone-btn')[${fact}].getAttribute('aria-pressed')`), 'true');
+      assert.equal(await evaluate('document.querySelector(".terrain-zone-card h4").textContent'), await evaluate(`document.querySelectorAll('.terrain-zone-btn strong')[${fact}].textContent`));
+    }
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), 'New clue fits mobile');
+  }
+  await click('.clue-tabs button', 0);
+  assert.ok(await evaluate('!!document.querySelector(".river-artwork")'), 'Original tide scene still mounts after all new clues');
+  await evaluate(`(() => {
+    const key = 'dau-viet-journey-v1';
+    const saved = JSON.parse(localStorage.getItem(key));
+    saved.discoveredClues = ['thuy-trieu', 'bai-coc', 'dia-hinh', 'chien-thuat'];
+    saved.score = 40;
+    localStorage.setItem(key, JSON.stringify(saved));
+  })()`);
+  await send('Page.navigate', { url: 'http://localhost:5173/demo?legacy-clues' });
+  await waitFor('document.querySelectorAll(".clue-tab--discovered").length === 4');
+  assert.deepEqual(await evaluate('JSON.parse(localStorage.getItem("dau-viet-journey-v1")).discoveredClues'), ['thuy-trieu', 'ngo-quyen', 'dia-hinh', 'nam-han']);
+  await click('.clue-tabs button', 1);
+  await click('.clue-tabs button', 3);
+  assert.equal(await evaluate('JSON.parse(localStorage.getItem("dau-viet-journey-v1")).score'), 40, 'Existing progress migrates without duplicate points');
   assert.deepEqual(browserErrors, [], 'No runtime errors');
   console.log('PASS: artwork loading, high/mid/low tides, ship impact and splitting, tide reset, phase controls, keyboard slider, zoom, mobile layout, reduced motion and clue switching.');
   await send('Browser.close');

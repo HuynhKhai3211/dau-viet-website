@@ -54,7 +54,7 @@ export default function DemoIntro({ onStart }) {
             </div>
             <h4 className="demo-step-card__title">Khám Phá Dấu Vết</h4>
             <p className="demo-step-card__text">
-              Quan sát 4 manh mối mấu chốt trên sa bàn: Thủy triều, bãi cọc nhọn bịt sắt, địa hình hiểm trở và kế hoạch tác chiến.
+              Khám phá 4 dấu vết trên sa bàn: Thủy triều, Ngô Quyền, sông Bạch Đằng và quân Nam Hán.
             </p>
             <span className="demo-step-card__points">+40 điểm tối đa</span>
           </div>

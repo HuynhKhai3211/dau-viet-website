@@ -39,42 +39,57 @@ export const clues = [
     position: { x: 20, y: 40 },
   },
   {
-    id: 'bai-coc',
+    id: 'ngo-quyen',
     number: 2,
-    title: 'Bãi Cọc Gỗ',
-    icon: 'TreePine',
-    shortDescription: 'Hàng ngàn cọc gỗ nhọn dưới lòng sông',
+    title: 'Ngô Quyền',
+    icon: 'UserRound',
+    shortDescription: 'Người lãnh đạo trận Bạch Đằng năm 938',
     fullDescription:
-      'Ngô Quyền đã cho đóng hàng ngàn cọc gỗ lớn, vạt nhọn đầu và bịt sắt, xuống lòng sông Bạch Đằng. Các cọc này được bố trí thành nhiều hàng, đầu nhọn hướng về phía cửa biển — nơi quân Nam Hán sẽ tiến vào.',
+      'Ngô Quyền là người lãnh đạo quân ta đánh bại quân Nam Hán trên sông Bạch Đằng năm 938. Ông chủ động chọn chiến trường và chuẩn bị kế hoạch đón đánh quân xâm lược.',
     detail:
-      'Khi triều lên, các cọc gỗ bị ngập hoàn toàn dưới nước, không thể nhìn thấy từ mặt sông. Khi triều xuống, các cọc nhọn lộ ra, trở thành bẫy chết người cho bất kỳ thuyền chiến nào đi qua vùng này.',
-    interactionType: 'examine',
+      'Hãy tìm hiểu vai trò của người chỉ huy, rồi liên hệ với điều bạn đã quan sát được trong tương tác thủy triều.',
+    explorationFacts: [
+      { name: 'Người chỉ huy', tag: 'Nhân vật lịch sử', desc: 'Ngô Quyền trực tiếp tổ chức cuộc kháng chiến chống quân Nam Hán năm 938.' },
+      { name: 'Cách tổ chức trận đánh', tag: 'Chủ động chuẩn bị', desc: 'Ông kết hợp việc chọn địa điểm, nắm quy luật con nước và bố trí lực lượng để tạo lợi thế.' },
+      { name: 'Ý nghĩa chiến thắng', tag: 'Bước ngoặt lịch sử', desc: 'Chiến thắng Bạch Đằng góp phần kết thúc thời kỳ Bắc thuộc, mở ra thời kỳ độc lập tự chủ lâu dài.' },
+    ],
+    interactionType: 'facts',
     position: { x: 50, y: 55 },
   },
   {
     id: 'dia-hinh',
     number: 3,
-    title: 'Địa Hình Sông Bạch Đằng',
-    icon: 'Mountain',
-    shortDescription: 'Đặc điểm địa hình vùng cửa sông',
+    title: 'Sông Bạch Đằng',
+    icon: 'MapPin',
+    shortDescription: 'Địa điểm diễn ra trận thủy chiến năm 938',
     fullDescription:
-      'Sông Bạch Đằng nằm ở vùng đông bắc, đổ ra biển qua cửa sông rộng. Hai bên bờ sông có nhiều nhánh nhỏ, bãi lầy, và vùng rừng rậm — tạo điều kiện thuận lợi để mai phục.',
+      'Sông Bạch Đằng là cửa ngõ đường biển ở vùng đông bắc nước ta. Năm 938, Ngô Quyền chọn nơi đây làm chiến trường đón đánh thủy quân Nam Hán.',
     detail:
-      'Địa hình sông Bạch Đằng với nhiều nhánh phụ và bãi lầy ven bờ là nơi lý tưởng để bố trí quân mai phục. Quân Việt có thể ẩn nấp trong các nhánh sông nhỏ và bất ngờ tấn công khi thời cơ đến.',
-    interactionType: 'map',
+      'Quan sát mối liên hệ giữa cửa biển, các nhánh sông và hai bờ để hiểu vì sao địa điểm này có lợi cho quân ta.',
+    explorationFacts: [
+      { name: 'Cửa ngõ đường biển', tag: 'Đường tiến quân', desc: 'Thủy quân Nam Hán từ biển tiến vào sông Bạch Đằng.' },
+      { name: 'Các nhánh sông', tag: 'Địa hình sông nước', desc: 'Nhiều nhánh sông và cây cối ven bờ tạo điều kiện bố trí lực lượng mai phục.' },
+      { name: 'Vùng chịu thủy triều', tag: 'Liên hệ Dấu 1', desc: 'Sự thay đổi mực nước là yếu tố tự nhiên quan trọng của chiến trường. Hãy quay lại Dấu 1 để quan sát.' },
+    ],
+    interactionType: 'facts',
     position: { x: 75, y: 30 },
   },
   {
-    id: 'chien-thuat',
+    id: 'nam-han',
     number: 4,
-    title: 'Chiến Thuật Của Ngô Quyền',
+    title: 'Quân Nam Hán',
     icon: 'Swords',
-    shortDescription: 'Kế hoạch tác chiến tinh vi',
+    shortDescription: 'Đối thủ của quân ta trong trận Bạch Đằng năm 938',
     fullDescription:
-      'Ngô Quyền đã xây dựng một kế hoạch chiến thuật kết hợp nhiều yếu tố: lợi dụng thủy triều, sử dụng bãi cọc, bố trí quân mai phục, và nhử địch vào bẫy. Một đội quân nhỏ được phái ra khiêu chiến rồi giả vờ thua chạy để dụ quân Nam Hán tiến sâu vào vùng cọc.',
+      'Năm 938, quân Nam Hán đưa thủy quân sang xâm lược nước ta. Đạo quân do Lưu Hoằng Tháo chỉ huy tiến vào sông Bạch Đằng và đối đầu với lực lượng của Ngô Quyền.',
     detail:
-      'Chiến thuật của Ngô Quyền thể hiện sự am hiểu sâu sắc về địa hình, thời tiết, và tâm lý đối phương. Ông đã biến những yếu tố tự nhiên thành vũ khí, kết hợp với sự chuẩn bị kỹ lưỡng để tạo ra một chiến thắng quyết định.',
-    interactionType: 'sequence',
+      'Tìm hiểu đường tiến quân và cách phản ứng của đối thủ để suy luận vì sao kế nghi binh của Ngô Quyền có hiệu quả.',
+    explorationFacts: [
+      { name: 'Lực lượng xâm lược', tag: 'Nhận diện đối thủ', desc: 'Quân Nam Hán sử dụng chiến thuyền vượt biển tiến vào nước ta.' },
+      { name: 'Lưu Hoằng Tháo', tag: 'Chỉ huy thủy quân', desc: 'Lưu Hoằng Tháo, con vua Nam Hán, được giao chỉ huy đạo quân thủy.' },
+      { name: 'Đuổi theo thuyền nhẹ', tag: 'Phản ứng của đối thủ', desc: 'Khi quân ta khiêu chiến rồi rút lui, quân Nam Hán đuổi theo và tiến sâu vào trận địa đã được chuẩn bị.' },
+    ],
+    interactionType: 'facts',
     position: { x: 35, y: 20 },
   },
 ];
@@ -109,7 +124,7 @@ export const hypothesisQuestions = [
     correctId: 'q1b',
     explanation:
       'Ngô Quyền lợi dụng quy luật thủy triều: khi triều lên, nước dâng cao che khuất bãi cọc, giúp nhử quân Nam Hán tiến sâu vào sông. Khi triều xuống, mực nước hạ, các cọc nhọn lộ ra, chặn đường rút lui và phá hủy thuyền chiến của địch.',
-    relatedClues: ['thuy-trieu', 'bai-coc'],
+    relatedClues: ['thuy-trieu', 'ngo-quyen'],
   },
   {
     id: 'q2',
@@ -140,7 +155,7 @@ export const hypothesisQuestions = [
     correctId: 'q2c',
     explanation:
       'Chiến thắng Bạch Đằng là kết quả của sự kết hợp tài tình giữa nhiều yếu tố: bãi cọc gỗ đã chuẩn bị sẵn, quy luật lên xuống của thủy triều, địa hình sông phức tạp với nhiều nhánh phụ thuận lợi cho mai phục, và chiến thuật khiêu chiến-giả thua để nhử quân địch vào vùng cọc.',
-    relatedClues: ['bai-coc', 'thuy-trieu', 'dia-hinh', 'chien-thuat'],
+    relatedClues: ['thuy-trieu', 'ngo-quyen', 'dia-hinh', 'nam-han'],
   },
 ];
 
