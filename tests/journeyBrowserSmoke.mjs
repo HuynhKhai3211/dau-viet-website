@@ -99,7 +99,7 @@ try {
   }
   await send('Page.navigate',{url:base+'/explore#learning-flow-step-4'});
   await waitFor('location.pathname === "/" && document.querySelectorAll(".discovery-nav button")[3]?.getAttribute("aria-selected") === "true"');
-  assert.equal(await evaluate('document.querySelector(".discovery-step:not([hidden])").id'),'learning-flow-step-4','Old direct links open their matching tab');
+  assert.equal(await evaluate('document.querySelector(".discovery-step:not([hidden])").id'),'how-it-works-step-4','Old direct links open their matching tab');
   assert.deepEqual(browserErrors,[],'No runtime errors');
   console.log('PASS: six tabs; exactly one matching panel visible; no scroll jump; four viewport sizes; next button; keyboard arrows/Home/End; direct legacy links.');
   await send('Browser.close');

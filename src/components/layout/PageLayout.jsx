@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { installInteractionSounds } from '../../utils/interactionSounds';
 import AmbientBackground from '../common/AmbientBackground';
+import { resolveSectionId } from '../../data/siteNavigation';
 
 import '../../styles/components/heritageBackground.css';
 
@@ -23,7 +24,7 @@ export default function PageLayout() {
       return;
     }
     const frame = requestAnimationFrame(() => {
-      document.getElementById(hash.slice(1))?.scrollIntoView({ block: 'start' });
+      document.getElementById(resolveSectionId(hash.slice(1)))?.scrollIntoView({ block: 'start' });
     });
     return () => cancelAnimationFrame(frame);
   }, [pathname, hash, key]);

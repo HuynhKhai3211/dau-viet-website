@@ -28,7 +28,7 @@ const avatarGradients = [
   'linear-gradient(135deg, #7B5EA7, #573D7A)', // Purple — CLO
 ];
 
-export default function TeamPage() {
+export default function TeamPage({ compact = false }) {
   const [heroRef, heroRevealed] = useScrollReveal(0.1);
   const [ctaRef, ctaRevealed] = useScrollReveal(0.15);
 
@@ -96,7 +96,7 @@ export default function TeamPage() {
                     </div>
                   </div>
 
-                  <p className="team-card__bio">{member.bio}</p>
+                  <p className="team-card__bio">{compact ? `${member.bio.split('. ')[0]}.` : member.bio}</p>
                 </article>
               );
             })}
@@ -105,7 +105,7 @@ export default function TeamPage() {
       </section>
 
       {/* 5. CTA to Contact Page */}
-      <section
+      {!compact && <section
         ref={ctaRef}
         className={`section team-cta-section ${ctaRevealed ? 'revealed' : ''}`}
         aria-label="Liên hệ với đội ngũ"
@@ -128,7 +128,7 @@ export default function TeamPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
     </div>
   );
 }

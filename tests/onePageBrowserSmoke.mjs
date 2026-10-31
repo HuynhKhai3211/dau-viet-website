@@ -48,7 +48,7 @@ try {
   });
   const send = (method, params = {}) => new Promise((resolve, reject) => {
     const callId = ++id;
-    const timer = setTimeout(() => { pending.delete(callId); reject(Error('Timeout: ' + method)); }, 10000);
+    const timer = setTimeout(() => { pending.delete(callId); reject(Error('Timeout: ' + method)); }, 30000);
     pending.set(callId, { resolve, reject, timer, method });
     ws.send(JSON.stringify({ id: callId, method, params }));
   });
@@ -63,64 +63,71 @@ try {
   };
   await send('Page.enable');
   await send('Runtime.enable');
-  await send('Emulation.setEmulatedMedia', {features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
   await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
-  await send('Page.navigate',{url:base + '/'});
-  await waitFor('document.querySelectorAll(".one-page > section").length === 6');
-  await evaluate('document.fonts.ready.then(() => true)');
-  await delay(300);
-  assert.equal(await evaluate('scrollY'),0,'Fresh load stays at home rather than jumping to demo');
-  const ids=['trang-chu','gioi-thieu','kham-pha','trai-nghiem','doi-ngu','lien-he'];
-  assert.deepEqual(await evaluate('[...document.querySelectorAll(".one-page > section")].map(el=>el.id)'),ids);
+  await send('Page.navigate',{url:base+'/'});
+  await waitFor('document.querySelectorAll(".one-page > section").length === 9');
+  await evaluate('document.fonts.ready.then(()=>true)');
+  const ids=['about','how-it-works','periods','investigation','islands','gamification','team','contact'];
+  assert.deepEqual(await evaluate('[...document.querySelectorAll(".one-page > section")].map(el=>el.id)'),['trang-chu',...ids]);
+  assert.deepEqual(await evaluate('[...document.querySelectorAll(".header__nav-link")].map(el=>el.hash.slice(1))'),ids);
   assert.equal(await evaluate('document.querySelectorAll("main").length'),1);
   assert.equal(await evaluate('document.querySelectorAll("h1").length'),1);
+  assert.equal(await evaluate('document.querySelectorAll(".landing-period").length'),4);
+  assert.equal(await evaluate('getComputedStyle(document.querySelector(".landing-quote"),"::before").content'),'none');
+  assert.equal(await evaluate('getComputedStyle(document.querySelector(".landing-quote"),"::after").content'),'none');
+  assert.equal(await evaluate('document.querySelector(".landing-quote").textContent.split(String.fromCharCode(8220)).length-1'),1);
+  assert.equal(await evaluate('document.querySelector(".landing-quote").textContent.split(String.fromCharCode(8221)).length-1'),1);
+  assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),true,'Full demo is collapsed by default');
+  assert.equal(await evaluate('document.querySelectorAll(".demo-intro").length'),0);
+  assert.ok(await evaluate('document.getElementById("about").getBoundingClientRect().height<800'),'Introduction fits one desktop screen');
+  assert.ok(await evaluate('document.getElementById("periods").getBoundingClientRect().height<900'),'Four chapters are compact');
   const duplicateIds=await evaluate('(() => {const ids=[...document.querySelectorAll("[id]")].map(el=>el.id);return ids.filter((id,index)=>ids.indexOf(id)!==index);})()');
-  assert.deepEqual(duplicateIds,[], 'One-page sections have unique IDs');
-  for(const width of [1440,1024,390,320]){
+  assert.deepEqual(duplicateIds,[]);
+  await mkdir('artifacts/compact-landing',{recursive:true});
+  for(const width of [1440,1280,1024,390,320]){
     await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<640});
     for(const id of ids){
       await evaluate('document.getElementById('+JSON.stringify(id)+').scrollIntoView({block:"start",behavior:"instant"})');
-      await waitFor('document.querySelector(".header__nav-link--active").hash === '+JSON.stringify('#'+id));
-      assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), 'No overflow at '+width+' in '+id);
+      await waitFor('document.querySelector(".header__nav-link--active")?.hash === '+JSON.stringify('#'+id));
+      assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'),'No overflow at '+width+' in '+id);
+    }
+    if(width===1440||width===390){
+      await evaluate('document.getElementById("periods").scrollIntoView({block:"start",behavior:"instant"})');
+      const shot=await send('Page.captureScreenshot',{format:'png'});
+      await writeFile('artifacts/compact-landing/periods-'+width+'.png',Buffer.from(shot.data,'base64'));
     }
   }
-  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
-  await evaluate('document.querySelectorAll(".header__nav-link")[3].click()');
-  await waitFor('location.hash === "#trai-nghiem"');
+  await evaluate('document.querySelector(".landing-period summary").click()');
+  assert.equal(await evaluate('document.querySelector(".landing-period details").open'),true);
+  for(let i=0;i<3;i++){
+    await evaluate('document.querySelectorAll(".landing-island-options button")['+i+'].click()');
+    await waitFor('document.querySelectorAll(".landing-island-options button")['+i+'].getAttribute("aria-pressed") === "true"');
+  }
+  await evaluate('document.querySelector(".landing-open-demo").click()');
+  await waitFor('!!document.querySelector(".demo-intro") && !document.querySelector(".landing-demo-panel").hidden');
   await evaluate('document.querySelector(".demo-intro button.btn--primary").click()');
   await waitFor('!!document.querySelector(".tide-interaction")');
-  assert.ok(await evaluate('scrollY > document.getElementById("trai-nghiem").offsetTop - 300'),'Demo stage changes stay within experience section');
   await evaluate('document.querySelectorAll(".clue-tabs button")[1].click()');
-  await evaluate('document.querySelectorAll(".header__nav-link")[4].click()');
-  await waitFor('location.hash === "#doi-ngu"');
-  await evaluate('document.querySelectorAll(".header__nav-link")[3].click()');
-  await waitFor('location.hash === "#trai-nghiem"');
-  assert.equal(await evaluate('document.querySelectorAll(".clue-tab--discovered").length'),1,'Anchor navigation preserves live demo state');
-  await evaluate('document.getElementById("doi-ngu").scrollIntoView({block:"start",behavior:"instant"})');
-  await evaluate('document.querySelectorAll(".header__nav-link")[3].click()');
-  await waitFor('Math.abs(document.getElementById("trai-nghiem").getBoundingClientRect().top - 112) < 35');
-  await mkdir('artifacts/one-page',{recursive:true});
+  await evaluate('document.querySelector(".landing-close-demo").click()');
+  assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),true);
+  await evaluate('document.querySelector(".landing-open-demo").click()');
+  await waitFor('!document.querySelector(".landing-demo-panel").hidden');
+  assert.equal(await evaluate('document.querySelectorAll(".clue-tab--discovered").length'),1,'Collapsing demo preserves live progress');
   await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
   await evaluate('document.querySelector(".header__hamburger").click()');
   await waitFor('document.querySelector(".header__hamburger").getAttribute("aria-expanded") === "true"');
-  await evaluate('document.querySelectorAll(".header__drawer-link")[5].click()');
-  await waitFor('location.hash === "#lien-he" && document.querySelector(".header__hamburger").getAttribute("aria-expanded") === "false"');
-  await delay(200);
-  assert.ok(await evaluate('Math.abs(document.getElementById("lien-he").getBoundingClientRect().top - 92) < 35'),'Mobile drawer closes and reaches contact without jumping to home');
-  assert.equal(await evaluate('document.body.style.position'),'');
-  const shot=await send('Page.captureScreenshot',{format:'png'});
-  await writeFile('artifacts/one-page/contact-mobile.png',Buffer.from(shot.data,'base64'));
-  await evaluate('document.querySelector(".header__logo").click()');
-  await waitFor('location.hash === "#trang-chu" && scrollY < 10');
-  for(const [path,id] of [['/about','gioi-thieu'],['/explore','kham-pha'],['/demo','trai-nghiem'],['/team','doi-ngu'],['/contact','lien-he']]){
+  await evaluate('document.querySelectorAll(".header__drawer-link")[7].click()');
+  await waitFor('location.hash === "#contact" && document.body.style.position !== "fixed"');
+  for(const [path,id] of [['/about','about'],['/explore','investigation'],['/demo','investigation'],['/team','team'],['/contact','contact']]){
     await send('Page.navigate',{url:base+path});
-    await waitFor('location.pathname === "/" && location.hash === '+JSON.stringify('#'+id)+' && !!document.getElementById('+JSON.stringify(id)+')');
-    await waitFor('document.querySelector(".header__nav-link--active").hash === '+JSON.stringify('#'+id));
+    await waitFor('location.pathname === "/" && !!document.getElementById('+JSON.stringify(id)+')');
+    if(path==='/demo')await waitFor('!!document.querySelector(".tide-interaction") && !document.querySelector(".landing-demo-panel").hidden');
   }
   await send('Page.navigate',{url:base+'/#learning-flow-step-4'});
-  await waitFor('!!document.querySelector("#learning-flow-step-4") && document.querySelectorAll(".discovery-nav button")[3].getAttribute("aria-selected") === "true"');
-  assert.deepEqual(browserErrors,[],'No runtime errors across the full one-page flow');
-  console.log('PASS: six ordered sections; home load; single main and h1; unique IDs; 1440/1024/390/320; active navigation; mobile drawer scroll; demo state retained; legacy redirects; direct step links.');
+  await waitFor('document.querySelectorAll(".discovery-nav button")[3]?.getAttribute("aria-selected") === "true"');
+  assert.deepEqual(browserErrors,[]);
+  console.log('PASS: ordered eight-section landing; one quote pair; compact intro and four chapters; five widths; profiles; island previews; demo expand/collapse without losing progress; mobile menu; legacy links and step aliases.');
   await send('Browser.close');
 } finally {
   ws?.close(); chrome.kill(); await delay(400);

@@ -3,16 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Compass, X } from 'lucide-react';
 import BrandLockup from '../common/BrandLockup';
 import SoundToggle from '../common/SoundToggle';
+import { mainSections, resolveSectionId } from '../../data/siteNavigation';
 import '../../styles/components/header.css';
 
-const navLinks = [
-  { label: 'Trang chủ', path: '/#trang-chu' },
-  { label: 'Giới thiệu', path: '/#gioi-thieu' },
-  { label: 'Khám phá', path: '/#kham-pha' },
-  { label: 'Trải nghiệm', path: '/#trai-nghiem' },
-  { label: 'Đội ngũ', path: '/#doi-ngu' },
-  { label: 'Liên hệ', path: '/#lien-he' },
-];
+const navLinks = mainSections.map(({ id, label }) => ({ label, path: `/#${id}` }));
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,7 +31,8 @@ export default function Header() {
         const section = document.getElementById(link.path.split('#')[1]);
         return section && section.getBoundingClientRect().top <= offset;
       });
-      if (current) setActiveSection(current.path.split('#')[1]);
+      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      setActiveSection(atBottom ? navLinks[navLinks.length - 1].path.split('#')[1] : current ? current.path.split('#')[1] : 'trang-chu');
     };
     const handleScroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
     handleScroll();
@@ -58,7 +53,7 @@ export default function Header() {
       const address = window.location.pathname + window.location.hash;
       if (address === openedAddress) window.scrollTo({ top: scrollY, behavior: 'instant' });
       else requestAnimationFrame(() => {
-        const section = document.getElementById(window.location.hash.slice(1));
+        const section = document.getElementById(resolveSectionId(window.location.hash.slice(1)));
         if (section) section.scrollIntoView({ block: 'start', behavior: 'instant' });
         else window.scrollTo({ top: 0, behavior: 'instant' });
       });

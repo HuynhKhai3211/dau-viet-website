@@ -1,20 +1,5 @@
 export const historicalPeriods = [
   {
-    id: 'au-lac',
-    title: 'Âu Lạc',
-    era: 'Khoảng thế kỷ III TCN',
-    theme: 'Dựng nước và giữ nước',
-    description: 'Thời kỳ An Dương Vương xây dựng nhà nước Âu Lạc với thành Cổ Loa – một trong những công trình quân sự độc đáo của Việt Nam cổ đại. Đây là giai đoạn quan trọng đánh dấu sự hình thành quốc gia sơ khai của người Việt.',
-    shortDescription: 'Thời kỳ An Dương Vương và thành Cổ Loa huyền thoại.',
-    color: '#8B6914',
-    bgGradient: 'linear-gradient(135deg, #D4A843, #8B6914)',
-    events: [
-      'Sự hình thành nhà nước Âu Lạc',
-      'Xây dựng thành Cổ Loa',
-      'Tổ chức quân sự và phòng thủ',
-    ],
-  },
-  {
     id: 'hai-ba-trung',
     title: 'Hai Bà Trưng',
     era: 'Năm 40 – 43',
@@ -30,9 +15,20 @@ export const historicalPeriods = [
     ],
   },
   {
+    id: 'ba-trieu',
+    title: 'Bà Triệu',
+    era: 'Năm 248',
+    theme: 'Ý chí độc lập và tinh thần bất khuất',
+    description: 'Năm 248, Bà Triệu lãnh đạo cuộc khởi nghĩa chống ách đô hộ của nhà Ngô tại vùng Thanh Hóa, trở thành biểu tượng của lòng yêu nước và ý chí tự chủ.',
+    shortDescription: 'Khám phá cuộc khởi nghĩa Bà Triệu và tinh thần bất khuất năm 248.',
+    color: '#A57C42',
+    bgGradient: 'linear-gradient(135deg, #C4A56A, #94703F)',
+    events: ['Bối cảnh ách đô hộ nhà Ngô', 'Cuộc khởi nghĩa năm 248', 'Tinh thần bất khuất của Bà Triệu'],
+  },
+  {
     id: 'ly-bi-van-xuan',
-    title: 'Lý Bí – Vạn Xuân',
-    era: 'Năm 544 – 602',
+    title: 'Lý Bí',
+    era: 'Năm 542 – 544',
     theme: 'Nhà nước độc lập Vạn Xuân',
     description: 'Lý Bí (Lý Nam Đế) đã lãnh đạo cuộc khởi nghĩa thành công, lập ra nhà nước Vạn Xuân – một trong những nhà nước độc lập đầu tiên trong lịch sử Việt Nam, thể hiện khát vọng tự chủ mãnh liệt của dân tộc.',
     shortDescription: 'Lý Nam Đế và nhà nước Vạn Xuân – khát vọng tự chủ.',
@@ -46,7 +42,7 @@ export const historicalPeriods = [
   },
   {
     id: 'ngo-quyen-bach-dang',
-    title: 'Ngô Quyền – Bạch Đằng',
+    title: 'Ngô Quyền',
     era: 'Năm 938',
     theme: 'Chiến thắng lịch sử, mở ra kỷ nguyên độc lập',
     description: 'Chiến thắng Bạch Đằng năm 938 của Ngô Quyền là một trong những trận đánh quan trọng nhất trong lịch sử Việt Nam. Bằng chiến thuật cọc gỗ trên sông và lợi dụng thủy triều, Ngô Quyền đã đánh bại quân Nam Hán, chấm dứt hơn 1000 năm Bắc thuộc.',

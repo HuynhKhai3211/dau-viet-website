@@ -269,11 +269,7 @@
 
 .about-story__quote blockquote::before,
 .about-story__quote blockquote::after {
-  content: '“';
-  font-size: 3rem;
-  color: var(--color-gold);
-  line-height: 0;
-  position: absolute;
+  content: none;
 }
 
 .about-story__body p {

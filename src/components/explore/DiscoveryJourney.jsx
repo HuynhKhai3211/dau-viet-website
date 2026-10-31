@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { resolveSectionId } from '../../data/siteNavigation';
 import { Clock, Map, Search, Lightbulb, GitBranch, Palmtree, Check, ArrowUpRight } from 'lucide-react';
 import '../../styles/components/discoveryJourney.css';
 
@@ -7,7 +8,7 @@ const stages = [
   {
     title: 'Chọn thời kỳ', icon: Clock, label: 'Giao diện Timeline',
     heading: 'Bắt đầu từ một thời kỳ bạn tò mò',
-    description: 'Đi qua bốn cột mốc từ Âu Lạc đến chiến thắng Bạch Đằng năm 938. Mỗi thời kỳ mở ra một bối cảnh, những nhân vật và câu chuyện để bạn khám phá.',
+    description: 'Bắt đầu với Hai Bà Trưng, Bà Triệu, Lý Bí hoặc Ngô Quyền. Mỗi thời kỳ mở ra những nhân vật và câu chuyện để bạn khám phá.',
     insight: 'Bạn có thể bắt đầu với Bạch Đằng 938 — hành trình đang có bản demo tương tác.',
     features: ['Bốn thời kỳ lịch sử', 'Bối cảnh và sự kiện tiêu biểu', 'Chọn hành trình phù hợp'],
     link: 'periods', action: 'Xem các thời kỳ',
@@ -106,12 +107,13 @@ function JourneyArt({ step }) {
   );
 }
 
-export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#historical-timeline', islandHref = '#personal-island' }) {
+export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#periods', islandHref = '#islands', className = '' }) {
   const root = useRef(null);
   const { hash } = useLocation();
   const stepFromHash = () => {
-    const prefix = `#${id}-step-`;
-    const step = hash.startsWith(prefix) ? Number(hash.slice(prefix.length)) - 1 : -1;
+    const fragment = resolveSectionId(hash.slice(1));
+    const prefix = `${id}-step-`;
+    const step = fragment.startsWith(prefix) ? Number(fragment.slice(prefix.length)) - 1 : -1;
     return Number.isInteger(step) && step >= 0 && step < stages.length ? step : null;
   };
   const [active, setActive] = useState(() => stepFromHash() ?? 0);
@@ -140,7 +142,7 @@ export default function DiscoveryJourney({ id = 'how-it-works', periodsHref = '#
   }, [active]);
 
   return (
-    <section className="section discovery-journey" id={id} ref={root} aria-labelledby={`${id}-title`}>
+    <section className={`section discovery-journey ${className}`} id={id} ref={root} aria-labelledby={`${id}-title`}>
       <div className="container">
         <header className="discovery-heading">
           <span className="discovery-eyebrow">Cách hoạt động</span>

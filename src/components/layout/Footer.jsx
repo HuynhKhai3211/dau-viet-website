@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import BrandLockup from '../common/BrandLockup';
+import { mainSections } from '../../data/siteNavigation';
 import '../../styles/components/footer.css';
 
 export default function Footer() {
   const currentYear = 2025;
 
-  const quickLinks = [
-    { label: 'Trang chủ', path: '/#trang-chu' },
-    { label: 'Giới thiệu dự án', path: '/#gioi-thieu' },
-    { label: 'Khám phá thời kỳ', path: '/#kham-pha' },
-    { label: 'Trải nghiệm tương tác', path: '/#trai-nghiem' },
-    { label: 'Đội ngũ phát triển', path: '/#doi-ngu' },
-    { label: 'Liên hệ đóng góp', path: '/#lien-he' },
-  ];
+  const quickLinks = mainSections.map(({ id, label }) => ({ label, path: `/#${id}` }));
 
   const exploreFeatures = [
     { label: 'Phòng suy luận lịch sử', path: '/#kham-pha' },
