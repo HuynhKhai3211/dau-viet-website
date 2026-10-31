@@ -96,7 +96,7 @@ export default function Header() {
     <header className={`header heritage-surface ${isScrolled ? 'header--scrolled' : ''}`}>
       <span className="heritage-surface__shine" aria-hidden="true" />
       <div className="header__container">
-        <BrandLockup className="header__logo" />
+        <BrandLockup className="header__logo" showSlogan />
         <nav className="header__nav" aria-label="Điều hướng chính">
           <ul className="header__nav-list">
             {navLinks.map(link => (
@@ -133,7 +133,7 @@ export default function Header() {
         aria-label="Menu điều hướng di động" aria-hidden={!isMobileMenuOpen} inert={!isMobileMenuOpen}>
         <span className="heritage-surface__shine" aria-hidden="true" />
         <div className="header__drawer-header">
-          <BrandLockup onClick={() => setIsMobileMenuOpen(false)} />
+          <BrandLockup onClick={() => setIsMobileMenuOpen(false)} showSlogan />
           <button type="button" className="header__drawer-close" onClick={() => setIsMobileMenuOpen(false)} aria-label="Đóng menu"><X size={20} /></button>
         </div>
         <ul className="header__drawer-nav">

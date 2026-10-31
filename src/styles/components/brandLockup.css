@@ -30,6 +30,11 @@
   white-space: nowrap;
 }
 .brand-lockup__name > span { color: #bd944f; font: 400 9px/1 var(--font-body); align-self: center; }
+.brand-lockup__slogan { color: #6a4b2f; font: 400 11px/1.5 var(--font-body); letter-spacing: .025em; }
+.header .brand-lockup__copy { gap: 1px; }
+@media (max-width: 600px) {
+  .header .brand-lockup__slogan { font-size: 9px; line-height: 1.4; }
+}
 
 .heritage-ticket {
   display: inline-flex;
