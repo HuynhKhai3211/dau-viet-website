@@ -223,6 +223,30 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
 }
 
 /* Clues sit above the scene, with an independent, wrapping progress summary. */
+.clue-activity { max-width: 860px; margin: 0 auto; padding: 18px 12px; color: #62472f; }
+.clue-activity__type { font-size: 11px; font-weight: 700; color: #9b4c33; letter-spacing: .06em; }
+.clue-activity h4 { margin: 12px 0; font-size: clamp(19px, 2.3vw, 26px); line-height: 1.4; }
+.clue-activity__context { font-size: 13px; line-height: 1.8; margin-bottom: 20px; }
+.clue-activity fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.clue-activity legend { font-size: 16px; font-weight: 600; margin-bottom: 14px; line-height: 1.6; }
+.clue-activity__option { display: flex; align-items: flex-start; gap: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid #bd98665e; border-radius: 9px; background: #fffbf2; cursor: pointer; font-size: 14px; line-height: 1.65; }
+.clue-activity__option.is-selected { border-color: #985034; background: #f4e6cc; box-shadow: inset 3px 0 #985034; }
+.clue-activity__option input { width: 19px; height: 19px; flex-shrink: 0; accent-color: #985034; margin-top: 3px; }
+.clue-activity__option:focus-within { outline: 2px solid #985034; outline-offset: 2px; }
+.clue-activity__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.clue-activity__actions button { min-height: 44px; }
+.clue-activity__feedback { padding: 18px; margin-top: 20px; border: 1px solid #ba9159; background: #fff2d9; border-radius: 9px; font-size: 13px; line-height: 1.8; }
+.clue-activity__feedback.is-success { border-color: #83985e; background: #f0f3e5; }
+.clue-activity__feedback p { margin: 8px 0 0; }
+.clue-activity__takeaway { display: flex; align-items: flex-start; gap: 8px; }
+.clue-activity__takeaway svg { flex-shrink: 0; margin-top: 4px; }
+.clue-activity__saved, .clue-activity__source { display: block; margin-top: 16px; font-size: 11px; line-height: 1.7; color: #84694b; }
+.clue-activity__pending { font-size: 11px; color: #8b6c45; }
+@media (max-width: 480px) {
+  .clue-activity { padding: 12px 2px; }
+  .clue-activity__option { padding: 12px; font-size: 13px; }
+  .clue-activity__actions button { width: 100%; }
+}
 .demo-workspace .clue-exploration__topbar { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 4px 0 10px; background: transparent; }
 .demo-workspace .clue-exploration__title-wrap { min-width: 0; flex: 1 1 260px; }
 .demo-workspace .clue-progress-summary { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; max-width: 100%; padding: 10px 14px; border: 1px solid #b58b4f55; border-radius: 12px; background: #fff8e9; color: #68482d; }

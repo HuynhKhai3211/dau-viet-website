@@ -117,6 +117,8 @@ try {
   await evaluate('document.querySelector(".demo-intro button.btn--primary").click()');
   await waitFor('!!document.querySelector(".tide-interaction")');
   await evaluate('document.querySelectorAll(".clue-tabs button")[1].click()');
+  await evaluate('document.querySelector(".clue-activity input").click()');
+  await evaluate('document.querySelector(".clue-activity__actions button").click()');
   await evaluate('document.getElementById("about").scrollIntoView({behavior:"instant"})');
   assert.equal(await evaluate('document.querySelector(".landing-demo-panel").hidden'),false);
   await evaluate('document.querySelector(".landing-open-demo").click()');

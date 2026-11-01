@@ -109,7 +109,10 @@ try {
   await trustedClick('.sound-toggle');
   await trustedClick('.demo-intro button.btn--primary');
   await waitFor('!!document.querySelector(".clue-tabs")');
-  for (let i = 0; i < 4; i++) await trustedClick('.clue-tabs button', i);
+  for (let i = 0; i < 4; i++) {
+    await trustedClick('.clue-tabs button', i);
+    if(i>0){ await trustedClick('.clue-activity__option',0); await trustedClick('.clue-activity__actions button'); }
+  }
   await waitFor('document.querySelector(".island-reward").open');
   assert.ok(await voiceCount() > mutedCount + 10, 'Clues and actual reward actions produce audio');
   await trustedClick('.island-reward__actions button', 0);

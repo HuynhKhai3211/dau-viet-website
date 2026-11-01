@@ -68,7 +68,10 @@ try {
   await waitFor("!!document.querySelector('.demo-experience-tabs')");
   await click('.demo-intro button.btn--primary');
   await waitFor("!!document.querySelector('.clue-tabs')");
-  for (let i = 0; i < 4; i++) await click('.clue-tabs button', i);
+  for (let i = 0; i < 4; i++) {
+    await click('.clue-tabs button', i);
+    if(i>0){ await click('.clue-activity input',0); await click('.clue-activity__actions button'); }
+  }
   await waitFor("document.querySelector('.island-reward')?.open");
   assert.deepEqual((await savedIsland()).pending, ['stakes']);
   assert.equal(await evaluate("document.querySelector('.demo-score-chip__val').textContent"), '40', 'StrictMode does not duplicate points');

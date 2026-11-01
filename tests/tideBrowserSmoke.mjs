@@ -139,13 +139,11 @@ try {
   for (let index = 1; index <= 3; index++) {
     await click('.clue-tabs button', index);
     assert.equal(await evaluate('document.querySelector(".clue-detail-panel__title").textContent'), clueTitles[index - 1]);
-    assert.equal(await evaluate('document.querySelectorAll(".clue-sub-interaction--facts .terrain-zone-btn").length'), 3);
+    assert.equal(await evaluate('document.querySelectorAll(".clue-activity input").length'), 3);
     assert.equal(await evaluate('!!document.querySelector(".stake-schematic, .strategy-stepper")'), false);
-    for (let fact = 0; fact < 3; fact++) {
-      await click('.clue-sub-interaction--facts .terrain-zone-btn', fact);
-      assert.equal(await evaluate(`document.querySelectorAll('.terrain-zone-btn')[${fact}].getAttribute('aria-pressed')`), 'true');
-      assert.equal(await evaluate('document.querySelector(".terrain-zone-card h4").textContent'), await evaluate(`document.querySelectorAll('.terrain-zone-btn strong')[${fact}].textContent`));
-    }
+    await click('.clue-activity input', 0);
+    await click('.clue-activity__actions button');
+    assert.ok(await evaluate('!!document.querySelector(".clue-activity__feedback.is-success")'));
     assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), 'New clue fits mobile');
   }
   await click('.clue-tabs button', 0);

@@ -10,10 +10,10 @@ import {
   Info,
   MapPin,
   Sparkles,
-  Layers,
 } from 'lucide-react';
 import { clues } from '../../data/bachDangDemo';
 import TideInteraction from './TideInteraction';
+import ClueActivity from './ClueActivity';
 import AnimatedMascot from '../common/AnimatedMascot';
 
 // Icon map for clues
@@ -23,40 +23,6 @@ const clueIconMap = {
   Swords,
   MapPin,
 };
-
-function ClueFactExplorer({ clue }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const selected = clue.explorationFacts[selectedIndex];
-  const Icon = clueIconMap[clue.icon] || Compass;
-
-  return (
-    <div className="clue-sub-interaction clue-sub-interaction--facts">
-      <div className="terrain-explorer">
-        <div className="terrain-zone-nav" role="group" aria-label={`Khám phá ${clue.title}`}>
-          {clue.explorationFacts.map((fact, index) => (
-            <button
-              key={fact.name}
-              type="button"
-              className={`terrain-zone-btn ${selectedIndex === index ? 'terrain-zone-btn--active' : ''}`}
-              aria-pressed={selectedIndex === index}
-              onClick={() => setSelectedIndex(index)}
-            >
-              <Icon size={16} aria-hidden="true" />
-              <div><strong>{fact.name}</strong><small>{fact.tag}</small></div>
-            </button>
-          ))}
-        </div>
-        <div className="terrain-zone-card" aria-live="polite" aria-atomic="true">
-          <div className="terrain-zone-card__header">
-            <Layers size={18} aria-hidden="true" />
-            <h4>{selected.name}</h4>
-          </div>
-          <p>{selected.desc}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function ClueExploration({
   discoveredClues = new Set(),
@@ -71,7 +37,7 @@ export default function ClueExploration({
 
   const handleSelectClue = (clueId) => {
     setActiveClueId(clueId);
-    if (!discoveredClues.has(clueId) && onDiscoverClue) {
+    if (clueId === 'thuy-trieu' && !discoveredClues.has(clueId) && onDiscoverClue) {
       onDiscoverClue(clueId);
     }
   };
@@ -173,7 +139,7 @@ export default function ClueExploration({
                 <CheckCircle2 size={16} />
                 <span>Đã khám phá (+10 điểm)</span>
               </div>
-            ) : (
+            ) : activeClue.id === 'thuy-trieu' ? (
               <button
                 type="button"
                 className="btn btn--small btn--gold"
@@ -182,7 +148,7 @@ export default function ClueExploration({
                 <Eye size={14} />
                 Xác nhận đã xem
               </button>
-            )}
+            ) : <span className="clue-activity__pending">Hoàn thành hoạt động để giải mã</span>}
           </div>
 
           {/* Historical Description Card */}
@@ -213,7 +179,7 @@ export default function ClueExploration({
               )}
 
               {activeClue.interactionType === 'facts' && (
-                <ClueFactExplorer key={activeClue.id} clue={activeClue} />
+                <ClueActivity key={activeClue.id} clueId={activeClue.id} completed={discoveredClues.has(activeClue.id)} onComplete={onDiscoverClue} />
               )}
 
             </div>
@@ -233,7 +199,7 @@ export default function ClueExploration({
             <div className="clue-pending-pill">
               <Info size={18} />
               <span>
-                Còn {clues.length - discoveredCount} Dấu Vết chưa khám phá. Hãy chọn trên bản đồ để tiếp tục.
+                Còn {clues.length - discoveredCount} dấu vết chưa giải mã. Chọn dấu vết phía trên và hoàn thành hoạt động để tiếp tục.
               </span>
             </div>
           )}
