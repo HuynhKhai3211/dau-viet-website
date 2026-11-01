@@ -134,57 +134,6 @@ export default function ClueExploration({
             <span className="clue-map-panel__hint">Nhấn vào từng Dấu Vết để mở khóa</span>
           </div>
 
-          {/* Interactive Map Viewport */}
-          <div className="historical-map">
-            {/* River flow visualization overlay */}
-            <div className="historical-map__river">
-              <div className="historical-map__current historical-map__current--1" />
-              <div className="historical-map__current historical-map__current--2" />
-              <span className="historical-map__river-label">Dòng Sông Bạch Đằng</span>
-            </div>
-
-            {/* Geographical Markers */}
-            <div className="historical-map__geo-tag historical-map__geo-tag--sea">
-              Cửa Biển (Nam Hán tiến vào) →
-            </div>
-            <div className="historical-map__geo-tag historical-map__geo-tag--upstream">
-              ← Thượng nguồn sông
-            </div>
-
-            {/* 4 Clue Markers placed at coordinates */}
-            {clues.map((clue) => {
-              const IconComponent = clueIconMap[clue.icon] || Compass;
-              const isDiscovered = discoveredClues.has(clue.id);
-              const isActive = activeClueId === clue.id;
-
-              return (
-                <button
-                  key={clue.id}
-                  type="button"
-                  className={`clue-marker clue-marker--${clue.id} ${
-                    isActive ? 'clue-marker--active' : ''
-                  } ${isDiscovered ? 'clue-marker--discovered' : ''}`}
-                  style={{
-                    left: `${clue.position.x}%`,
-                    top: `${clue.position.y}%`,
-                  }}
-                  onClick={() => handleSelectClue(clue.id)}
-                  aria-label={`Dấu vết ${clue.number}: ${clue.title}`}
-                >
-                  <div className="clue-marker__pulse" />
-                  <div className="clue-marker__bubble">
-                    <span className="clue-marker__number">{clue.number}</span>
-                    <IconComponent size={18} className="clue-marker__icon" />
-                    {isDiscovered && (
-                      <CheckCircle2 size={14} className="clue-marker__check" />
-                    )}
-                  </div>
-                  <span className="clue-marker__title">{clue.title}</span>
-                </button>
-              );
-            })}
-          </div>
-
           {/* Quick Clue Selector Tabs (Accessible on Mobile) */}
           <div className="clue-tabs">
             {clues.map((clue) => {
