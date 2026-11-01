@@ -12,7 +12,7 @@ import {
   Sparkles,
   Layers,
 } from 'lucide-react';
-import { clues, scoring } from '../../data/bachDangDemo';
+import { clues } from '../../data/bachDangDemo';
 import TideInteraction from './TideInteraction';
 import AnimatedMascot from '../common/AnimatedMascot';
 
@@ -93,21 +93,10 @@ export default function ClueExploration({
         </div>
 
         {/* Discovery Progress Meter */}
-        <div className="clue-meter">
-          <div className="clue-meter__header">
-            <span className="clue-meter__label">Dấu Vết đã giải mã:</span>
-            <span className="clue-meter__count">
-              <strong>{discoveredCount}</strong> / {clues.length}
-            </span>
-          </div>
-          <div className="clue-meter__track">
-            <div
-              className="clue-meter__fill"
-              style={{ width: `${(discoveredCount / clues.length) * 100}%` }}
-            />
-          </div>
-          <div className="clue-meter__points">
-            Điểm tích lũy: +{discoveredCount * scoring.cluePoints} / 40 điểm
+        <div className="clue-progress-summary" role="status" aria-live="polite" aria-atomic="true">
+          <div className="clue-progress-summary__count"><strong>{discoveredCount}</strong><span>/ {clues.length}</span></div>
+          <div className="clue-progress-summary__detail"><span>Dấu vết đã giải mã</span>
+            <div className="clue-progress-summary__segments" aria-hidden="true">{clues.map(clue => <i key={clue.id} className={discoveredClues.has(clue.id) ? 'is-complete' : ''} />)}</div>
           </div>
         </div>
 
@@ -126,13 +115,6 @@ export default function ClueExploration({
       <div className="clue-exploration__layout">
         {/* Left Column: Interactive Strategic Map View */}
         <div className="clue-map-panel">
-          <div className="clue-map-panel__header">
-            <div className="clue-map-panel__tag">
-              <MapPin size={16} />
-              <span>Sa bàn chiến trường Bạch Đằng (Năm 938)</span>
-            </div>
-            <span className="clue-map-panel__hint">Nhấn vào từng Dấu Vết để mở khóa</span>
-          </div>
 
           {/* Quick Clue Selector Tabs (Accessible on Mobile) */}
           <div className="clue-tabs">
@@ -149,6 +131,8 @@ export default function ClueExploration({
                     isDiscovered ? 'clue-tab--discovered' : ''
                   }`}
                   onClick={() => handleSelectClue(clue.id)}
+                  aria-pressed={isActive}
+                  aria-label={`Dấu vết ${clue.number}: ${clue.title} · ${isDiscovered ? 'Đã giải mã' : 'Chưa khám phá'}`}
                 >
                   <div className="clue-tab__icon">
                     <IconComponent size={16} />

@@ -221,6 +221,38 @@ body:has(.demo-workspace[data-in-view]) .ambient-toggle > svg { width: 12px; hei
 @media (min-width: 761px) {
   .demo-workspace .clue-exploration__layout { min-height: 600px; }
 }
+
+/* Clues sit above the scene, with an independent, wrapping progress summary. */
+.demo-workspace .clue-exploration__topbar { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 4px 0 10px; background: transparent; }
+.demo-workspace .clue-exploration__title-wrap { min-width: 0; flex: 1 1 260px; }
+.demo-workspace .clue-progress-summary { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; max-width: 100%; padding: 10px 14px; border: 1px solid #b58b4f55; border-radius: 12px; background: #fff8e9; color: #68482d; }
+.clue-progress-summary__count { display: flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+.clue-progress-summary__count strong { font-size: 26px; line-height: 1; color: #875431; }
+.clue-progress-summary__count span { font-size: 12px; color: #8b7357; }
+.clue-progress-summary__detail { display: flex; flex-direction: column; gap: 7px; font-size: 11px; }
+.clue-progress-summary__segments { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.clue-progress-summary__segments i { height: 5px; border-radius: 5px; background: #e7d6b6; }
+.clue-progress-summary__segments i.is-complete { background: #738a49; }
+.demo-workspace .clue-exploration__layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; min-height: 0; }
+.demo-workspace .clue-map-panel { padding: 0; border: 0; background: transparent; box-shadow: none; }
+.demo-workspace .clue-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.demo-workspace .clue-tab { display: flex; align-items: center; text-align: left; min-width: 0; min-height: 64px; padding: 12px; border-radius: 10px; gap: 9px; }
+.demo-workspace .clue-tab__icon { display: flex; flex-shrink: 0; }
+.demo-workspace .clue-tab__info { flex: 1; min-width: 0; }
+.demo-workspace .clue-tab__num { display: block; font-size: 9px; }
+.demo-workspace .clue-tab__name { font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
+.demo-workspace .clue-tab__status { display: block; flex-shrink: 0; font-size: 9px; }
+@media (max-width: 900px) {
+  .demo-workspace .clue-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .demo-workspace .clue-tab { padding: 10px; }
+}
+@media (max-width: 480px) {
+  .demo-workspace .clue-exploration__title-wrap { flex-basis: 100%; }
+  .demo-workspace .clue-progress-summary { width: 100%; padding: 9px 12px; }
+  .clue-progress-summary__detail { flex: 1; }
+  .demo-workspace .clue-tab__name { font-size: 11px; }
+  .demo-workspace .clue-tab__status:not(.clue-tab__status--done) { display: none; }
+}
 @media (max-width: 760px) {
   .demo-workspace .clue-exploration__layout { grid-template-rows: auto auto; }
   .demo-workspace .tide-interaction { grid-template-rows: auto auto auto auto; grid-template-areas: 'heading' 'scene' 'controls' 'story'; }

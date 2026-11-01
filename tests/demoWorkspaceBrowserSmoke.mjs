@@ -87,6 +87,9 @@ try {
       }
       assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'),'No overflow '+marker);
       if(stage==='CLUE_EXPLORATION'){
+        assert.ok(await evaluate('document.querySelector(".clue-tabs").getBoundingClientRect().bottom <= document.querySelector(".clue-detail-panel").getBoundingClientRect().top'),'Clue selectors sit above content');
+        assert.equal(await evaluate('document.querySelectorAll(".clue-progress-summary__segments .is-complete").length'),4);
+        assert.equal(await evaluate('document.querySelectorAll(".clue-tabs button[aria-pressed=true]").length'),1);
         const scene=await evaluate('document.querySelector(".tide-battle-scene").getBoundingClientRect().toJSON()');
         const slider=await evaluate('document.querySelector(".tide-controls__slider").getBoundingClientRect().toJSON()');
         const artwork=await evaluate('document.querySelector(".river-artwork").getBoundingClientRect().toJSON()');
